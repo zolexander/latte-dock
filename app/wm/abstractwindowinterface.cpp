@@ -18,7 +18,7 @@
 
 // KDE
 #include <KWindowSystem>
-#include <KActivities/Controller>
+#include <PlasmaActivities/Controller>
 
 namespace Latte {
 namespace WindowSystem {
@@ -47,7 +47,7 @@ AbstractWindowInterface::AbstractWindowInterface(QObject *parent)
 
     connect(&m_windowWaitingTimer, &QTimer::timeout, this, [&]() {
         WindowId wid = m_windowChangedWaiting;
-        m_windowChangedWaiting = QVariant();
+        m_windowChangedWaiting = WindowId::nil();
         emit windowChanged(wid);
     });
 
