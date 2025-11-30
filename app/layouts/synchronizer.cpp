@@ -1,3 +1,4 @@
+/* KF6-PORT-REVIEW-currentActivityChanged: please verify semantics: currentActivityChanged removed in KF6. */
 /*
     SPDX-FileCopyrightText: 2019 Michail Vourlakos <mvourlakos@gmail.com>
     SPDX-License-Identifier: GPL-2.0-or-later
@@ -57,7 +58,7 @@ Synchronizer::Synchronizer(QObject *parent)
     connect(m_manager->corona()->activitiesConsumer(), &KActivities::Consumer::activityRemoved,
             this, &Synchronizer::onActivityRemoved);
 
-    connect(m_manager->corona()->activitiesConsumer(), &KActivities::Consumer::currentActivityChanged,
+    connect(m_manager->corona()->activitiesConsumer(), &KActivities::Consumer::activitiesChanged,
             this, [&]() {
         if (m_manager->memoryUsage() == MemoryUsage::MultipleLayouts) {
             //! this signal is also triggered when runningactivities are changed and actually is received first
@@ -67,7 +68,7 @@ Synchronizer::Synchronizer(QObject *parent)
         }
     });
 
-    connect(m_manager->corona()->activitiesConsumer(), &KActivities::Consumer::runningActivitiesChanged,
+    connect(m_manager->corona()->activitiesConsumer(), &KActivities::Consumer::activitiesChanged,
             this, [&]() {
         if (m_manager->memoryUsage() == MemoryUsage::MultipleLayouts) {
             syncMultipleLayoutsToActivities();
@@ -155,16 +156,16 @@ QStringList Synchronizer::freeActivities()
     return frees;
 }
 
-QStringList Synchronizer::runningActivities()
+QStringList Synchronizer::activities()
 {   
-    return m_manager->corona()->activitiesConsumer()->runningActivities();
+    return m_manager->corona()->activitiesConsumer()->activities();
 }
 
 QStringList Synchronizer::freeRunningActivities()
 {
     QStringList fActivities;
 
-    for (const auto &activity : runningActivities()) {
+    for (const auto &activity : activities()) {
         if (!m_assignedLayouts.contains(activity)) {
             fActivities.append(activity);
         }
@@ -864,7 +865,7 @@ bool Synchronizer::switchToLayoutInMultipleModeBasedOnActivities(const QString &
     }
 
     if (!switchToActivity.isEmpty()) {
-        if (!m_manager->corona()->activitiesConsumer()->runningActivities().contains(switchToActivity)) {
+        if (!m_manager->corona()->activitiesConsumer()->activities().contains(switchToActivity)) {
             m_activitiesController->startActivity(switchToActivity);
         }
 
@@ -945,7 +946,7 @@ void Synchronizer::syncMultipleLayoutsToActivities(QStringList preloadedLayouts)
     }
 
     //! discover layouts assigned to explicit activities based on running activities
-    for (const auto &activity : runningActivities()) {
+    for (const auto &activity : activities()) {
         if (m_assignedLayouts.contains(activity)) {
             layoutNamesToLoad << m_assignedLayouts[activity];
         }

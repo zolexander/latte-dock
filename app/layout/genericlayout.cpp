@@ -1,3 +1,4 @@
+/* KF6-PORT-REVIEW-currentActivityChanged: please verify semantics: currentActivityChanged removed in KF6. */
 /*
     SPDX-FileCopyrightText: 2019 Michail Vourlakos <mvourlakos@gmail.com>
 
@@ -114,7 +115,7 @@ void GenericLayout::unloadLatteViews()
     disconnect(this, &GenericLayout::viewsCountChanged, m_corona, &Plasma::Corona::availableScreenRectChanged);
     disconnect(this, &GenericLayout::viewsCountChanged, m_corona, &Plasma::Corona::availableScreenRegionChanged);
     disconnect(this, &GenericLayout::activitiesChanged, this, &GenericLayout::updateLastUsedActivity);
-    disconnect(m_corona->activitiesConsumer(), &KActivities::Consumer::currentActivityChanged, this, &GenericLayout::updateLastUsedActivity);
+    disconnect(m_corona->activitiesConsumer(), &KActivities::Consumer::activitiesChanged, this, &GenericLayout::updateLastUsedActivity);
 
     for (const auto view : m_latteViews) {
         view->disconnectSensitiveSignals();
@@ -995,9 +996,9 @@ bool GenericLayout::initCorona()
 
     //! signals
     connect(this, &GenericLayout::activitiesChanged, this, &GenericLayout::updateLastUsedActivity);
-    connect(m_corona->activitiesConsumer(), &KActivities::Consumer::currentActivityChanged, this, &GenericLayout::updateLastUsedActivity);
-    connect(m_corona->activitiesConsumer(), &KActivities::Consumer::runningActivitiesChanged, this, &GenericLayout::updateLastUsedActivity);
-
+    connect(m_corona->activitiesConsumer(), &KActivities::Consumer::activitiesChanged, this, &GenericLayout::updateLastUsedActivity);
+    connect(m_corona->activitiesConsumer(),&KActivities::Consumer::activitiesAdded,this,&GenericLayout::updateLastUsedActivity);
+    connect(m_corona->activitiesConsumer(),&KActivities::Consumer::activitiesRemoved,this,&GenericLayout::updateLastUsedActivity);
     connect(this, &GenericLayout::lastConfigViewForChanged, m_corona->layoutsManager(), &Layouts::Manager::lastConfigViewChangedFrom);
     connect(m_corona->layoutsManager(), &Layouts::Manager::lastConfigViewChangedFrom, this, &GenericLayout::onLastConfigViewChangedFrom);
 

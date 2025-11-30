@@ -1,3 +1,4 @@
+/* KF6-PORT-REVIEW-currentActivityChanged: please verify semantics: currentActivityChanged removed in KF6. */
 /*
     SPDX-FileCopyrightText: 2018 Michail Vourlakos <mvourlakos@gmail.com>
     SPDX-License-Identifier: GPL-2.0-or-later
@@ -130,7 +131,7 @@ void Positioner::init()
         }
     });
 
-    connect(m_corona->activitiesConsumer(), &KActivities::Consumer::currentActivityChanged, this, [&]() {
+    connect(m_corona->activitiesConsumer(), &KActivities::Consumer::activitiesChanged, this, [&]() {
         if (m_view->formFactor() == Plasma::Types::Vertical && m_view->layout() && m_view->layout()->isCurrent()) {
             syncGeometry();
         }

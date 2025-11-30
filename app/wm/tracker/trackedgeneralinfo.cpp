@@ -1,3 +1,4 @@
+/* KF6-PORT-REVIEW-currentActivityChanged: please verify semantics: currentActivityChanged removed in KF6. */
 /*
     SPDX-FileCopyrightText: 2019 Michail Vourlakos <mvourlakos@gmail.com>
     SPDX-License-Identifier: GPL-2.0-or-later
@@ -24,7 +25,7 @@ TrackedGeneralInfo::TrackedGeneralInfo(Tracker::Windows *tracker)
 {
     m_lastActiveWindow = new LastActiveWindow(this);
 
-    connect(m_wm, &AbstractWindowInterface::currentActivityChanged, this, [&]() {
+    connect(m_wm, &AbstractWindowInterface::activitiesChanged, this, [&]() {
         updateTrackingCurrentActivity();
     });
 

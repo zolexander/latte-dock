@@ -1,3 +1,4 @@
+/* KF6-PORT-REVIEW-currentActivityChanged: please verify semantics: currentActivityChanged removed in KF6. */
 /*
     SPDX-FileCopyrightText: 2016 Smith AR <audoban@openmailbox.org>
     SPDX-FileCopyrightText: 2016 Michail Vourlakos <mvourlakos@gmail.com>
@@ -57,9 +58,9 @@ AbstractWindowInterface::AbstractWindowInterface(QObject *parent)
     //     qDebug() << "WINDOW CHANGED ::: " << wid;
     // });
 
-    connect(m_activities.data(), &KActivities::Consumer::currentActivityChanged, this, [&](const QString &id) {
+    connect(m_activities.data(), &KActivities::Consumer::activitiesChanged, this, [&](const QString &id) {
         m_currentActivity = id;
-        emit currentActivityChanged();
+        emit activitiesChanged();
     });
 
     connect(KWindowSystem::self(), &KWindowSystem::showingDesktopChanged, this, &AbstractWindowInterface::setIsShowingDesktop);

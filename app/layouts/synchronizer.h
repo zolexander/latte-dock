@@ -85,7 +85,7 @@ public:
 
     QStringList activities();
     QStringList freeActivities();
-    QStringList runningActivities();
+    QStringList activities();
     QStringList freeRunningActivities(); //! These are activities that haven't been assigned to specific layout
     QStringList validActivities(const QStringList &layoutActivities);
 

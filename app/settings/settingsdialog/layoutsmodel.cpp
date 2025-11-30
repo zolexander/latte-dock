@@ -784,7 +784,7 @@ void Layouts::updateConsideredActiveStates()
     } else if (m_inMultipleMode) {
         //! multiple mode but not the running one
 
-        QStringList runningActivities = m_corona->layoutsManager()->synchronizer()->runningActivities();
+        QStringList runningActivities = m_corona->layoutsManager()->synchronizer()->activities();
         QStringList freeRunningActivities = m_corona->layoutsManager()->synchronizer()->freeRunningActivities();
 
         for(int i=0; i<rowCount(); ++i) {
@@ -926,7 +926,7 @@ void Layouts::initActivities()
 
     connect(m_corona->activitiesConsumer(), &KActivities::Consumer::activityAdded, this, &Layouts::onActivityAdded);
     connect(m_corona->activitiesConsumer(), &KActivities::Consumer::activityRemoved, this, &Layouts::onActivityRemoved);
-    connect(m_corona->activitiesConsumer(), &KActivities::Consumer::runningActivitiesChanged, this, &Layouts::onRunningActivitiesChanged);
+    connect(m_corona->activitiesConsumer(), &KActivities::Consumer::activitiesChanged, this, &Layouts::onRunningActivitiesChanged);
 
     emit activitiesStatesChanged();
 }

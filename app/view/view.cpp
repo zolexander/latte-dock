@@ -1,3 +1,4 @@
+/* KF6-PORT-REVIEW-currentActivityChanged: please verify semantics: currentActivityChanged removed in KF6. */
 /*
     SPDX-FileCopyrightText: 2016 Smith AR <audoban@openmailbox.org>
     SPDX-FileCopyrightText: 2016 Michail Vourlakos <mvourlakos@gmail.com>
@@ -1174,7 +1175,7 @@ QStringList View::activities() const
 {
     QStringList running;
 
-    QStringList runningAll = m_corona->activitiesConsumer()->runningActivities();
+    QStringList runningAll = m_corona->activitiesConsumer()->activities();
 
     for(int i=0; i<m_activities.count(); ++i) {
         if (runningAll.contains(m_activities[i])) {
@@ -1289,21 +1290,21 @@ void View::setLayout(Layout::GenericLayout *layout)
 
         Latte::Corona *latteCorona = qobject_cast<Latte::Corona *>(this->corona());
 
-        connectionsLayout << connect(latteCorona->activitiesConsumer(), &KActivities::Consumer::currentActivityChanged, this, [&]() {
+        connectionsLayout << connect(latteCorona->activitiesConsumer(), &KActivities::Consumer::activitiesChanged, this, [&]() {
             if (m_layout && m_visibility) {
                 setActivities(m_layout->appliedActivities());
                 //! update activities in case KWin did its magic and assigned windows to faulty activities
                 applyActivitiesToWindows();
                 showHiddenViewFromActivityStopping();
-                qDebug() << "DOCK VIEW FROM LAYOUT (currentActivityChanged) ::: " << m_layout->name() << " - activities: " << m_activities;
+                qDebug() << "DOCK VIEW FROM LAYOUT (activitiesChanged) ::: " << m_layout->name() << " - activities: " << m_activities;
             }
         });
 
         if (latteCorona->layoutsManager()->memoryUsage() == MemoryUsage::MultipleLayouts) {
-            connectionsLayout << connect(latteCorona->activitiesConsumer(), &KActivities::Consumer::runningActivitiesChanged, this, [&]() {
+            connectionsLayout << connect(latteCorona->activitiesConsumer(), &KActivities::Consumer::activitiesChanged, this, [&]() {
                 if (m_layout && m_visibility) {
                     setActivities(m_layout->appliedActivities());
-                    qDebug() << "DOCK VIEW FROM LAYOUT (runningActivitiesChanged) ::: " << m_layout->name()
+                    qDebug() << "DOCK VIEW FROM LAYOUT (activitiesChanged) ::: " << m_layout->name()
                              << " - activities: " << m_activities;
                 }
             });

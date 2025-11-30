@@ -1,3 +1,4 @@
+/* KF6-PORT-REVIEW-currentActivityChanged: please verify semantics: currentActivityChanged removed in KF6. */
 /*
     SPDX-FileCopyrightText: 2016 Smith AR <audoban@openmailbox.org>
     SPDX-FileCopyrightText: 2016 Michail Vourlakos <mvourlakos@gmail.com>
@@ -250,7 +251,7 @@ void VisibilityManager::setMode(Latte::Types::Visibility mode)
                 raiseViewTemporarily();
             }
         });
-        m_connections[1] = connect(m_wm, &WindowSystem::AbstractWindowInterface::currentActivityChanged, this, [&]() {
+        m_connections[1] = connect(m_wm, &WindowSystem::AbstractWindowInterface::activitiesChanged, this, [&]() {
             if (m_raiseOnActivityChange) {
                 raiseViewTemporarily();
             } else {
@@ -274,7 +275,7 @@ void VisibilityManager::setMode(Latte::Types::Visibility mode)
         // when dragging active window from a floating dock/panel) ???
         m_connections[base+1] = connect(m_latteView, &Latte::View::absoluteGeometryChanged, this, &VisibilityManager::updateStrutsAfterTimer);
 
-        m_connections[base+2] = connect(m_corona->activitiesConsumer(), &KActivities::Consumer::currentActivityChanged, this, [&]() {
+        m_connections[base+2] = connect(m_corona->activitiesConsumer(), &KActivities::Consumer::activitiesChanged, this, [&]() {
             if (m_corona && m_corona->layoutsManager()->memoryUsage() == MemoryUsage::MultipleLayouts) {
                 updateStrutsBasedOnLayoutsAndActivities(true);
             }
@@ -1137,7 +1138,7 @@ void VisibilityManager::createEdgeGhostWindow()
             }
         });
 
-        m_connectionsKWinEdges[0] = connect(m_wm, &WindowSystem::AbstractWindowInterface::currentActivityChanged,
+        m_connectionsKWinEdges[0] = connect(m_wm, &WindowSystem::AbstractWindowInterface::activitiesChanged,
                                             this, [&]() {
             bool inCurrentLayout = (m_corona->layoutsManager()->memoryUsage() == MemoryUsage::SingleLayout ||
                                     (m_corona->layoutsManager()->memoryUsage() == MemoryUsage::MultipleLayouts

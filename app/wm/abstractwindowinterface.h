@@ -1,3 +1,4 @@
+/* KF6-PORT-REVIEW-currentActivityChanged: please verify semantics: currentActivityChanged removed in KF6. */
 /*
     SPDX-FileCopyrightText: 2016 Smith AR <audoban@openmailbox.org>
     SPDX-FileCopyrightText: 2016 Michail Vourlakos <mvourlakos@gmail.com>
@@ -140,7 +141,7 @@ signals:
     void windowAdded(WindowId wid);
     void windowRemoved(WindowId wid);
     void currentDesktopChanged();
-    void currentActivityChanged();
+    void activitiesChanged();
 
     void isShowingDesktopChanged();
 

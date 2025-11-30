@@ -1,3 +1,4 @@
+/* KF6-PORT-REVIEW-currentActivityChanged: please verify semantics: currentActivityChanged removed in KF6. */
 /*
     SPDX-FileCopyrightText: 2019 Michail Vourlakos <mvourlakos@gmail.com>
     SPDX-License-Identifier: GPL-2.0-or-later
@@ -44,7 +45,7 @@ LastActiveWindow::LastActiveWindow(TrackedGeneralInfo *trackedInfo)
     connect(m_windowsTracker, &Windows::windowChanged, this, &LastActiveWindow::windowChanged);
     connect(m_windowsTracker, &Windows::windowRemoved, this, &LastActiveWindow::windowRemoved);
 
-    connect(m_wm, &AbstractWindowInterface::currentActivityChanged, this, &LastActiveWindow::updateInformationFromHistory);
+    connect(m_wm, &AbstractWindowInterface::activitiesChanged, this, &LastActiveWindow::updateInformationFromHistory);
     connect(m_wm, &AbstractWindowInterface::currentDesktopChanged, this, &LastActiveWindow::updateInformationFromHistory);
 }
 
