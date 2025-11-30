@@ -52,7 +52,7 @@
 #include <KX11Extras>
 
 // Plasma
-#include <PlasmaActivities/Consumer>
+#include <plasmaactivities/consumer.h>
 #include <Plasma/Containment>
 #include <Plasma/ContainmentActions>
 #include <PlasmaQuick/AppletQuickItem>

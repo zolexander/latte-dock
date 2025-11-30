@@ -26,7 +26,7 @@
 
 // Plasma
 #include <Plasma/Containment>
-#include <PlasmaActivities/Consumer>
+#include <plasmaactivities/consumer.h>
 #include <PlasmaActivities/Controller>
 
 // KDE

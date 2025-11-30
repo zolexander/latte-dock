@@ -32,7 +32,7 @@
 
 // KDE
 #include <KSharedConfig>
-#include <PlasmaActivities/Consumer>
+#include <plasmaactivities/consumer.h>
 
 // Plasma
 #include <Plasma/Plasma>

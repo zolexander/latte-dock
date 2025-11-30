@@ -21,7 +21,7 @@
 #include <QtDBus>
 
 // KDE
-#include <PlasmaActivities/Consumer>
+#include <plasmaactivities/consumer.h>
 #include <KDirWatch>
 #include <KPackage/Package>
 #include <KWindowSystem>

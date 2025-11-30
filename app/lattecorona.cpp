@@ -63,7 +63,7 @@
 #include <Plasma/Plasma>
 #include <Plasma/Corona>
 #include <Plasma/Containment>
-#include <PlasmaActivities/Consumer>
+#include <plasmaactivities/consumer.h>
 #include <PlasmaQuick/ConfigView>
 
 // KDE

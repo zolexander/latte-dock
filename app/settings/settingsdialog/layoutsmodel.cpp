@@ -21,8 +21,8 @@
 #include <KLocalizedString>
 
 // PlasmaActivities
-#include <PlasmaActivities/Consumer>
-#include <PlasmaActivities/Info>
+#include <plasmaactivities/consumer.h>
+#include <plasmaactivities/info.h>
 
 namespace Latte {
 namespace Settings {
