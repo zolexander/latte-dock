@@ -1,4 +1,5 @@
 /* KF6-PORT-REVIEW-currentActivityChanged: please verify semantics: currentActivityChanged removed in KF6. */
+/* KF6-PORT-REVIEW-activitiesChanged: please verify semantics: activitiesChanged removed in KF6. */
 /*
     SPDX-FileCopyrightText: 2019 Michail Vourlakos <mvourlakos@gmail.com>
 
@@ -996,7 +997,15 @@ bool GenericLayout::initCorona()
 
     //! signals
     connect(this, &GenericLayout::activitiesChanged, this, &GenericLayout::updateLastUsedActivity);
-    connect(m_corona->activitiesConsumer(), &KActivities::Consumer::activitiesChanged, this, &GenericLayout::updateLastUsedActivity);
+    connect(m_corona->activitiesConsumer(),
+        &KActivities::Consumer::activitiesAdded,
+        this,
+        &GenericLayout::updateLastUsedActivity);
+
+    connect(m_corona->activitiesConsumer(),
+        &KActivities::Consumer::activitiesRemoved,
+        this,
+        &GenericLayout::updateLastUsedActivity);
     connect(m_corona->activitiesConsumer(),&KActivities::Consumer::activitiesAdded,this,&GenericLayout::updateLastUsedActivity);
     connect(m_corona->activitiesConsumer(),&KActivities::Consumer::activitiesRemoved,this,&GenericLayout::updateLastUsedActivity);
     connect(this, &GenericLayout::lastConfigViewForChanged, m_corona->layoutsManager(), &Layouts::Manager::lastConfigViewChangedFrom);

@@ -1,4 +1,5 @@
 /* KF6-PORT-REVIEW-currentActivityChanged: please verify semantics: currentActivityChanged removed in KF6. */
+/* KF6-PORT-REVIEW-activitiesChanged: please verify semantics: activitiesChanged removed in KF6. */
 /*
     SPDX-FileCopyrightText: 2018 Michail Vourlakos <mvourlakos@gmail.com>
     SPDX-License-Identifier: GPL-2.0-or-later

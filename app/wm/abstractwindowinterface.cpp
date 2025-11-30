@@ -1,5 +1,6 @@
-/* KF6-PORT-REVIEW-InfoState: KActivities::Info::State removed in KF6. Replace usage with availability()/isCurrent()/custom flags. */
 /* KF6-PORT-REVIEW-currentActivityChanged: please verify semantics: currentActivityChanged removed in KF6. */
+/* KF6-PORT-REVIEW-InfoState: KActivities::Info::State removed in KF6. Replace usage with availability()/isCurrent()/custom flags. */
+/* KF6-PORT-REVIEW-activitiesChanged: please verify semantics: activitiesChanged removed in KF6. */
 /*
     SPDX-FileCopyrightText: 2016 Smith AR <audoban@openmailbox.org>
     SPDX-FileCopyrightText: 2016 Michail Vourlakos <mvourlakos@gmail.com>
