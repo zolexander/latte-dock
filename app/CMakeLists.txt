@@ -84,10 +84,10 @@ target_link_libraries(latte-dock
     Plasma::PlasmaQuick
 )
 
-
+find_package(Qt6 REQUIRED COMPONENTS GuiPrivate)
 if(HAVE_X11)
     target_link_libraries(latte-dock
-        Qt::GuiPrivate
+         Qt6::GuiPrivate
         KF6::WindowSystem
         ${X11_LIBRARIES}
         ${XCB_LIBRARIES}
