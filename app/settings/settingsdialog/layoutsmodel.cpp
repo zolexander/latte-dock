@@ -1,3 +1,4 @@
+/* KF6-PORT-REVIEW-InfoStates: previous code relied on Info::Running/Starting/Invalid. In KF6 the state enum is removed. Use info.availability() != Info::Nothing and info.isCurrent() where applicable. */
 /*
     SPDX-FileCopyrightText: 2020 Michail Vourlakos <mvourlakos@gmail.com>
     SPDX-License-Identifier: GPL-2.0-or-later
