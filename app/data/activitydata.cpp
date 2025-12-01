@@ -1,8 +1,3 @@
-/*
-    SPDX-FileCopyrightText: 2020 Michail Vourlakos <mvourlakos@gmail.com>
-    SPDX-License-Identifier: GPL-2.0-or-later
-*/
-
 #include "activitydata.h"
 
 namespace Latte {
@@ -17,7 +12,7 @@ Activity::Activity(Activity &&o)
     : Generic(o),
       icon(o.icon),
       isCurrent(o.isCurrent),
-      state(o.state)
+      available(o.available)
 {
 }
 
@@ -25,7 +20,7 @@ Activity::Activity(const Activity &o)
     : Generic(o),
       icon(o.icon),
       isCurrent(o.isCurrent),
-      state(o.state)
+      available(o.available)
 {
 }
 
@@ -35,7 +30,7 @@ Activity &Activity::operator=(const Activity &rhs)
     name = rhs.name;
     icon = rhs.icon;
     isCurrent = rhs.isCurrent;
-    state = rhs.state;
+    available = rhs.available;
 
     return (*this);
 }
@@ -46,19 +41,20 @@ Activity &Activity::operator=(Activity &&rhs)
     name = rhs.name;
     icon = rhs.icon;
     isCurrent = rhs.isCurrent;
-    state = rhs.state;
+    available = rhs.available;
 
     return (*this);
 }
 
 bool Activity::isValid() const
 {
-    return (state != KActivities::Info::Invalid);
+    return available;
 }
 
 bool Activity::isRunning() const
 {
-    return ((state == KActivities::Info::Running) || (state == KActivities::Info::Starting));
+    // KF6: “running” Zustand gibt es nicht mehr – wenn verfügbar, dann nutzbar
+    return available;
 }
 
 }

@@ -1,7 +1,5 @@
 /*
-    SPDX-FileCopyrightText: 2020 Michail Vourlakos <mvourlakos@gmail.com>
-    SPDX-License-Identifier: GPL-2.0-or-later
-
+    Modernized Plasma-6 version
 */
 
 #ifndef ACTIVITYDATA_H
@@ -13,11 +11,12 @@
 
 //! Qt
 #include <QMetaType>
-#include <QIcon>
 #include <QString>
+#include <QIcon>
 
-//! Plasma Activities
-#include <PlasmaActivities/Info>
+//! Plasma Activities (KF6)
+#include <plasmaactivities/consumer.h>
+#include <plasmaactivities/info.h>
 
 namespace Latte {
 namespace Data {
@@ -29,21 +28,21 @@ public:
     Activity(Activity &&o);
     Activity(const Activity &o);
 
-    //! Layout data
-    bool isCurrent{false};
+    //! Activity data
     QString icon;
-    KActivities::Info::State state;
+    bool isCurrent{false};
+    bool available{false};
 
-    bool isValid() const;
-    bool isRunning() const;
+    //! Checks
+    bool isValid() const;     // availability != Nothing
+    bool isRunning() const;   // KF6: Activities are "running" if available
 
     //! Operators
     Activity &operator=(const Activity &rhs);
     Activity &operator=(Activity &&rhs);
 };
 
-//! This is an Activities map in the following structure:
-//! #activityId -> activite_information
+//! Activities table
 typedef GenericTable<Data::Activity> ActivitiesTable;
 
 }

@@ -33,7 +33,10 @@ build*/
 
 # locale files
 *.mo
-
+*.pkg.tar
+*.pkg.tar.zst
+*.pkg.tar.xz
+*.pkg.tar.gz
 # KDevelop Project files
 *.kdev4
 .kdev4/

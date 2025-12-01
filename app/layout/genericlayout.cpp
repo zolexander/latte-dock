@@ -1,5 +1,4 @@
 /* KF6-PORT-REVIEW-currentActivityChanged: please verify semantics: currentActivityChanged removed in KF6. */
-/* KF6-PORT-REVIEW-activitiesChanged: please verify semantics: activitiesChanged removed in KF6. */
 /*
     SPDX-FileCopyrightText: 2019 Michail Vourlakos <mvourlakos@gmail.com>
 
@@ -32,11 +31,14 @@
 #include <Plasma/Plasma>
 #include <Plasma/Applet>
 #include <Plasma/Containment>
-
 // KDE
 #include <KActionCollection>
 #include <KConfigGroup>
 #include <KPackage/Package>
+#include <plasmaactivities/consumer.h>
+#include <plasmaactivities/info.h>   // falls du Info verwendest
+#include <plasmaactivities/controller.h> // optional, falls benötigt
+
 
 namespace Latte {
 namespace Layout {
@@ -996,18 +998,27 @@ bool GenericLayout::initCorona()
     updateLastUsedActivity();
 
     //! signals
-    connect(this, &GenericLayout::activitiesChanged, this, &GenericLayout::updateLastUsedActivity);
-    connect(m_corona->activitiesConsumer(),
-        &KActivities::Consumer::activitiesAdded,
-        this,
-        &GenericLayout::updateLastUsedActivity);
+    KActivities::Consumer *consumer = m_corona->activitiesConsumer();
+    if (consumer) {
+    // einzelne activity added/removed (signatur: const QString &id)
+    connect(consumer, &KActivities::Consumer::activityAdded,
+            this, &GenericLayout::updateLastUsedActivity);
 
-    connect(m_corona->activitiesConsumer(),
-        &KActivities::Consumer::activitiesRemoved,
-        this,
-        &GenericLayout::updateLastUsedActivity);
-    connect(m_corona->activitiesConsumer(),&KActivities::Consumer::activitiesAdded,this,&GenericLayout::updateLastUsedActivity);
-    connect(m_corona->activitiesConsumer(),&KActivities::Consumer::activitiesRemoved,this,&GenericLayout::updateLastUsedActivity);
+    connect(consumer, &KActivities::Consumer::activityRemoved,
+            this, &GenericLayout::updateLastUsedActivity);
+
+    // bulk-signal: activities changed (signatur: const QStringList &)
+    connect(consumer, &KActivities::Consumer::activitiesChanged,
+            this, &GenericLayout::updateLastUsedActivity);
+
+    // current activity changed
+    connect(consumer, &KActivities::Consumer::currentActivityChanged,
+            this, &GenericLayout::updateLastUsedActivity);
+
+    // optional: runningActivitiesChanged exists in the API (if used)
+
+}
+    
     connect(this, &GenericLayout::lastConfigViewForChanged, m_corona->layoutsManager(), &Layouts::Manager::lastConfigViewChangedFrom);
     connect(m_corona->layoutsManager(), &Layouts::Manager::lastConfigViewChangedFrom, this, &GenericLayout::onLastConfigViewChangedFrom);
 

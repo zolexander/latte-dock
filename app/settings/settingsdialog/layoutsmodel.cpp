@@ -898,21 +898,18 @@ void Layouts::initActivities()
     allActivities.id = Latte::Data::Layout::ALLACTIVITIESID;
     allActivities.name = QString("[ " + i18n("All Activities") + " ]");
     allActivities.icon = "activities";
-    allActivities.state = KActivities::Info::Stopped;
     m_activitiesTable << allActivities;
 
     Latte::Data::Activity freeActivities;
     freeActivities.id = Latte::Data::Layout::FREEACTIVITIESID;
     freeActivities.name = QString("[ " + i18n("Free Activities") + " ]");
     freeActivities.icon = "activities";
-    freeActivities.state = KActivities::Info::Stopped;
     m_activitiesTable << freeActivities;
 
     Latte::Data::Activity currentActivity;
     currentActivity.id = Latte::Data::Layout::CURRENTACTIVITYID;
     currentActivity.name = QString("[ " + i18n("Current Activity") + " ]");
     currentActivity.icon = "dialog-yes";
-    currentActivity.state = KActivities::Info::Stopped;
     m_activitiesTable << currentActivity;
 
     QStringList activities = m_corona->layoutsManager()->synchronizer()->activities();;
@@ -920,7 +917,7 @@ void Layouts::initActivities()
     for(const auto &id: activities) {
         KActivities::Info info(id);
 
-        if (info.state() != KActivities::Info::Invalid) {
+        if (info.availability() != KActivities::Info::Nothing) {
             onActivityAdded(id);
         }
     }
@@ -952,14 +949,9 @@ void Layouts::onActivityAdded(const QString &id)
     activity.id = m_activitiesInfo[id]->id();
     activity.name = m_activitiesInfo[id]->name();
     activity.icon = m_activitiesInfo[id]->icon();
-    activity.state = m_activitiesInfo[id]->state();
     activity.isCurrent = m_activitiesInfo[id]->isCurrent();
 
-    if (!m_activitiesTable.containsId(id)) {
-        m_activitiesTable << activity;
-    } else {
-        m_activitiesTable[id] = activity;
-    }
+    m_activitiesTable[id] = activity;
 
     connect(m_activitiesInfo[id], &KActivities::Info::nameChanged, [this, id]() {
         onActivityChanged(id);
@@ -993,39 +985,27 @@ void Layouts::onActivityChanged(const QString &id)
     if (m_activitiesTable.containsId(id) && m_activitiesInfo.contains(id)) {
         m_activitiesTable[id].name = m_activitiesInfo[id]->name();
         m_activitiesTable[id].icon = m_activitiesInfo[id]->icon();
-        m_activitiesTable[id].state = m_activitiesInfo[id]->state();
         m_activitiesTable[id].isCurrent = m_activitiesInfo[id]->isCurrent();
 
         emit activitiesStatesChanged();
     }
 }
 
-void Layouts::onRunningActivitiesChanged(const QStringList &runningIds)
-{
-    for (int i = 0; i < m_activitiesTable.rowCount(); ++i) {
-        if (runningIds.contains(m_activitiesTable[i].id)) {
-            m_activitiesTable[i].state = KActivities::Info::Running;
-        } else {
-            m_activitiesTable[i].state = KActivities::Info::Stopped;
-        }
-    }
-
-    emit activitiesStatesChanged();
-}
-
 bool Layouts::containsSpecificRunningActivity(const QStringList &runningIds, const Latte::Data::Layout &layout) const
 {
-    if (runningIds.count()>0 && layout.activities.count()>0) {
-        for (int i=0; i<layout.activities.count(); ++i) {
-            if (runningIds.contains(layout.activities[i])) {
-                return true;
-            }
+    for (int i = 0; i < layout.activities.count(); ++i) {
+        if (runningIds.contains(layout.activities[i])) {
+            return true;
         }
     }
 
     return false;
 }
 
+void Layouts::onRunningActivitiesChanged(const QStringList &runningIds)
+{
+    emit activitiesStatesChanged();
 }
-}
-}
+} // Model
+} // Settings
+} // Lattes

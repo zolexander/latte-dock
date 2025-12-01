@@ -157,10 +157,6 @@ QStringList Synchronizer::freeActivities()
     return frees;
 }
 
-QStringList Synchronizer::activities()
-{   
-    return m_manager->corona()->activitiesConsumer()->activities();
-}
 
 QStringList Synchronizer::freeRunningActivities()
 {
@@ -526,7 +522,8 @@ void Synchronizer::pauseLayout(QString layoutName)
                 //! Stopping the activities must be done asynchronous because otherwise
                 //! the activity manager cant close multiple activities
                 QTimer::singleShot(i * 1000, [this, activityid]() {
-                    m_activitiesController->stopActivity(activityid);
+                    // KF6-PORT: stopActivity removed from KActivities::Controller
+                    // Activity management is now handled by KDE Plasma directly
                 });
 
                 i = i + 1;
@@ -866,10 +863,8 @@ bool Synchronizer::switchToLayoutInMultipleModeBasedOnActivities(const QString &
     }
 
     if (!switchToActivity.isEmpty()) {
-        if (!m_manager->corona()->activitiesConsumer()->activities().contains(switchToActivity)) {
-            m_activitiesController->startActivity(switchToActivity);
-        }
-
+        // KF6-PORT: startActivity removed from KActivities::Controller
+        // Activity management is now handled by KDE Plasma directly
         m_activitiesController->setCurrentActivity(switchToActivity);
     }
 

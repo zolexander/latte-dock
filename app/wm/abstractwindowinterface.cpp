@@ -60,7 +60,7 @@ AbstractWindowInterface::AbstractWindowInterface(QObject *parent)
     //     qDebug() << "WINDOW CHANGED ::: " << wid;
     // });
 
-    connect(m_activities.data(), &KActivities::Consumer::activitiesChanged, this, [&](const QString &id) {
+    connect(m_activities.data(), &KActivities::Consumer::currentActivityChanged, this, [&](const QString &id) {
         m_currentActivity = id;
         emit activitiesChanged();
     });
@@ -367,7 +367,7 @@ void AbstractWindowInterface::windowRemovedSlot(WindowId wid)
 //! Activities switching
 void AbstractWindowInterface::switchToNextActivity()
 {
-    QStringList runningActivities = m_activities->activities(KActivities::Info::State::Running);
+    QStringList runningActivities = m_activities->activities();
     if (runningActivities.count() <= 1) {
         return;
     }
@@ -385,7 +385,7 @@ void AbstractWindowInterface::switchToNextActivity()
 
 void AbstractWindowInterface::switchToPreviousActivity()
 {
-    QStringList runningActivities = m_activities->activities(KActivities::Info::State::Running);
+    QStringList runningActivities = m_activities->activities();
     if (runningActivities.count() <= 1) {
         return;
     }
