@@ -1,0 +1,8 @@
+-I/home/zolexander/latte-dock/app
+-I/home/zolexander/latte-dock/build/app
+-D_GNU_SOURCE
+-D_LARGEFILE64_SOURCE
+-DPLASMA_WORKSPACE_VERSION="6.5.3"
+-o
+/home/zolexander/latte-dock/build/app/moc_lattedockadaptor.cpp
+/home/zolexander/latte-dock/build/app/lattedockadaptor.h
