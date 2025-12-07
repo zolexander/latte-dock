@@ -88,7 +88,12 @@ Positioner::Positioner(Latte::View *parent)
             }
         });
     }
-
+    // KF6/Wayland: do not use the X11-style offscreen startup behavior,
+    // which moves the view to (-9999, -9999) until sliding in. On Wayland
+    // this leaves the dock effectively invisible.
+    if (KWindowSystem::isPlatformWayland()) {
+        m_inStartup = false;
+    }
     init();
 }
 
@@ -652,7 +657,25 @@ QRect Positioner::maximumNormalGeometry(QRect screenGeometry)
     QRect maxGeometry;
     maxGeometry.setRect(0, 0, maxWidth, maxHeight);
 
-    switch (m_view->location()) {
+    Plasma::Types::Location loc = m_view->location();
+
+    // KF6/Wayland: guard against Desktop/Floating location which does
+    // not make sense for a dock positioner. Prefer the containment
+    // location, and as a last resort fall back to BottomEdge.
+    if (loc == Plasma::Types::Desktop || loc == Plasma::Types::Floating) {
+        if (m_view->containment()) {
+            Plasma::Types::Location cLoc = m_view->containment()->location();
+            if (cLoc != Plasma::Types::Desktop && cLoc != Plasma::Types::Floating) {
+                loc = cLoc;
+            } else {
+                loc = Plasma::Types::BottomEdge;
+            }
+        } else {
+            loc = Plasma::Types::BottomEdge;
+        }
+    }
+
+    switch (loc) {
     case Plasma::Types::LeftEdge:
         xPos = currentScrGeometry.x();
         maxGeometry.setRect(xPos, yPos, maxWidth, maxHeight);
@@ -720,16 +743,23 @@ void Positioner::updateCanvasGeometry(QRect availableScreenRect)
     QRect canvas;
     QRect screenGeometry{m_view->screen()->geometry()};
     int thickness{m_view->editThickness()};
+    
+    Plasma::Types::Location loc = m_view->location();
 
-    if (m_view->formFactor() == Plasma::Types::Vertical) {
-        canvas.setWidth(thickness);
-        canvas.setHeight(availableScreenRect.height());
-    } else {
-        canvas.setWidth(screenGeometry.width());
-        canvas.setHeight(thickness);
+       if (loc == Plasma::Types::Desktop || loc == Plasma::Types::Floating) {
+        if (m_view->containment()) {
+            Plasma::Types::Location cLoc = m_view->containment()->location();
+            if (cLoc != Plasma::Types::Desktop && cLoc != Plasma::Types::Floating) {
+                loc = cLoc;
+            } else {
+                loc = Plasma::Types::BottomEdge;
+            }
+        } else {
+            loc = Plasma::Types::BottomEdge;
+        }
     }
 
-    switch (m_view->location()) {
+    switch (loc) {
     case Plasma::Types::TopEdge:
         canvas.moveLeft(screenGeometry.x());
         canvas.moveTop(screenGeometry.y());
@@ -751,7 +781,7 @@ void Positioner::updateCanvasGeometry(QRect availableScreenRect)
         break;
 
     default:
-        qWarning() << "wrong location, couldn't update the canvas config window geometry " << m_view->location();
+        qWarning() << "wrong location, couldn't update the canvas config window geometry " << loc;
     }
 
     setCanvasGeometry(canvas);
@@ -777,7 +807,25 @@ void Positioner::updatePosition(QRect availableScreenRect)
 
     int screenEdgeMargin = m_view->behaveAsPlasmaPanel() ? m_view->screenEdgeMargin() - qAbs(m_slideOffset) : 0;
 
-    switch (m_view->location()) {
+    Plasma::Types::Location loc = m_view->location();
+
+    // KF6/Wayland: guard against Desktop/Floating location which does
+    // not make sense for a dock. Prefer the containment location, and
+    // as a last resort fall back to BottomEdge.
+    if (loc == Plasma::Types::Desktop || loc == Plasma::Types::Floating) {
+        if (m_view->containment()) {
+            Plasma::Types::Location cLoc = m_view->containment()->location();
+            if (cLoc != Plasma::Types::Desktop && cLoc != Plasma::Types::Floating) {
+                loc = cLoc;
+            } else {
+                loc = Plasma::Types::BottomEdge;
+            }
+        } else {
+            loc = Plasma::Types::BottomEdge;
+        }
+    }
+
+    switch (loc) {
     case Plasma::Types::TopEdge:
         if (m_view->behaveAsPlasmaPanel()) {
             int y = screenGeometry.y() + screenEdgeMargin;
@@ -847,8 +895,7 @@ void Positioner::updatePosition(QRect availableScreenRect)
         break;
 
     default:
-        qWarning() << "wrong location, couldn't update the panel position"
-                   << m_view->location();
+        qWarning() << "wrong location, couldn't update the panel position" << loc;
     }
 
     if (m_slideOffset == 0 || m_nextScreenEdge != Plasma::Types::Floating /*exactly after relocating and changing screen edge*/) {

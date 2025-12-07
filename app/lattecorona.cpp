@@ -220,13 +220,21 @@ void Corona::onAboutToQuit()
 
 void Corona::load()
 {
+    qDebug() << "[LATTE-DEBUG] Corona::load() - checking activities status:"
+             << "hasConsumer:" << (m_activitiesConsumer != nullptr)
+             << "serviceStatus:" << (m_activitiesConsumer ? m_activitiesConsumer->serviceStatus() : -1)
+             << "activitiesStarting:" << m_activitiesStarting;
+
     if (m_activitiesConsumer && (m_activitiesConsumer->serviceStatus() == KActivities::Consumer::Running) && m_activitiesStarting) {
+        qDebug() << "[LATTE-DEBUG] Corona::load() - Activities ready, starting initialization";
         m_activitiesStarting = false;
 
         disconnect(m_activitiesConsumer, &KActivities::Consumer::serviceStatusChanged, this, &Corona::load);
 
+        qDebug() << "[LATTE-DEBUG] Corona::load() - Initializing templates and layouts managers";
         m_templatesManager->init();
         m_layoutsManager->init();
+        qDebug() << "[LATTE-DEBUG] Corona::load() - Managers initialized";
 
         // We must extract Screen Id from the signalled view.
         connect(this, &Corona::availableScreenRectChangedFrom,
@@ -248,14 +256,18 @@ void Corona::load()
             if (m_universalSettings->layoutsMemoryUsage() == MemoryUsage::MultipleLayouts) {
                 loadLayoutName = "";
             } else {
+                qDebug() << "[LATTE-DEBUG] Corona::load() - Loading single layout mode";
                 loadLayoutName = m_universalSettings->singleModeLayoutName();
+                qDebug() << "[LATTE-DEBUG] Corona::load() - singleModeLayoutName:" << loadLayoutName;
 
                 if (!m_layoutsManager->synchronizer()->layoutExists(loadLayoutName)) {
+                    qDebug() << "[LATTE-DEBUG] Corona::load() - Layout not found, checking for Default layout";
                     //! If chosen layout does not exist, force Default layout loading
                     QString defaultLayoutTemplateName = i18n(Templates::DEFAULTLAYOUTTEMPLATENAME);
                     loadLayoutName = defaultLayoutTemplateName;
 
                     if (!m_layoutsManager->synchronizer()->layoutExists(defaultLayoutTemplateName)) {
+                        qDebug() << "[LATTE-DEBUG] Corona::load() - Default layout not found, creating new one";
                         //! If Default layout does not exist at all, create it
                         QString path = m_templatesManager->newLayout("", defaultLayoutTemplateName);
                         m_layoutsManager->setOnAllActivities(Layout::AbstractLayout::layoutName(path));
@@ -272,13 +284,17 @@ void Corona::load()
             m_universalSettings->setLayoutsMemoryUsage(MemoryUsage::SingleLayout);
         }
 
+        qDebug() << "[LATTE-DEBUG] Corona::load() - Calling loadLayoutOnStartup with:" << loadLayoutName;
         m_layoutsManager->loadLayoutOnStartup(loadLayoutName);
+        qDebug() << "[LATTE-DEBUG] Corona::load() - loadLayoutOnStartup returned";
 
         //! load screens signals such screenGeometryChanged in order to support
         //! plasmoid.screenGeometry properly
+        qDebug() << "[LATTE-DEBUG] Corona::load() - Adding screens, count:" << qGuiApp->screens().size();
         for (QScreen *screen : qGuiApp->screens()) {
             onScreenAdded(screen);
         }
+        qDebug() << "[LATTE-DEBUG] Corona::load() - Screens added";
 
         connect(m_layoutsManager->synchronizer(), &Layouts::Synchronizer::initializationFinished, [this]() {
             if (!m_startupAddViewTemplateName.isEmpty()) {
@@ -290,9 +306,12 @@ void Corona::load()
         });
 
         m_inStartup = false;
+        qDebug() << "[LATTE-DEBUG] Corona::load() - Initialization complete";
 
         connect(qGuiApp, &QGuiApplication::screenAdded, this, &Corona::onScreenAdded, Qt::UniqueConnection);
         connect(qGuiApp, &QGuiApplication::screenRemoved, this, &Corona::onScreenRemoved, Qt::UniqueConnection);
+    } else {
+        qDebug() << "[LATTE-DEBUG] Corona::load() - Condition not met, skipping initialization";
     }
 }
 

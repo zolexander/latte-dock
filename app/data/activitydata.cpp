@@ -8,9 +8,9 @@ Activity::Activity()
 {
 }
 
-Activity::Activity(Activity &&o)
+Activity::Activity(Activity &&o) noexcept
     : Generic(o),
-      icon(o.icon),
+      iconName(o.iconName),
       isCurrent(o.isCurrent),
       available(o.available)
 {
@@ -18,7 +18,7 @@ Activity::Activity(Activity &&o)
 
 Activity::Activity(const Activity &o)
     : Generic(o),
-      icon(o.icon),
+      iconName(o.iconName),
       isCurrent(o.isCurrent),
       available(o.available)
 {
@@ -28,7 +28,7 @@ Activity &Activity::operator=(const Activity &rhs)
 {
     id = rhs.id;
     name = rhs.name;
-    icon = rhs.icon;
+    iconName = rhs.iconName;
     isCurrent = rhs.isCurrent;
     available = rhs.available;
 
@@ -39,7 +39,7 @@ Activity &Activity::operator=(Activity &&rhs)
 {
     id = rhs.id;
     name = rhs.name;
-    icon = rhs.icon;
+    iconName = rhs.iconName;
     isCurrent = rhs.isCurrent;
     available = rhs.available;
 

@@ -1,0 +1,77 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"declarativeimports/core/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 33,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 35,
+				"parent" : 0
+			}
+		]
+	},
+	"codemodelVersion" : 
+	{
+		"major" : 2,
+		"minor" : 9
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "lattedock",
+			"destination" : "lib/qt6/qml/org/kde/latte/core",
+			"paths" : 
+			[
+				"bin/liblattecoreplugin.so"
+			],
+			"targetId" : "lattecoreplugin::@dacf2cab7d1c6bc47e7e",
+			"targetIndex" : 10,
+			"type" : "target"
+		},
+		{
+			"backtrace" : 1,
+			"component" : "lattedock",
+			"cxxModuleBmiTarget" : 
+			{
+				"id" : "lattecoreplugin::@dacf2cab7d1c6bc47e7e",
+				"index" : 10
+			},
+			"destination" : "lib/qt6/qml/org/kde/latte/core",
+			"type" : "cxxModuleBmi"
+		},
+		{
+			"backtrace" : 2,
+			"component" : "lattedock",
+			"destination" : "lib/qt6/qml/org/kde/latte/core",
+			"paths" : 
+			[
+				"declarativeimports/core/qmldir"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "declarativeimports/core",
+		"source" : "declarativeimports/core"
+	}
+}

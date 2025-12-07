@@ -23,6 +23,7 @@ PlasmoidItem {
         anchors.fill: colorizer
 
         active: appletItem.environment.isGraphicsSystemAccelerated
+                && plasmoid && plasmoid.configuration
                 && plasmoid.configuration.appletShadowsEnabled
                 && (appletColorizer.opacity>0)
 

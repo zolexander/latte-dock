@@ -99,6 +99,8 @@ public slots:
     Q_INVOKABLE void insertAfter(QQuickItem *hoveredItem, QQuickItem *item);
     Q_INVOKABLE void insertAtCoordinates(QQuickItem *item, const int &x, const int &y);
 
+    Q_INVOKABLE QObject *visualAppletFor(QObject *appletObj) const;
+
     Q_INVOKABLE int dndSpacerIndex();
 
     Q_INVOKABLE bool isMasqueradedIndex(const int &x, const int &y);
@@ -174,6 +176,8 @@ private:
     QQuickItem *appletItemInLayout(QQuickItem *layout, const int &id);
 
     void printAppletList(QList<QQuickItem *> list);
+
+    QList<QObject *> appletsFromPlasmoid() const;
 
     QList<int> toIntList(const QString &serialized);
     QString toStr(const QList<int> &list);

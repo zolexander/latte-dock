@@ -49,6 +49,10 @@ function checkAndUpdateAppletRootItem() {
         return;
     }
 
+    if (!applet || !applet.children || applet.children.length === 0) {
+        return;
+    }
+
     var level0 = applet.children;
 
     for(var i=0; i<level0.length; ++i){
@@ -73,6 +77,10 @@ function checkAndUpdateAppletRootItem() {
 
 function identifyGeneric() {
     if (blacklistedApplets.indexOf(applet.pluginName) >= 0) {
+        return;
+    }
+
+    if (!applet || !applet.children || applet.children.length === 0) {
         return;
     }
 

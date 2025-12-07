@@ -1,0 +1,85 @@
+{
+	"backtrace" : 0,
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : 
+		[
+			"app/packageplugins/indicator/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			}
+		]
+	},
+	"codemodelVersion" : 
+	{
+		"major" : 2,
+		"minor" : 9
+	},
+	"dependencies" : 
+	[
+		{
+			"id" : "latte_packagestructure_indicator_autogen_timestamp_deps::@0c5e57ce88fcd5adfc34"
+		}
+	],
+	"id" : "latte_packagestructure_indicator_autogen::@0c5e57ce88fcd5adfc34",
+	"isGeneratorProvided" : true,
+	"name" : "latte_packagestructure_indicator_autogen",
+	"orderDependencies" : 
+	[
+		{
+			"id" : "Qt6::moc::@6890427a1f51a3e7e1df"
+		},
+		{
+			"id" : "latte_packagestructure_indicator_autogen_timestamp_deps::@0c5e57ce88fcd5adfc34"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "app/packageplugins/indicator",
+		"source" : "app/packageplugins/indicator"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		},
+		{
+			"name" : "CMake Rules",
+			"sourceIndexes" : 
+			[
+				1,
+				2
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/app/packageplugins/indicator/CMakeFiles/latte_packagestructure_indicator_autogen",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/app/packageplugins/indicator/CMakeFiles/latte_packagestructure_indicator_autogen.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/app/packageplugins/indicator/latte_packagestructure_indicator_autogen/timestamp.rule",
+			"sourceGroupIndex" : 1
+		}
+	],
+	"type" : "UTILITY"
+}

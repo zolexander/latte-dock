@@ -897,19 +897,19 @@ void Layouts::initActivities()
     Latte::Data::Activity allActivities;
     allActivities.id = Latte::Data::Layout::ALLACTIVITIESID;
     allActivities.name = QString("[ " + i18n("All Activities") + " ]");
-    allActivities.icon = "activities";
+    allActivities.iconName = "activities";
     m_activitiesTable << allActivities;
 
     Latte::Data::Activity freeActivities;
     freeActivities.id = Latte::Data::Layout::FREEACTIVITIESID;
     freeActivities.name = QString("[ " + i18n("Free Activities") + " ]");
-    freeActivities.icon = "activities";
+    freeActivities.iconName = "activities";
     m_activitiesTable << freeActivities;
 
     Latte::Data::Activity currentActivity;
     currentActivity.id = Latte::Data::Layout::CURRENTACTIVITYID;
     currentActivity.name = QString("[ " + i18n("Current Activity") + " ]");
-    currentActivity.icon = "dialog-yes";
+    currentActivity.iconName = "dialog-yes";
     m_activitiesTable << currentActivity;
 
     QStringList activities = m_corona->layoutsManager()->synchronizer()->activities();;
@@ -948,7 +948,7 @@ void Layouts::onActivityAdded(const QString &id)
     Latte::Data::Activity activity;
     activity.id = m_activitiesInfo[id]->id();
     activity.name = m_activitiesInfo[id]->name();
-    activity.icon = m_activitiesInfo[id]->icon();
+    activity.iconName = m_activitiesInfo[id]->icon();
     activity.isCurrent = m_activitiesInfo[id]->isCurrent();
 
     m_activitiesTable[id] = activity;
@@ -984,7 +984,7 @@ void Layouts::onActivityChanged(const QString &id)
 {
     if (m_activitiesTable.containsId(id) && m_activitiesInfo.contains(id)) {
         m_activitiesTable[id].name = m_activitiesInfo[id]->name();
-        m_activitiesTable[id].icon = m_activitiesInfo[id]->icon();
+        m_activitiesTable[id].iconName = m_activitiesInfo[id]->icon();
         m_activitiesTable[id].isCurrent = m_activitiesInfo[id]->isCurrent();
 
         emit activitiesStatesChanged();

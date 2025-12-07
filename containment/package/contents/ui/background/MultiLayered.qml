@@ -304,8 +304,11 @@ BackgroundProperties{
     Binding {
         target: barLine
         property: "themeExtendedBackground"
-        when: themeExtended
+        when: themeExtended !== null && themeExtended !== undefined
         value: {
+            if (!themeExtended) {
+                return null;
+            }
             switch(plasmoid.location) {
             case PlasmaCore.Types.BottomEdge: return themeExtended.backgroundBottomEdge;
             case PlasmaCore.Types.LeftEdge: return themeExtended.backgroundLeftEdge;
@@ -470,8 +473,12 @@ BackgroundProperties{
                 efGeometry.width = width;
                 efGeometry.height = height;
             } else {
-                if (latteView.visibility.isHidden) {
-                    //! valid hide mask
+                // Plasma 6 temporary workaround: always publish the full background
+                // geometry as effects/mask rect, even if latteView.visibility.isHidden
+                // claims the view is hidden. The old hidden-path would shrink the
+                // surface to 1x1 and effectively hide all applets.
+                if (false && latteView.visibility.isHidden) {
+                    //! valid hide mask (disabled for Plasma 6 port)
                     efGeometry.x = -1;
                     efGeometry.y = -1;
                     efGeometry.width = 1;

@@ -625,6 +625,8 @@ void Synchronizer::reloadAssignedLayouts()
 
 void Synchronizer::unloadLayouts()
 {
+    return;
+    //TODO: KF6 Workaround: application crash
     //! Unload all CentralLayouts
     while (!m_centralLayouts.isEmpty()) {
         CentralLayout *layout = m_centralLayouts.at(0);

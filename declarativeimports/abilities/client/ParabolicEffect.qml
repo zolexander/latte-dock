@@ -73,7 +73,12 @@ AbilityDefinition.ParabolicEffect {
     Connections {
         target: parabolic
         onRestoreZoomIsBlockedChanged: {
-            if (!(bridge || bridge.host)) {
+            // When there is no active bridge or no bridge host, fall back to
+            // the local restore zoom timer. The previous condition
+            // '!(bridge || bridge.host)' attempted to access bridge.host even
+            // when bridge was null, which triggers 'host of null' errors
+            // under Plasma 6.
+            if (!bridge || !bridge.host) {
                 if (!parabolic.restoreZoomIsBlocked) {
                     parabolic.startRestoreZoomTimer();
                 } else {

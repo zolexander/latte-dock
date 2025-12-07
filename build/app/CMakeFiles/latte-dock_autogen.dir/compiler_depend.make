@@ -1183,6 +1183,19 @@ app/latte-dock_autogen/timestamp: /home/zolexander/latte-dock/app/CMakeLists.txt
   /usr/include/xcb/xcb.h \
   /usr/include/xcb/xcb_event.h \
   /usr/include/xcb/xproto.h \
+  /usr/lib/clang/21/include/__stdarg___gnuc_va_list.h \
+  /usr/lib/clang/21/include/__stddef_header_macro.h \
+  /usr/lib/clang/21/include/__stddef_max_align_t.h \
+  /usr/lib/clang/21/include/__stddef_null.h \
+  /usr/lib/clang/21/include/__stddef_nullptr_t.h \
+  /usr/lib/clang/21/include/__stddef_offsetof.h \
+  /usr/lib/clang/21/include/__stddef_ptrdiff_t.h \
+  /usr/lib/clang/21/include/__stddef_size_t.h \
+  /usr/lib/clang/21/include/__stddef_wchar_t.h \
+  /usr/lib/clang/21/include/float.h \
+  /usr/lib/clang/21/include/stdarg.h \
+  /usr/lib/clang/21/include/stdbool.h \
+  /usr/lib/clang/21/include/stddef.h \
   /usr/lib/cmake/Qt6/3rdparty/kwin/FindXKB.cmake \
   /usr/lib/cmake/Qt6/Qt6Config.cmake \
   /usr/lib/cmake/Qt6/Qt6ConfigExtras.cmake \
@@ -1237,10 +1250,6 @@ app/latte-dock_autogen/timestamp: /home/zolexander/latte-dock/app/CMakeLists.txt
   /usr/lib/cmake/Qt6GuiPrivate/Qt6GuiPrivateDependencies.cmake \
   /usr/lib/cmake/Qt6GuiPrivate/Qt6GuiPrivateTargets.cmake \
   /usr/lib/cmake/Qt6GuiPrivate/Qt6GuiPrivateVersionlessAliasTargets.cmake \
-  /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include/float.h \
-  /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include/stdarg.h \
-  /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include/stdbool.h \
-  /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include/stddef.h \
   /usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake \
   /usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake \
   /usr/share/cmake/Modules/FeatureSummary.cmake \
@@ -1254,8 +1263,6 @@ app/latte-dock_autogen/timestamp: /home/zolexander/latte-dock/app/CMakeLists.txt
 /usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake:
 
 /usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include/float.h:
 
 /usr/lib/cmake/Qt6GuiPrivate/Qt6GuiPrivateTargets.cmake:
 
@@ -1322,6 +1329,24 @@ app/latte-dock_autogen/timestamp: /home/zolexander/latte-dock/app/CMakeLists.txt
 /usr/lib/cmake/Qt6/Qt6ConfigExtras.cmake:
 
 /usr/lib/cmake/Qt6/Qt6Config.cmake:
+
+/usr/lib/clang/21/include/stddef.h:
+
+/usr/lib/clang/21/include/stdarg.h:
+
+/usr/lib/clang/21/include/__stddef_wchar_t.h:
+
+/usr/lib/clang/21/include/__stddef_size_t.h:
+
+/usr/lib/clang/21/include/__stddef_ptrdiff_t.h:
+
+/usr/lib/clang/21/include/__stddef_offsetof.h:
+
+/usr/lib/clang/21/include/__stddef_nullptr_t.h:
+
+/usr/lib/clang/21/include/__stddef_max_align_t.h:
+
+/usr/lib/clang/21/include/__stdarg___gnuc_va_list.h:
 
 /usr/include/xcb/xcb_event.h:
 
@@ -1463,6 +1488,8 @@ app/latte-dock_autogen/timestamp: /home/zolexander/latte-dock/app/CMakeLists.txt
 
 /usr/include/c++/15.2.1/bits/algorithmfwd.h:
 
+/usr/lib/clang/21/include/__stddef_null.h:
+
 /usr/include/qt6/QtCore/qbasictimer.h:
 
 /usr/include/qt6/QtGui/qfontvariableaxis.h:
@@ -1559,6 +1586,8 @@ app/latte-dock_autogen/timestamp: /home/zolexander/latte-dock/app/CMakeLists.txt
 
 /usr/include/qt6/QtGui/qvector2d.h:
 
+/usr/lib/clang/21/include/__stddef_header_macro.h:
+
 /home/zolexander/latte-dock/app/wm/tracker/trackedlayoutinfo.h:
 
 /home/zolexander/latte-dock/app/view/windowstracker/allscreenstracker.cpp:
@@ -1580,6 +1609,8 @@ app/latte-dock_autogen/timestamp: /home/zolexander/latte-dock/app/CMakeLists.txt
 /usr/include/PlasmaActivities/plasmaactivities/plasma_activities_export.h:
 
 /usr/include/qt6/QtQuick/qquickview.h:
+
+/usr/lib/clang/21/include/stdbool.h:
 
 /usr/include/PlasmaActivities/plasmaactivities/info.h:
 
@@ -1682,8 +1713,6 @@ app/latte-dock_autogen/timestamp: /home/zolexander/latte-dock/app/CMakeLists.txt
 /usr/include/KF6/KWindowSystem/KWindowEffects:
 
 /home/zolexander/latte-dock/app/settings/generic/genericviewtools.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include/stddef.h:
 
 /usr/include/bits/cpu-set.h:
 
@@ -2703,8 +2732,6 @@ app/qwayland-kde-primary-output-v1.cpp:
 
 /home/zolexander/latte-dock/app/view/positioner.cpp:
 
-/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include/stdbool.h:
-
 /home/zolexander/latte-dock/app/view/positioner.h:
 
 /home/zolexander/latte-dock/app/settings/generic/generictools.h:
@@ -2714,6 +2741,8 @@ app/qwayland-kde-primary-output-v1.cpp:
 /usr/include/qt6/QtWidgets/qradiobutton.h:
 
 /usr/include/qt6/QtGui/qvector4d.h:
+
+/usr/lib/clang/21/include/float.h:
 
 /usr/include/bits/floatn-common.h:
 
@@ -3404,8 +3433,6 @@ app/wayland-kde-primary-output-v1-protocol.c:
 /usr/include/stdio.h:
 
 /usr/include/qt6/QtCore/qjsondocument.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include/stdarg.h:
 
 /usr/include/qt6/QtCore/qline.h:
 

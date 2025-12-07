@@ -156,6 +156,10 @@ Item{
     }
 
     function slotContainsMouseChanged() {
+        if (!latteView || !latteView.visibility) {
+            return;
+        }
+
         if(latteView.visibility.containsMouse && latteView.visibility.mode !== LatteCore.Types.SidebarOnDemand) {
             updateMaskArea();
 
@@ -166,6 +170,10 @@ Item{
     }
 
     function slotMustBeShown() {
+        if (!latteView || !latteView.visibility) {
+            return;
+        }
+
         if (root.inStartup) {
             slidingAnimationAutoHiddenIn.init();
             return;
@@ -194,6 +202,10 @@ Item{
     }
 
     function slotMustBeHide() {
+        if (!latteView || !latteView.visibility) {
+            return;
+        }
+
         if (root.inStartup) {
             slidingAnimationAutoHiddenOut.init();
             return;
@@ -236,6 +248,10 @@ Item{
     }
 
     function sendSlidingOutAnimationEnded() {
+        if (!latteView || !latteView.visibility) {
+            return;
+        }
+
         latteView.visibility.hide();
         latteView.visibility.isHidden = true;
 
@@ -322,6 +338,10 @@ Item{
     }
 
     function updateInputGeometry() {
+        if (!latteView) {
+            return;
+        }
+
         // VisibilityManager.qml tries to workaround faulty onEntered() signals from ParabolicMouseArea
         // by specifying inputThickness when ParabolicEffect is applied. (inputThickness->animated scenario)
         var animated = (animations.needBothAxis.count>0);
@@ -455,9 +475,13 @@ Item{
 
         ScriptAction{
             script: {
+                if (!latteView || !latteView.visibility) {
+                    return;
+                }
+
                 latteView.visibility.isHidden = true;
 
-                if (root.behaveAsPlasmaPanel && latteView.positioner.slideOffset !== 0) {
+                if (root.behaveAsPlasmaPanel && latteView.positioner && latteView.positioner.slideOffset !== 0) {
                     //! hide real panels when they slide-out
                     latteView.visibility.hide();
                 }
@@ -561,6 +585,10 @@ Item{
 
             if (slidingAnimationAutoHiddenOut.running) {
                 slidingAnimationAutoHiddenOut.stop();
+            }
+
+            if (!latteView || !latteView.visibility) {
+                return;
             }
 
             latteView.visibility.isHidden = false;

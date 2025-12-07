@@ -1183,6 +1183,19 @@ app/latte-dock_autogen/timestamp: /home/zolexander/latte-dock/app/CMakeLists.txt
   /usr/include/xcb/xcb.h \
   /usr/include/xcb/xcb_event.h \
   /usr/include/xcb/xproto.h \
+  /usr/lib/clang/21/include/__stdarg___gnuc_va_list.h \
+  /usr/lib/clang/21/include/__stddef_header_macro.h \
+  /usr/lib/clang/21/include/__stddef_max_align_t.h \
+  /usr/lib/clang/21/include/__stddef_null.h \
+  /usr/lib/clang/21/include/__stddef_nullptr_t.h \
+  /usr/lib/clang/21/include/__stddef_offsetof.h \
+  /usr/lib/clang/21/include/__stddef_ptrdiff_t.h \
+  /usr/lib/clang/21/include/__stddef_size_t.h \
+  /usr/lib/clang/21/include/__stddef_wchar_t.h \
+  /usr/lib/clang/21/include/float.h \
+  /usr/lib/clang/21/include/stdarg.h \
+  /usr/lib/clang/21/include/stdbool.h \
+  /usr/lib/clang/21/include/stddef.h \
   /usr/lib/cmake/Qt6/3rdparty/kwin/FindXKB.cmake \
   /usr/lib/cmake/Qt6/Qt6Config.cmake \
   /usr/lib/cmake/Qt6/Qt6ConfigExtras.cmake \
@@ -1237,10 +1250,6 @@ app/latte-dock_autogen/timestamp: /home/zolexander/latte-dock/app/CMakeLists.txt
   /usr/lib/cmake/Qt6GuiPrivate/Qt6GuiPrivateDependencies.cmake \
   /usr/lib/cmake/Qt6GuiPrivate/Qt6GuiPrivateTargets.cmake \
   /usr/lib/cmake/Qt6GuiPrivate/Qt6GuiPrivateVersionlessAliasTargets.cmake \
-  /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include/float.h \
-  /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include/stdarg.h \
-  /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include/stdbool.h \
-  /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include/stddef.h \
   /usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake \
   /usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake \
   /usr/share/cmake/Modules/FeatureSummary.cmake \
@@ -103017,8 +103026,6 @@ app/latte-dock_autogen/include/waylandinterface.moc:
 
 /usr/include/qt6/QtCore/qvariantanimation.h:
 
-/usr/include/qt6/QtCore/qurlquery.h:
-
 /usr/include/qt6/QtCore/qtsymbolmacros.h:
 
 /usr/include/qt6/QtCore/qtransposeproxymodel.h:
@@ -103335,6 +103342,8 @@ app/latte-dock_autogen/include/moc_globalshortcuts.cpp:
 
 /usr/include/KF6/KArchive/KArchiveDirectory:
 
+/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include/float.h:
+
 /usr/include/qt6/QtWidgets/QToolButton:
 
 /usr/include/qt6/QtCore/qmimetype.h:
@@ -103369,12 +103378,6 @@ app/latte-dock_autogen/include/moc_globalshortcuts.cpp:
 
 /usr/include/c++/15.2.1/bits/fs_ops.h:
 
-/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include/avx512vbmi2vlintrin.h:
-
-app/latte-dock_autogen/FND3RJHXKT/moc_schemes.cpp:
-
-/usr/include/c++/15.2.1/bits/fs_fwd.h:
-
 /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include/syslimits.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include/stdint.h:
@@ -103384,8 +103387,6 @@ app/latte-dock_autogen/FND3RJHXKT/moc_schemes.cpp:
 /usr/include/qt6/QtQml/qjsmanagedvalue.h:
 
 /usr/include/qt6/QtQml/qjsengine.h:
-
-/usr/include/qt6/QtQml/QQmlEngine:
 
 /usr/include/qt6/QtCore/qtmochelpers.h:
 
@@ -103434,8 +103435,6 @@ app/latte-dock_autogen/F4LGTPZWUU/moc_layoutsmodel.cpp:
 /usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake:
 
 /usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include/float.h:
 
 /usr/lib/cmake/Qt6GuiPrivate/Qt6GuiPrivateTargets.cmake:
 
@@ -103520,6 +103519,34 @@ app/latte-dock_autogen/5VVE2IEQ6X/moc_windowstracker.cpp:
 /usr/include/KF6/KWindowSystem/KWindowShadow:
 
 /usr/lib/cmake/Qt6/Qt6Config.cmake:
+
+/usr/lib/clang/21/include/stddef.h:
+
+/usr/lib/clang/21/include/stdarg.h:
+
+/usr/lib/clang/21/include/__stddef_wchar_t.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include/avx512vbmi2vlintrin.h:
+
+app/latte-dock_autogen/FND3RJHXKT/moc_schemes.cpp:
+
+/usr/include/c++/15.2.1/bits/fs_fwd.h:
+
+/usr/lib/clang/21/include/__stddef_size_t.h:
+
+/usr/include/qt6/QtCore/qurlquery.h:
+
+/usr/lib/clang/21/include/__stddef_ptrdiff_t.h:
+
+/usr/include/qt6/QtQml/QQmlEngine:
+
+/usr/lib/clang/21/include/__stddef_offsetof.h:
+
+/usr/lib/clang/21/include/__stddef_nullptr_t.h:
+
+/usr/lib/clang/21/include/__stddef_max_align_t.h:
+
+/usr/lib/clang/21/include/__stdarg___gnuc_va_list.h:
 
 /usr/include/xcb/xcb_event.h:
 
@@ -103683,6 +103710,8 @@ app/latte-dock_autogen/PRN4CEZ4N5/moc_theme.cpp:
 
 /usr/include/c++/15.2.1/bits/algorithmfwd.h:
 
+/usr/lib/clang/21/include/__stddef_null.h:
+
 /usr/include/qt6/QtCore/qbasictimer.h:
 
 /usr/include/qt6/QtGui/qfontvariableaxis.h:
@@ -103795,6 +103824,8 @@ app/ui_screensdialog.h:
 
 /usr/include/qt6/QtGui/qvector2d.h:
 
+/usr/lib/clang/21/include/__stddef_header_macro.h:
+
 /home/zolexander/latte-dock/app/wm/tracker/trackedlayoutinfo.h:
 
 /home/zolexander/latte-dock/app/view/windowstracker/allscreenstracker.cpp:
@@ -103818,6 +103849,8 @@ app/ui_screensdialog.h:
 /usr/include/PlasmaActivities/plasmaactivities/plasma_activities_export.h:
 
 /usr/include/qt6/QtQuick/qquickview.h:
+
+/usr/lib/clang/21/include/stdbool.h:
 
 /usr/include/PlasmaActivities/plasmaactivities/info.h:
 
@@ -105182,6 +105215,8 @@ app/latte-dock_autogen/GQUGDM6HO3/moc_abstractwindowinterface.cpp:
 /usr/include/qt6/QtWidgets/qradiobutton.h:
 
 /usr/include/qt6/QtGui/qvector4d.h:
+
+/usr/lib/clang/21/include/float.h:
 
 /usr/include/bits/floatn-common.h:
 

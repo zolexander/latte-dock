@@ -1,4 +1,5 @@
 {
+    "KPackageStructure": "Plasma/Shell",
     "KPlugin": {
         "Authors": [
             {
@@ -137,5 +138,9 @@
     "Keywords[x-test]": "xxshellxx",
     "Keywords[zh_CN]": "shell",
     "Keywords[zh_TW]": "shell",
-    "X-KDE-ParentApp": "latte-dock"
+    "X-KDE-ParentApp": "latte-dock",
+    "X-Plasma-Api-Minimum-Version": "6.0",
+    "X-Plama-Provides": [
+        "org.kde.plasma.multitasking"
+    ]
 }

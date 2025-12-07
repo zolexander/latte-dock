@@ -129,6 +129,14 @@ T &GenericTable<T>::operator[](const QString &id)
         }
     }
 
+    if (pos == -1) {
+        T entry;
+        entry.id = id;
+        insertBasedOnId(entry);
+        // find new position
+        pos = indexOf(id);
+    }
+
     return m_list[pos];
 }
 
@@ -142,6 +150,10 @@ const T GenericTable<T>::operator[](const QString &id) const
             pos = i;
             break;
         }
+    }
+
+    if (pos == -1) {
+        return T();
     }
 
     return m_list[pos];

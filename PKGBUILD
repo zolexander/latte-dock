@@ -47,8 +47,7 @@ optdepends=(
 )
 source=()
 sha256sums=()
-options=('!strip')
-
+options=('debug')
 build() {
     cd /home/zolexander/latte-dock
 

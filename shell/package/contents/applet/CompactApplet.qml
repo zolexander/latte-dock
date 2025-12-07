@@ -20,11 +20,12 @@ PlasmaCore.ToolTipArea {
     objectName: "org.kde.desktop-CompactApplet"
     anchors.fill: parent
 
-    mainText: plasmoid.toolTipMainText
-    subText: plasmoid.toolTipSubText
+    mainText: plasmoid.toolTipMainText !== undefined ? plasmoid.toolTipMainText : ""
+    subText: plasmoid.toolTipSubText !== undefined ? plasmoid.toolTipSubText : ""
     location: plasmoid.location
     active: !plasmoid.expanded
-    textFormat: plasmoid.toolTipTextFormat
+    // Plasma 6: toolTipTextFormat may be undefined; provide a sane default
+    textFormat: plasmoid.toolTipTextFormat !== undefined ? plasmoid.toolTipTextFormat : Text.PlainText
     mainItem: plasmoid.toolTipItem ? plasmoid.toolTipItem : null
 
     property Item fullRepresentation: null
@@ -147,11 +148,6 @@ PlasmaCore.ToolTipArea {
     }
 
     Connections {
-        target: plasmoid.action("configure")
-        function onTriggered() { plasmoid.expanded = false }
-    }
-
-    Connections {
         target: plasmoid
         function onContextualActionsAboutToShow() { root.hideToolTip() }
     }
@@ -160,12 +156,15 @@ PlasmaCore.ToolTipArea {
         id: popupWindow
         objectName: "popupWindow"
         flags: Qt.WindowStaysOnTopHint
-        visible: plasmoid.expanded && fullRepresentation
+        visible: !!plasmoid.expanded && fullRepresentation
         visualParent: compactRepresentationVisualParent ? compactRepresentationVisualParent : (compactRepresentation ? compactRepresentation : null)
        // location: PlasmaCore.Types.Floating //plasmoid.location
         edge: plasmoid.location /*this way dialog borders are not updated and it is used only for adjusting dialog position*/
-        hideOnWindowDeactivate: plasmoid.hideOnWindowDeactivate
-        backgroundHints: (plasmoid.containmentDisplayHints & PlasmaCore.Types.DesktopFullyCovered) ? PlasmaCore.Dialog.SolidBackground : PlasmaCore.Dialog.StandardBackground
+        hideOnWindowDeactivate: plasmoid.hideOnWindowDeactivate !== undefined ? plasmoid.hideOnWindowDeactivate : true
+        backgroundHints: (plasmoid.containmentDisplayHints !== undefined
+                          && (plasmoid.containmentDisplayHints & PlasmaCore.Types.DesktopFullyCovered))
+                         ? PlasmaCore.Dialog.SolidBackground
+                         : PlasmaCore.Dialog.StandardBackground
 
         property var oldStatus: PlasmaCore.Types.UnknownStatus
 

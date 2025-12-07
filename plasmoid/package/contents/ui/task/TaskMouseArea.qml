@@ -24,8 +24,8 @@ MouseArea {
 
     Connections {
         target: taskMouseArea
-        onPressed: taskItem.mousePressed(mouse.x, mouse.y, mouse.button)
-        onReleased: taskItem.mouseReleased(mouse.x, mouse.y, mouse.button)
+        onPressed: function(mouse) { taskItem.mousePressed(mouse.x, mouse.y, mouse.button); }
+        onReleased: function(mouse) { taskItem.mouseReleased(mouse.x, mouse.y, mouse.button); }
     }
 
     onEntered: {
@@ -72,7 +72,7 @@ MouseArea {
     }
 
     // IMPORTANT: This must be improved ! even for small milliseconds  it reduces performance
-    onPositionChanged: {
+    onPositionChanged: function(mouse) {
         if (taskItem.abilities.myView.isReady && !taskItem.abilities.myView.isShownFully) {
             return;
         }
@@ -105,7 +105,7 @@ MouseArea {
         }
     }
 
-    onPressed: {
+    onPressed: function(mouse) {
         //console.log("Pressed Task Delegate..");
         if (LatteCore.WindowSystem.compositingActive && !LatteCore.WindowSystem.isPlatformWayland) {
             if(root.leftClickAction !== LatteTasks.Types.PreviewWindows) {
@@ -139,7 +139,7 @@ MouseArea {
         }
     }
 
-    onReleased: {
+    onReleased: function(mouse) {
         //console.log("Released Task Delegate...");
         _resistanerTimer.stop();
 
@@ -184,18 +184,7 @@ MouseArea {
                     activateTask();
                 }
             } else if (mouse.button == Qt.LeftButton){
-                var canPresentWindowsIsSupported = false;
-
-                if (root.plasmaAtLeast525) {
-                    //! At least Plasma 5.25 case
-                    canPresentWindowsIsSupported = LatteCore.WindowSystem.compositingActive && backend.windowViewAvailable;
-                } else if (root.plasmaGreaterThan522) {
-                    //! At least Plasma 5.23 case
-                    canPresentWindowsIsSupported = LatteCore.WindowSystem.compositingActive && backend.canPresentWindows;
-                } else {
-                    //! past Plasma versions
-                    canPresentWindowsIsSupported = LatteCore.WindowSystem.compositingActive && backend.canPresentWindows();
-                }
+                var canPresentWindowsIsSupported = LatteCore.WindowSystem.compositingActive && backend.windowViewAvailable;
 
                 if( !taskItem.isLauncher && !root.disableAllWindowsFunctionality ){
                     if ( (root.leftClickAction === LatteTasks.Types.PreviewWindows && isGroupParent)
@@ -222,13 +211,15 @@ MouseArea {
                 }
             }
 
-            backend.cancelHighlightWindows();
+            if (backend.cancelHighlightWindows) {
+                backend.cancelHighlightWindows();
+            }
         }
 
         pressed = false;
     }
 
-    onWheel: {
+    onWheel: function(wheel) {
         var wheelActionsEnabled = (root.taskScrollAction !== LatteTasks.Types.ScrollNone || root.manualScrollTasksEnabled);
 
         if (isSeparator

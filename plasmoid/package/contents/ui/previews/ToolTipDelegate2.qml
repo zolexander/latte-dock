@@ -58,15 +58,6 @@ PlasmaComponents.ScrollView {
 
     property int textWidth: theme.mSize(theme.defaultFont).width * 20
 
-    verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
-    horizontalScrollBarPolicy: Qt.ScrollBarAlwaysOff
-
-    Component.onCompleted: {
-        flickableItem.interactive = Qt.binding(function() {
-            return isVerticalPanel ? contentItem.height > viewport.height : contentItem.width > viewport.width
-        });
-    }
-
     Item{
         width: contentItem.width
         height: contentItem.height

@@ -82,7 +82,7 @@ QWidget *Activities::createEditor(QWidget *parent, const QStyleOptionViewItem &o
 
         QAction *action = new QAction(activitydata.name);
         action->setData(activitydata.id);
-        action->setIcon(QIcon::fromTheme(activitydata.icon));
+        action->setIcon(QIcon::fromTheme(activitydata.iconName));
         action->setCheckable(true);
         action->setChecked(ischecked);
 

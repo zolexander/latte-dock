@@ -12,13 +12,19 @@ import org.kde.plasma.core 2.0 as PlasmaCore
 
 KSvg.FrameSvgItem {
     id: root
-
-    imagePath: containment && containment.backgroundHints === PlasmaCore.Types.NoBackground ? "" : "widgets/panel-background"
+    visible:true
+    opacity: 1.0
+    layer.enabled: false
+    imagePath: "widgets/panel-background"
     //imagePath: "widgets/panel-background"
     //imagePath: ""
     prefix:""
     // onRepaintNeeded: adjustPrefix();
-
+  Rectangle {
+        anchors.fill: parent
+        color: "lime"
+        opacity: 0.4
+    }
     property Item containment
     property Item viewLayout
 
@@ -63,10 +69,13 @@ KSvg.FrameSvgItem {
         console.log("latte view qml source deleting...");
 
         if (containment) {
-            containment.locationChanged.disconnect(adjustPrefix);
+            if (containment.locationChanged) {
+                containment.locationChanged.disconnect(adjustPrefix);
+            }
         }
     }
-
+    onWidthChanged: console.log("LATTE DEBUG Panel width", width, "height", height)
+    onHeightChanged: console.log("LATTE DEBUG Panel width", width, "height", height)
     onContainmentChanged: {
         console.log("latte view qml source - containment changed 1...");
         if (!containment) {
@@ -77,7 +86,9 @@ KSvg.FrameSvgItem {
         containment.parent = containmentParent;
         containment.visible = true;
         containment.anchors.fill = containmentParent;
-        containment.locationChanged.connect(adjustPrefix);
+        if (containment.locationChanged) {
+            containment.locationChanged.connect(adjustPrefix);
+        }
         adjustPrefix();
 
         for(var i=0; i<containment.children.length; ++i){

@@ -79,6 +79,8 @@ template <> constexpr inline auto Latte::Containment::LayoutManager::qt_create_m
         "item",
         "insertAfter",
         "insertAtCoordinates",
+        "visualAppletFor",
+        "appletObj",
         "dndSpacerIndex",
         "isMasqueradedIndex",
         "masquearadedIndex",
@@ -185,78 +187,82 @@ template <> constexpr inline auto Latte::Containment::LayoutManager::qt_create_m
         QtMocHelpers::SlotData<void(QQuickItem *, const int &, const int &)>(39, 2, QMC::AccessPublic, QMetaType::Void, {{
             { 0x80000000 | 35, 37 }, { QMetaType::Int, 27 }, { QMetaType::Int, 28 },
         }}),
+        // Slot 'visualAppletFor'
+        QtMocHelpers::SlotData<QObject *(QObject *) const>(40, 2, QMC::AccessPublic, QMetaType::QObjectStar, {{
+            { QMetaType::QObjectStar, 41 },
+        }}),
         // Slot 'dndSpacerIndex'
-        QtMocHelpers::SlotData<int()>(40, 2, QMC::AccessPublic, QMetaType::Int),
+        QtMocHelpers::SlotData<int()>(42, 2, QMC::AccessPublic, QMetaType::Int),
         // Slot 'isMasqueradedIndex'
-        QtMocHelpers::SlotData<bool(const int &, const int &)>(41, 2, QMC::AccessPublic, QMetaType::Bool, {{
+        QtMocHelpers::SlotData<bool(const int &, const int &)>(43, 2, QMC::AccessPublic, QMetaType::Bool, {{
             { QMetaType::Int, 27 }, { QMetaType::Int, 28 },
         }}),
         // Slot 'masquearadedIndex'
-        QtMocHelpers::SlotData<int(const int &, const int &)>(42, 2, QMC::AccessPublic, QMetaType::Int, {{
+        QtMocHelpers::SlotData<int(const int &, const int &)>(44, 2, QMC::AccessPublic, QMetaType::Int, {{
             { QMetaType::Int, 27 }, { QMetaType::Int, 28 },
         }}),
         // Slot 'indexToMasquearadedPoint'
-        QtMocHelpers::SlotData<QPoint(const int &)>(43, 2, QMC::AccessPublic, 0x80000000 | 44, {{
+        QtMocHelpers::SlotData<QPoint(const int &)>(45, 2, QMC::AccessPublic, 0x80000000 | 46, {{
             { QMetaType::Int, 29 },
         }}),
         // Slot 'requestAppletsOrder'
-        QtMocHelpers::SlotData<void(const QList<int> &)>(45, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { 0x80000000 | 46, 47 },
+        QtMocHelpers::SlotData<void(const QList<int> &)>(47, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { 0x80000000 | 48, 49 },
         }}),
         // Slot 'requestAppletsInLockedZoom'
-        QtMocHelpers::SlotData<void(const QList<int> &)>(48, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { 0x80000000 | 46, 49 },
+        QtMocHelpers::SlotData<void(const QList<int> &)>(50, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { 0x80000000 | 48, 51 },
         }}),
         // Slot 'requestAppletsDisabledColoring'
-        QtMocHelpers::SlotData<void(const QList<int> &)>(50, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { 0x80000000 | 46, 49 },
+        QtMocHelpers::SlotData<void(const QList<int> &)>(52, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { 0x80000000 | 48, 51 },
         }}),
         // Slot 'setAppletInScheduledDestruction'
-        QtMocHelpers::SlotData<void(const int &, const bool &)>(51, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { QMetaType::Int, 52 }, { QMetaType::Bool, 53 },
+        QtMocHelpers::SlotData<void(const int &, const bool &)>(53, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::Int, 54 }, { QMetaType::Bool, 55 },
         }}),
         // Slot 'onRootItemChanged'
-        QtMocHelpers::SlotData<void()>(54, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'destroyJustifySplitters'
-        QtMocHelpers::SlotData<void()>(55, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'updateOrder'
         QtMocHelpers::SlotData<void()>(56, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'cleanupOptions'
+        // Slot 'destroyJustifySplitters'
         QtMocHelpers::SlotData<void()>(57, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'reorderParabolicSpacers'
+        // Slot 'updateOrder'
         QtMocHelpers::SlotData<void()>(58, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'cleanupOptions'
+        QtMocHelpers::SlotData<void()>(59, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'reorderParabolicSpacers'
+        QtMocHelpers::SlotData<void()>(60, 2, QMC::AccessPrivate, QMetaType::Void),
     };
     QtMocHelpers::UintData qt_properties {
         // property 'plasmoidObj'
-        QtMocHelpers::PropertyData<QObject*>(59, QMetaType::QObjectStar, QMC::DefaultPropertyFlags | QMC::Writable, 3),
+        QtMocHelpers::PropertyData<QObject*>(61, QMetaType::QObjectStar, QMC::DefaultPropertyFlags | QMC::Writable, 3),
         // property 'rootItem'
-        QtMocHelpers::PropertyData<QQuickItem*>(60, 0x80000000 | 35, QMC::DefaultPropertyFlags | QMC::Writable | QMC::EnumOrFlag | QMC::StdCppSet, 4),
+        QtMocHelpers::PropertyData<QQuickItem*>(62, 0x80000000 | 35, QMC::DefaultPropertyFlags | QMC::Writable | QMC::EnumOrFlag | QMC::StdCppSet, 4),
         // property 'mainLayout'
-        QtMocHelpers::PropertyData<QQuickItem*>(61, 0x80000000 | 35, QMC::DefaultPropertyFlags | QMC::Writable | QMC::EnumOrFlag | QMC::StdCppSet, 8),
+        QtMocHelpers::PropertyData<QQuickItem*>(63, 0x80000000 | 35, QMC::DefaultPropertyFlags | QMC::Writable | QMC::EnumOrFlag | QMC::StdCppSet, 8),
         // property 'startLayout'
-        QtMocHelpers::PropertyData<QQuickItem*>(62, 0x80000000 | 35, QMC::DefaultPropertyFlags | QMC::Writable | QMC::EnumOrFlag | QMC::StdCppSet, 13),
+        QtMocHelpers::PropertyData<QQuickItem*>(64, 0x80000000 | 35, QMC::DefaultPropertyFlags | QMC::Writable | QMC::EnumOrFlag | QMC::StdCppSet, 13),
         // property 'endLayout'
-        QtMocHelpers::PropertyData<QQuickItem*>(63, 0x80000000 | 35, QMC::DefaultPropertyFlags | QMC::Writable | QMC::EnumOrFlag | QMC::StdCppSet, 14),
+        QtMocHelpers::PropertyData<QQuickItem*>(65, 0x80000000 | 35, QMC::DefaultPropertyFlags | QMC::Writable | QMC::EnumOrFlag | QMC::StdCppSet, 14),
         // property 'dndSpacerItem'
-        QtMocHelpers::PropertyData<QQuickItem*>(64, 0x80000000 | 35, QMC::DefaultPropertyFlags | QMC::Writable | QMC::EnumOrFlag, 5),
+        QtMocHelpers::PropertyData<QQuickItem*>(66, 0x80000000 | 35, QMC::DefaultPropertyFlags | QMC::Writable | QMC::EnumOrFlag, 5),
         // property 'metrics'
-        QtMocHelpers::PropertyData<QQuickItem*>(65, 0x80000000 | 35, QMC::DefaultPropertyFlags | QMC::Writable | QMC::EnumOrFlag | QMC::StdCppSet, 9),
+        QtMocHelpers::PropertyData<QQuickItem*>(67, 0x80000000 | 35, QMC::DefaultPropertyFlags | QMC::Writable | QMC::EnumOrFlag | QMC::StdCppSet, 9),
         // property 'hasRestoredApplets'
-        QtMocHelpers::PropertyData<bool>(66, QMetaType::Bool, QMC::DefaultPropertyFlags, 2),
+        QtMocHelpers::PropertyData<bool>(68, QMetaType::Bool, QMC::DefaultPropertyFlags, 2),
         // property 'splitterPosition'
-        QtMocHelpers::PropertyData<int>(67, QMetaType::Int, QMC::DefaultPropertyFlags, 11),
+        QtMocHelpers::PropertyData<int>(69, QMetaType::Int, QMC::DefaultPropertyFlags, 11),
         // property 'splitterPosition2'
-        QtMocHelpers::PropertyData<int>(68, QMetaType::Int, QMC::DefaultPropertyFlags, 12),
+        QtMocHelpers::PropertyData<int>(70, QMetaType::Int, QMC::DefaultPropertyFlags, 12),
         // property 'appletOrder'
-        QtMocHelpers::PropertyData<QList<int>>(69, 0x80000000 | 46, QMC::DefaultPropertyFlags | QMC::EnumOrFlag, 0),
+        QtMocHelpers::PropertyData<QList<int>>(71, 0x80000000 | 48, QMC::DefaultPropertyFlags | QMC::EnumOrFlag, 0),
         // property 'order'
-        QtMocHelpers::PropertyData<QList<int>>(47, 0x80000000 | 46, QMC::DefaultPropertyFlags | QMC::EnumOrFlag, 10),
+        QtMocHelpers::PropertyData<QList<int>>(49, 0x80000000 | 48, QMC::DefaultPropertyFlags | QMC::EnumOrFlag, 10),
         // property 'lockedZoomApplets'
-        QtMocHelpers::PropertyData<QList<int>>(70, 0x80000000 | 46, QMC::DefaultPropertyFlags | QMC::EnumOrFlag, 6),
+        QtMocHelpers::PropertyData<QList<int>>(72, 0x80000000 | 48, QMC::DefaultPropertyFlags | QMC::EnumOrFlag, 6),
         // property 'userBlocksColorizingApplets'
-        QtMocHelpers::PropertyData<QList<int>>(71, 0x80000000 | 46, QMC::DefaultPropertyFlags | QMC::EnumOrFlag, 7),
+        QtMocHelpers::PropertyData<QList<int>>(73, 0x80000000 | 48, QMC::DefaultPropertyFlags | QMC::EnumOrFlag, 7),
         // property 'appletsInScheduledDestruction'
-        QtMocHelpers::PropertyData<QList<int>>(72, 0x80000000 | 46, QMC::DefaultPropertyFlags | QMC::EnumOrFlag, 1),
+        QtMocHelpers::PropertyData<QList<int>>(74, 0x80000000 | 48, QMC::DefaultPropertyFlags | QMC::EnumOrFlag, 1),
     };
     QtMocHelpers::UintData qt_enums {
     };
@@ -306,23 +312,25 @@ void Latte::Containment::LayoutManager::qt_static_metacall(QObject *_o, QMetaObj
         case 25: _t->insertBefore((*reinterpret_cast<std::add_pointer_t<QQuickItem*>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QQuickItem*>>(_a[2]))); break;
         case 26: _t->insertAfter((*reinterpret_cast<std::add_pointer_t<QQuickItem*>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QQuickItem*>>(_a[2]))); break;
         case 27: _t->insertAtCoordinates((*reinterpret_cast<std::add_pointer_t<QQuickItem*>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<int>>(_a[2])),(*reinterpret_cast<std::add_pointer_t<int>>(_a[3]))); break;
-        case 28: { int _r = _t->dndSpacerIndex();
+        case 28: { QObject* _r = _t->visualAppletFor((*reinterpret_cast<std::add_pointer_t<QObject*>>(_a[1])));
+            if (_a[0]) *reinterpret_cast<QObject**>(_a[0]) = std::move(_r); }  break;
+        case 29: { int _r = _t->dndSpacerIndex();
             if (_a[0]) *reinterpret_cast<int*>(_a[0]) = std::move(_r); }  break;
-        case 29: { bool _r = _t->isMasqueradedIndex((*reinterpret_cast<std::add_pointer_t<int>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<int>>(_a[2])));
+        case 30: { bool _r = _t->isMasqueradedIndex((*reinterpret_cast<std::add_pointer_t<int>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<int>>(_a[2])));
             if (_a[0]) *reinterpret_cast<bool*>(_a[0]) = std::move(_r); }  break;
-        case 30: { int _r = _t->masquearadedIndex((*reinterpret_cast<std::add_pointer_t<int>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<int>>(_a[2])));
+        case 31: { int _r = _t->masquearadedIndex((*reinterpret_cast<std::add_pointer_t<int>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<int>>(_a[2])));
             if (_a[0]) *reinterpret_cast<int*>(_a[0]) = std::move(_r); }  break;
-        case 31: { QPoint _r = _t->indexToMasquearadedPoint((*reinterpret_cast<std::add_pointer_t<int>>(_a[1])));
+        case 32: { QPoint _r = _t->indexToMasquearadedPoint((*reinterpret_cast<std::add_pointer_t<int>>(_a[1])));
             if (_a[0]) *reinterpret_cast<QPoint*>(_a[0]) = std::move(_r); }  break;
-        case 32: _t->requestAppletsOrder((*reinterpret_cast<std::add_pointer_t<QList<int>>>(_a[1]))); break;
-        case 33: _t->requestAppletsInLockedZoom((*reinterpret_cast<std::add_pointer_t<QList<int>>>(_a[1]))); break;
-        case 34: _t->requestAppletsDisabledColoring((*reinterpret_cast<std::add_pointer_t<QList<int>>>(_a[1]))); break;
-        case 35: _t->setAppletInScheduledDestruction((*reinterpret_cast<std::add_pointer_t<int>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<bool>>(_a[2]))); break;
-        case 36: _t->onRootItemChanged(); break;
-        case 37: _t->destroyJustifySplitters(); break;
-        case 38: _t->updateOrder(); break;
-        case 39: _t->cleanupOptions(); break;
-        case 40: _t->reorderParabolicSpacers(); break;
+        case 33: _t->requestAppletsOrder((*reinterpret_cast<std::add_pointer_t<QList<int>>>(_a[1]))); break;
+        case 34: _t->requestAppletsInLockedZoom((*reinterpret_cast<std::add_pointer_t<QList<int>>>(_a[1]))); break;
+        case 35: _t->requestAppletsDisabledColoring((*reinterpret_cast<std::add_pointer_t<QList<int>>>(_a[1]))); break;
+        case 36: _t->setAppletInScheduledDestruction((*reinterpret_cast<std::add_pointer_t<int>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<bool>>(_a[2]))); break;
+        case 37: _t->onRootItemChanged(); break;
+        case 38: _t->destroyJustifySplitters(); break;
+        case 39: _t->updateOrder(); break;
+        case 40: _t->cleanupOptions(); break;
+        case 41: _t->reorderParabolicSpacers(); break;
         default: ;
         }
     }
@@ -352,13 +360,6 @@ void Latte::Containment::LayoutManager::qt_static_metacall(QObject *_o, QMetaObj
                 *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< QQuickItem* >(); break;
             }
             break;
-        case 32:
-            switch (*reinterpret_cast<int*>(_a[1])) {
-            default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
-            case 0:
-                *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< QList<int> >(); break;
-            }
-            break;
         case 33:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
@@ -367,6 +368,13 @@ void Latte::Containment::LayoutManager::qt_static_metacall(QObject *_o, QMetaObj
             }
             break;
         case 34:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
+            case 0:
+                *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< QList<int> >(); break;
+            }
+            break;
+        case 35:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 0:
@@ -480,14 +488,14 @@ int Latte::Containment::LayoutManager::qt_metacall(QMetaObject::Call _c, int _id
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 41)
+        if (_id < 42)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 41;
+        _id -= 42;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 41)
+        if (_id < 42)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 41;
+        _id -= 42;
     }
     if (_c == QMetaObject::ReadProperty || _c == QMetaObject::WriteProperty
             || _c == QMetaObject::ResetProperty || _c == QMetaObject::BindableProperty

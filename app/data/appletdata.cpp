@@ -1,6 +1,6 @@
 /*
-    SPDX-FileCopyrightText: 2020 Michail Vourlakos <mvourlakos@gmail.com>
-    SPDX-License-Identifier: GPL-2.0-or-later
+SPDX-FileCopyrightText: 2020 Michail Vourlakos <mvourlakos@gmail.com>
+SPDX-License-Identifier: GPL-2.0-or-later
 */
 
 #include "appletdata.h"
@@ -14,7 +14,7 @@ Applet::Applet()
 }
 
 Applet::Applet(Applet &&o)
-    : Generic(o),
+    : Generic(std::move(o)),
       isSelected(o.isSelected),
       description(o.description),
       icon(o.icon),
@@ -35,6 +35,10 @@ Applet::Applet(const Applet &o)
 
 Applet &Applet::operator=(const Applet &rhs)
 {
+    if (this == &rhs) {
+        return *this;
+    }
+
     id = rhs.id;
     name = rhs.name;
     description = rhs.description;
@@ -48,13 +52,17 @@ Applet &Applet::operator=(const Applet &rhs)
 
 Applet &Applet::operator=(Applet &&rhs)
 {
-    id = rhs.id;
-    name = rhs.name;
-    description = rhs.description;
+    if (this == &rhs) {
+        return *this;
+    }
+
+    id = std::move(rhs.id);
+    name = std::move(rhs.name);
+    description = std::move(rhs.description);
     isSelected = rhs.isSelected;
-    icon = rhs.icon;
-    storageId = rhs.storageId;
-    subcontainmentId = rhs.subcontainmentId;
+    icon = std::move(rhs.icon);
+    storageId = std::move(rhs.storageId);
+    subcontainmentId = std::move(rhs.subcontainmentId);
 
     return (*this);
 }
@@ -70,7 +78,7 @@ bool Applet::operator==(const Applet &rhs) const
             && (subcontainmentId == rhs.subcontainmentId);
 }
 
-bool  Applet::operator!=(const Applet &rhs) const
+bool Applet::operator!=(const Applet &rhs) const
 {
     return !(*this == rhs);
 }

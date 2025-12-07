@@ -9,13 +9,14 @@ import QtQuick.Layouts
 
 import Qt5Compat.GraphicalEffects
 
+import org.kde.kirigami 2.20 as Kirigami
 import org.kde.ksvg 1.0 as KSvg
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 3.0 as PlasmaComponents
 import org.kde.plasma.plasmoid 2.0
 
 import org.kde.taskmanager 0.1 as TaskManager
-import org.kde.plasma.private.taskmanager 0.1 as TaskManagerApplet
+//import org.kde.plasma.private.taskmanager 0.1 as TaskManagerApplet
 
 import org.kde.activities 0.1 as Activities
 
@@ -46,6 +47,12 @@ PlasmoidItem {
 
     LayoutMirroring.enabled: Qt.application.layoutDirection === Qt.RightToLeft && !root.vertical
     LayoutMirroring.childrenInherit: true
+
+    // Plasma 6: PlasmaCore.Theme and Kirigami.Units are singletons
+    // and not creatable as QML elements. Expose them via readonly
+    // properties so existing theme.* / units.* usages keep working.
+    readonly property var theme: PlasmaCore.Theme
+    readonly property var units: Kirigami.Units
 
     property bool disableRestoreZoom: false //blocks restore animation in rightClick
     property bool disableAllWindowsFunctionality: plasmoid.configuration.hideAllTasks
@@ -195,7 +202,6 @@ PlasmoidItem {
     readonly property bool latteInEditMode: latteBridge && latteBridge.inEditMode
     //END  Latte Dock Communicator
 
-    Plasmoid.preferredRepresentation: Plasmoid.fullRepresentation
     Plasmoid.backgroundHints: inPlasmaDesktop ? PlasmaCore.Types.StandardBackground : PlasmaCore.Types.NoBackground
 
     signal draggingFinished();
@@ -241,8 +247,12 @@ PlasmoidItem {
         }
 
         onIsReadyChanged: {
-            if (appletAbilities.myView.isReady) {
-                plasmoid.action("configure").visible = false;
+            if (appletAbilities.myView.isReady
+                    && plasmoid && plasmoid.action) {
+                var cfgAction = plasmoid.action("configure");
+                if (cfgAction) {
+                    cfgAction.visible = false;
+                }
                 plasmoid.configuration.isInLatteDock = true;
             }
         }
@@ -559,30 +569,52 @@ PlasmoidItem {
     }
 
 
-    TaskManagerApplet.Backend {
+    // Minimal backend stub for Plasma 6: we no longer depend on
+    // org.kde.plasma.private.taskmanager, but still expose the
+    // properties the rest of this file and ContextMenu.qml expect.
+    QtObject {
         id: backend
-        taskManagerItem: root
-        highlightWindows: root.highlightWindows
 
-        onAddLauncher: {
+        // basic references
+        property var taskManagerItem: root
+        property bool highlightWindows: root.highlightWindows
+        property var groupDialog: groupDialogGhost
+        property var toolTipItem: toolTipDelegate
+
+        // whether the window/present-windows effect is available
+        // (used in TaskMouseArea; we default to false for Plasma 6 stub)
+        property bool windowViewAvailable: false
+
+        signal showAllPlaces()
+
+        function addLauncher(url) {
             tasksModel.requestAddLauncher(url);
         }
 
-        Component.onCompleted: {
-            //! In Plasma 5.9 TaskManagerBackend required a groupDialog setting
-            //! otherwise it crashes.
-            //! frameworks 5.29.0 provide id 335104
-            //! work only after Plasma 5.9 and frameworks 5.29
-            //! + added a check for groupDialog also when it is present
-            //!   in plasma 5.8 (that was introduced after 5.8.5)
-            if (LatteCore.Environment.frameworksVersion >= 335104 || (groupDialog !== undefined)) {
-                groupDialog = groupDialogGhost;
-            }
+        // ContextMenu expects these helpers to exist; provide
+        // harmless no-op implementations that return empty lists.
+        function placesActions(launcherUrl, showAllPlaces, parent) {
+            return [];
+        }
 
-            //! In Plasma 5.22 toolTipItem was dropped
-            if (!root.plasmaGreaterThan522) {
-                toolTipItem = toolTipDelegate;
-            }
+        function recentDocumentActions(launcherUrl, parent) {
+            return [];
+        }
+
+        function jumpListActions(launcherUrl, parent) {
+            return [];
+        }
+
+        function setActionGroup(action) {
+            // no-op in Plasma 6 stub
+        }
+
+        function ungrabMouse(item) {
+            // no-op in Plasma 6 stub
+        }
+
+        function cancelHighlightWindows() {
+            // no-op in Plasma 6 stub
         }
     }
 
@@ -610,80 +642,35 @@ PlasmoidItem {
         Component.onCompleted: previousActivity = currentActivity;
     }
 
-    PlasmaCore.DataSource {
+    // Plasma 6: PlasmaCore.DataSource is no longer available as a creatable type.
+    // Provide a no-op stub with the same API so that MPRIS-related code in
+    // ContextMenu.qml and ToolTipInstance.qml can still run without errors.
+    QtObject {
         id: mpris2Source
-        engine: "mpris2"
-        connectedSources: sources
+
+        // Matches the original interface shape but does not talk to the
+        // mpris2 engine. This disables media controls but keeps the
+        // plasmoid loadable.
+        property var data: ({})
+        property var sources: []
+        property var connectedSources: sources
+
         function sourceNameForLauncherUrl(launcherUrl, pid) {
-            if (!launcherUrl || launcherUrl === "") {
-                return "";
-            }
-
-            // MPRIS spec explicitly mentions that "DesktopEntry" is with .desktop extension trimmed
-            // Moreover, remove URL parameters, like wmClass (part after the question mark)
-            var desktopFileName = launcherUrl.toString().split('/').pop().split('?')[0].replace(".desktop", "")
-            if (desktopFileName.indexOf("applications:") === 0) {
-                desktopFileName = desktopFileName.substr(13)
-            }
-
-            for (var i = 0, length = connectedSources.length; i < length; ++i) {
-                var source = connectedSources[i];
-                // we intend to connect directly, otherwise the multiplexer steals the connection away
-                if (source === "@multiplex") {
-                    continue;
-                }
-
-                var sourceData = data[source];
-                if (!sourceData) {
-                    continue;
-                }
-
-                if (sourceData.DesktopEntry === desktopFileName || (pid && sourceData.InstancePid === pid)) {
-                    return source;
-                }
-
-                var metadata = sourceData.Metadata;
-                if (metadata) {
-                    var kdePid = metadata["kde:pid"];
-                    if (kdePid && pid === kdePid) {
-                        return source;
-                    }
-                }
-            }
-
-            return ""
+            return "";
         }
 
         function startOperation(source, op) {
-            var service = serviceForSource(source)
-            var operation = service.operationDescription(op)
-            return service.startOperationCall(operation)
+            return null;
         }
 
-        function goPrevious(source) {
-            startOperation(source, "Previous");
-        }
-        function goNext(source) {
-            startOperation(source, "Next");
-        }
-        function play(source) {
-            startOperation(source, "Play");
-        }
-        function pause(source) {
-            startOperation(source, "Pause");
-        }
-        function playPause(source) {
-            startOperation(source, "PlayPause");
-        }
-        function stop(source) {
-            startOperation(source, "Stop");
-        }
-        function raise(source) {
-            startOperation(source, "Raise");
-        }
-        function quit(source) {
-            startOperation(source, "Quit");
-        }
+        function goPrevious(source) {}
+        function goNext(source) {}
+        function play(source) {}
+        function pause(source) {}
+        function playPause(source) {}
+        function stop(source) {}
+        function raise(source) {}
+        function quit(source) {}
     }
 
     Loader {
@@ -1282,23 +1269,45 @@ PlasmoidItem {
         initialArgs.mpris2Source = mpris2Source;
         initialArgs.backend = backend;
 
+        // Plasma 6: protect against using the component before it is ready.
+        // If the component is still loading or in error, just skip creating
+        // the menu instead of spamming 'QQmlComponent: Component is not ready'.
+        if (!root.contextMenuComponent) {
+            root.contextMenuComponent = Qt.createComponent("ContextMenu.qml");
+        }
+
+        if (root.contextMenuComponent.status !== Component.Ready) {
+            console.log("LATTE DEBUG: ContextMenu.qml not ready, status=", root.contextMenuComponent.status,
+                        "error=", root.contextMenuComponent.errorString());
+            return null;
+        }
+
         root.contextMenu = root.contextMenuComponent.createObject(rootTask, initialArgs);
 
         return root.contextMenu;
     }
 
-    Component.onCompleted:  {
+ Component.onCompleted:  {
+    if (backend && backend.activateWindowView) {
         root.activateWindowView.connect(backend.activateWindowView);
-
-        root.windowsHovered.connect(backend.windowsHovered);
-        updateListViewParent();
     }
 
-    Component.onDestruction: {
-        root.activateWindowView.disconnect(backend.activateWindowView);
+    if (backend && backend.windowsHovered) {
+        root.windowsHovered.connect(backend.windowsHovered);
+    }
 
+    updateListViewParent();
+}
+
+Component.onDestruction: {
+    if (backend && backend.activateWindowView) {
+        root.activateWindowView.disconnect(backend.activateWindowView);
+    }
+
+    if (backend && backend.windowsHovered) {
         root.windowsHovered.disconnect(backend.windowsHovered);
     }
+}
 
     //BEGIN states
     // Alignments

@@ -9,7 +9,6 @@ import Qt5Compat.GraphicalEffects
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 3.0 as PlasmaComponents
 import org.kde.plasma.plasmoid 2.0
-import org.kde.plasma.private.taskmanager 0.1 as TaskManagerApplet
 
 import org.kde.kirigami 2.0 as Kirigami
 
@@ -53,9 +52,14 @@ Item {
     Loader {
         id: smartLauncherLoader
         active: taskIconContainer.smartLauncherEnabled
-        sourceComponent: TaskManagerApplet.SmartLauncherItem {
-            //! It creates issues with Valgrind and needs to be completely removed in that case
-            launcherUrl: taskItem.launcherUrlWithIcon
+        // Plasma 6: org.kde.plasma.private.taskmanager is no longer
+        // available, so we provide a minimal stub that exposes the
+        // properties TaskIcon expects (progressVisible, progress,
+        // countVisible) without relying on the old engine.
+        sourceComponent: QtObject {
+            property bool progressVisible: false
+            property real progress: 0.0
+            property int countVisible: 0
         }
     }
 

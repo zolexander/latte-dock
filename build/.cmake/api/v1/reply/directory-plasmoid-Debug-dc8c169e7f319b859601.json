@@ -1,0 +1,112 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install",
+			"kpackage_install_package",
+			"plasma_install_package"
+		],
+		"files" : 
+		[
+			"/usr/lib/cmake/KF6Package/KF6PackageMacros.cmake",
+			"/usr/lib/cmake/Plasma/PlasmaMacros.cmake",
+			"plasmoid/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 2
+			},
+			{
+				"command" : 2,
+				"file" : 2,
+				"line" : 3,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 29,
+				"parent" : 1
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 47,
+				"parent" : 2
+			},
+			{
+				"command" : 0,
+				"file" : 2,
+				"line" : 18,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 2,
+				"line" : 19,
+				"parent" : 0
+			}
+		]
+	},
+	"codemodelVersion" : 
+	{
+		"major" : 2,
+		"minor" : 9
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 3,
+			"component" : "lattedock",
+			"destination" : "share/plasma/plasmoids/org.kde.latte.plasmoid",
+			"paths" : 
+			[
+				{
+					"from" : "plasmoid/package",
+					"to" : "."
+				}
+			],
+			"type" : "directory"
+		},
+		{
+			"backtrace" : 4,
+			"component" : "lattedock",
+			"destination" : "lib/qt6/qml/org/kde/latte/private/tasks",
+			"paths" : 
+			[
+				"bin/liblattetasksplugin.so"
+			],
+			"targetId" : "lattetasksplugin::@00b107bf1009fdd347cf",
+			"targetIndex" : 13,
+			"type" : "target"
+		},
+		{
+			"backtrace" : 4,
+			"component" : "lattedock",
+			"cxxModuleBmiTarget" : 
+			{
+				"id" : "lattetasksplugin::@00b107bf1009fdd347cf",
+				"index" : 13
+			},
+			"destination" : "lib/qt6/qml/org/kde/latte/private/tasks",
+			"type" : "cxxModuleBmi"
+		},
+		{
+			"backtrace" : 5,
+			"component" : "lattedock",
+			"destination" : "lib/qt6/qml/org/kde/latte/private/tasks",
+			"paths" : 
+			[
+				"plasmoid/plugin/qmldir"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "plasmoid",
+		"source" : "plasmoid"
+	}
+}

@@ -12,8 +12,6 @@ import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 3.0 as PlasmaComponents
 import org.kde.plasma.plasmoid 2.0
 
-import org.kde.plasma.private.taskmanager 0.1 as TaskManagerApplet
-
 import org.kde.latte.core 0.2 as LatteCore
 import org.kde.latte.private.tasks 0.1 as LatteTasks
 
@@ -596,8 +594,11 @@ AbilityItem.BasicItem {
             return;
 
         if (!root.contextMenu) {
-            contextMenu = root.createContextMenu(taskItem, modelIndex(), args);
-            contextMenu.show();
+            root.contextMenu = root.createContextMenu(taskItem, modelIndex(), args);
+            var cMenuNew = root.contextMenu;
+            if (cMenuNew && cMenuNew.show) {
+                cMenuNew.show();
+            }
         } else {
             //! make sure that context menu isn't deleted multiple times and creates a crash
             //! bug case: 397635
@@ -633,12 +634,20 @@ AbilityItem.BasicItem {
         //! this way we make sure that layouts that are in different activities that the current layout
         //! don't publish their geometries
         if ( canPublishGeometries && (!taskItem.abilities.myView.isReady || (taskItem.abilities.myView.isReady && taskItem.abilities.myView.inCurrentLayout()))) {
-            var globalChoords = backend.globalRect(taskItem.parabolicItem.contentItemContainer);
-            var limits = backend.globalRect(scrollableList);
+            // KF6: backend.globalRect is no longer a callable function and mapRectToItem
+            // is not available here. Compute global coordinates using mapToItem(null, 0, 0)
+            // and construct the rects manually.
+            var srcItem = taskItem.parabolicItem.contentItemContainer;
+            var srcPos = srcItem.mapToItem(null, 0, 0);
+            var globalChoords = Qt.rect(srcPos.x, srcPos.y, srcItem.width, srcItem.height);
 
-            //! Limit the published geometries boundaries at scrolling area boundaries
-            var adjX = Math.min(limits.x+limits.width, Math.max(limits.x, globalChoords.x));
-            var adjY = Math.min(limits.y+limits.height, Math.max(limits.y, globalChoords.y));
+            var limitsItem = scrollableList;
+            var limitsPos = limitsItem.mapToItem(null, 0, 0);
+            var limits = Qt.rect(limitsPos.x, limitsPos.y, limitsItem.width, limitsItem.height);
+
+            // Limit the published geometries boundaries at scrolling area boundaries
+            var adjX = Math.min(limits.x + limits.width, Math.max(limits.x, globalChoords.x));
+            var adjY = Math.min(limits.y + limits.height, Math.max(limits.y, globalChoords.y));
 
             var length = taskItem.abilities.metrics.iconSize * taskItem.parabolicItem.zoom;
             var thickness = length;

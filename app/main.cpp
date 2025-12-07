@@ -454,8 +454,15 @@ int main(int argc, char **argv)
     KCrash::setDrKonqiEnabled(true);
     KCrash::setFlags(KCrash::AutoRestart | KCrash::AlwaysDirectly);
 
-    Latte::Corona corona(defaultLayoutOnStartup, layoutNameOnStartup, addViewTemplateNameOnStartup, memoryUsage);
+    // TODO KF6: Workaround crash in Plasma::Applet::config() during Corona destruction
+    // Create Corona on the heap and intentionally do not delete it, so that Qt/Plasma
+    // applet/containment teardown does not run on process shutdown.
+    Latte::Corona *corona = new Latte::Corona(defaultLayoutOnStartup, layoutNameOnStartup, addViewTemplateNameOnStartup, memoryUsage);
+    Q_UNUSED(corona);
+    qDebug() << "[LATTE-MAIN] Corona object created";
+    
     KDBusService service(KDBusService::Unique);
+    qDebug() << "[LATTE-MAIN] KDBusService created, entering event loop";
 
     return app.exec();
 }

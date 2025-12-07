@@ -37,6 +37,38 @@ Grid {
     property int beginIndex: 0
     property int offset: 0
 
+    // Plasma 6: make sure the container itself has size, otherwise children
+    // with valid width/height remain invisible because the Grid has w/h = 0.
+    // This stretches the container to the parent size (which may left-align
+    // the contents) but keeps tasks visible so we can debug layout.
+    width: parent ? parent.width : width
+    height: parent ? parent.height : height
+
+    //! Debug: log children and their geometry to understand layouting
+    Component.onCompleted: {
+        console.log("LATTE DEBUG: AppletsContainer completed alignment=", alignment,
+                    "children=", children.length,
+                    "geom:", "x=", x, "y=", y, "w=", width, "h=", height);
+        for (var i = 0; i < children.length; ++i) {
+            var c = children[i];
+            console.log("LATTE DEBUG: AppletsContainer child", i, c,
+                        "x/y", c.x, c.y,
+                        "w/h", c.width, c.height);
+        }
+    }
+
+    onChildrenChanged: {
+        console.log("LATTE DEBUG: AppletsContainer childrenChanged alignment=", alignment,
+                    "children=", children.length,
+                    "geom:", "x=", x, "y=", y, "w=", width, "h=", height);
+        for (var i = 0; i < children.length; ++i) {
+            var c2 = children[i];
+            console.log("LATTE DEBUG: AppletsContainer child", i, c2,
+                        "x/y", c2.x, c2.y,
+                        "w/h", c2.width, c2.height);
+        }
+    }
+
     //////////////////////////BEGIN states
     //user set Panel Positions
     // 0-Center, 1-Left, 2-Right, 3-Top, 4-Bottom

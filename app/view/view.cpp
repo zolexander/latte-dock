@@ -104,6 +104,20 @@ View::View(Plasma::Corona *corona, QScreen *targetScreen, bool byPassX11WM)
         setFlags(flags);
     }
 
+    // KF6/Wayland DEBUG: force an initial visible geometry to verify that
+    // the Latte::View window is actually shown by the compositor. This is
+    // a temporary hack for porting; it should be removed once normal
+    // positioning works reliably.
+    /*if (KWindowSystem::isPlatformWayland()) {
+        const QSize debugSize(800, 100);
+        setMinimumSize(debugSize);
+        setMaximumSize(debugSize);
+        resize(debugSize);
+        setPosition(QPoint(100, 100));
+        qDebug() << "LATTE DEBUG: forced debug geometry" << geometry();
+        setVisible(true);
+    }*/
+
     if (KWindowSystem::isPlatformX11()) {
         //! Enable OnAllDesktops during creation in order to protect corner cases that is ignored
         //! during startup. Such corner case is bug #447689.
@@ -140,6 +154,16 @@ View::View(Plasma::Corona *corona, QScreen *targetScreen, bool byPassX11WM)
 
         //! First load default values from file
         restoreConfig();
+
+        //! KF6/Wayland: avoid Plasma::Types::Desktop as location which
+        //! leads to wrong positioning and invisible dock. For now,
+        //! enforce a horizontal bottom-edge panel when the containment
+        //! is first assigned. Layout/alignment logic can still override
+        //! this later via viewLocationChanged/view config.
+        if (containment()) {
+            containment()->setFormFactor(Plasma::Types::Horizontal);
+            containment()->setLocation(Plasma::Types::BottomEdge);
+        }
 
         //! Afterwards override that values in case during creation something different is needed
         setByPassWM(byPassX11WM);
@@ -186,12 +210,14 @@ View::View(Plasma::Corona *corona, QScreen *targetScreen, bool byPassX11WM)
             emit indicatorChanged();
         }
 
-        if (m_positioner) {
-            //! immediateSyncGeometry helps avoiding binding loops from containment qml side
-            m_positioner->immediateSyncGeometry();
+        // KF6/Wayland: ensure the dock window actually becomes visible once
+        // containment, config and geometry are initialized. Legacy X11 logic
+        // relied on various visibility timers; during porting this can leave
+        // the window effectively hidden. For Wayland we force the view to be
+        // shown here.
+        if (KWindowSystem::isPlatformWayland()) {
+            setVisible(true);
         }
-
-        connect(this->containment(), SIGNAL(statusChanged(Plasma::Types::ItemStatus)), SLOT(statusChanged(Plasma::Types::ItemStatus)));
         connect(this->containment(), &Plasma::Containment::showAddWidgetsInterface, this, &View::showWidgetExplorer);
         connect(this->containment(), &Plasma::Containment::userConfiguringChanged, this, [&]() {
             emit inEditModeChanged();

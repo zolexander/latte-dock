@@ -40,6 +40,78 @@ LayoutManager::LayoutManager(QObject *parent)
     });
 }
 
+QList<QObject *> LayoutManager::appletsFromPlasmoid() const
+{
+    QList<QObject *> result;
+
+    if (!m_plasmoid) {
+        return result;
+    }
+
+    const QVariant v = m_plasmoid->property("applets");
+
+    if (!v.isValid()) {
+        return result;
+    }
+
+    qDebug() << "org.kde.latte ::: appletsFromPlasmoid property type ::" << v.metaType().name()
+             << "canConvert<QVariantList>() ::" << v.canConvert<QVariantList>();
+
+    // Plasma 6: QML list property is exposed as a QVariant holding
+    // "QList<Plasma::Applet*>" (see debug output). fromVariant/toList()
+    // turns this into a QVariantList whose entries store Plasma::Applet*.
+    // For restore() and isValidApplet() we only need QObject* with a valid
+    // "id" property, so we can safely return those without requiring
+    // them to be AppletQuickItem/QQuickItem.
+    if (v.canConvert<QVariantList>()) {
+        const QVariantList list = v.toList();
+
+        qDebug() << "org.kde.latte ::: appletsFromPlasmoid QVariantList size ::" << list.size();
+
+        for (const QVariant &entry : list) {
+            QObject *obj = entry.value<QObject *>();
+
+            qDebug() << "org.kde.latte ::: appletsFromPlasmoid entry type ::" << entry.metaType().name()
+                     << "QObject* ::" << obj;
+
+            if (obj) {
+                result << obj;
+            }
+        }
+    } else {
+        // Fallback for older Plasma versions where a QList<QObject *> may still work
+        const QList<QObject *> list = v.value<QList<QObject *>>();
+
+        qDebug() << "org.kde.latte ::: appletsFromPlasmoid QList<QObject*> size ::" << list.size();
+
+        for (QObject *obj : list) {
+            qDebug() << "org.kde.latte ::: appletsFromPlasmoid QList entry QObject* ::" << obj;
+
+            if (obj) {
+                result << obj;
+            }
+        }
+    }
+
+    return result;
+}
+
+QObject *LayoutManager::visualAppletFor(QObject *appletObj) const
+{
+    if (!appletObj) {
+        return nullptr;
+    }
+
+    Plasma::Applet *applet = qobject_cast<Plasma::Applet *>(appletObj);
+    if (!applet) {
+        return nullptr;
+    }
+
+    QQuickItem *visualItem = PlasmaQuick::AppletQuickItem::itemForApplet(applet);
+    qDebug() << "org.kde.latte ::: visualAppletFor applet" << applet << "-> visual" << visualItem;
+    return visualItem;
+}
+
 bool LayoutManager::hasRestoredApplets() const
 {
     return m_hasRestoredApplets;
@@ -296,15 +368,20 @@ void LayoutManager::onRootItemChanged()
 bool LayoutManager::isValidApplet(const int &id)
 {
     //! should be loaded after m_plasmoid has been set properly
-    if (!m_plasmoid) {
+    if (!m_plasmoid || id <= 0) {
         return false;
     }
 
-    QList<QObject *> applets = m_plasmoid->property("applets").value<QList<QObject *>>();
+    const QList<QObject *> applets = appletsFromPlasmoid();
 
-    for(int i=0; i<applets.count(); ++i) {
-        uint appletid = applets[i]->property("id").toUInt();
-        if (id>0 && appletid == (uint)id) {
+    for (QObject *applet : applets) {
+        if (!applet) {
+            continue;
+        }
+
+        const uint appletid = applet->property("id").toUInt();
+
+        if (appletid == static_cast<uint>(id)) {
             return true;
         }
     }
@@ -316,7 +393,7 @@ bool LayoutManager::isValidApplet(const int &id)
 void LayoutManager::restore()
 {
     QList<int> appletIdsOrder = toIntList((*m_configuration)["appletOrder"].toString());
-    QList<QObject *> applets = m_plasmoid->property("applets").value<QList<QObject *>>();
+    const QList<QObject *> applets = appletsFromPlasmoid();
 
     Latte::Types::Alignment alignment = static_cast<Latte::Types::Alignment>((*m_configuration)["alignment"].toInt());
     int splitterPosition = (*m_configuration)["splitterPosition"].toInt();
@@ -407,7 +484,9 @@ void LayoutManager::restore()
             QVariant appletVariant; appletVariant.setValue(orderedApplets[i]);
             m_createAppletItemMethod.invoke(m_rootItem, Q_RETURN_ARG(QVariant, appletItemVariant), Q_ARG(QVariant, appletVariant));
             QQuickItem *appletItem = appletItemVariant.value<QQuickItem *>();
-            appletItem->setParentItem(m_mainLayout);
+            if (appletItem) {
+                appletItem->setParentItem(m_mainLayout);
+            }
         }
     } else {
         QQuickItem *parentlayout = m_startLayout;
@@ -427,7 +506,6 @@ void LayoutManager::restore()
                     parentlayout = m_endLayout;
                     splitterItem->setParentItem(parentlayout);
                 }
-
                 continue;
             }
 
@@ -435,7 +513,9 @@ void LayoutManager::restore()
             QVariant appletVariant; appletVariant.setValue(orderedApplets[i]);
             m_createAppletItemMethod.invoke(m_rootItem, Q_RETURN_ARG(QVariant, appletItemVariant), Q_ARG(QVariant, appletVariant));
             QQuickItem *appletItem = appletItemVariant.value<QQuickItem *>();
-            appletItem->setParentItem(parentlayout);
+            if (appletItem) {
+                appletItem->setParentItem(parentlayout);
+            }
         }
     }
 

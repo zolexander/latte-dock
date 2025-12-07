@@ -194,6 +194,16 @@ Types::Visibility VisibilityManager::mode() const
 
 void VisibilityManager::initViewFlags()
 {
+    // KF6/Wayland: during porting, ensure the dock window stays on a
+    // visible layer. Some legacy "back layer" hints can cause the
+    // view to end up effectively behind the desktop. On Wayland we
+    // therefore always keep the view on the front layer, while
+    // preserving the old behavior for X11.
+    if (KWindowSystem::isPlatformWayland()) {
+        setViewOnFrontLayer();
+        return;
+    }
+
     if ((m_mode == Types::WindowsCanCover || m_mode == Types::WindowsAlwaysCover) && (!m_latteView->inEditMode())) {
         setViewOnBackLayer();
     } else {

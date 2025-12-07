@@ -1,0 +1,904 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "bin/liblattetasksplugin.so"
+		}
+	],
+	"backtrace" : 4,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_library",
+			"_qt_internal_add_library",
+			"qt6_add_library",
+			"qt_add_library",
+			"install",
+			"target_link_libraries",
+			"set_target_properties",
+			"include",
+			"find_package",
+			"__find_dependency_common",
+			"find_dependency",
+			"set_property",
+			"_qt_internal_find_third_party_dependencies",
+			"add_custom_command",
+			"qt6_extract_metatypes",
+			"qt6_finalize_target",
+			"add_definitions",
+			"_kde_add_platform_definitions",
+			"target_sources"
+		],
+		"files" : 
+		[
+			"/usr/lib/cmake/Qt6Core/Qt6CoreMacros.cmake",
+			"plasmoid/CMakeLists.txt",
+			"/usr/lib/cmake/PlasmaQuick/PlasmaQuickTargets.cmake",
+			"/usr/lib/cmake/PlasmaQuick/PlasmaQuickConfig.cmake",
+			"CMakeLists.txt",
+			"/usr/lib/cmake/Qt6Quick/Qt6QuickTargets.cmake",
+			"/usr/lib/cmake/Qt6Quick/Qt6QuickConfig.cmake",
+			"/usr/lib/cmake/Qt6/Qt6Config.cmake",
+			"/usr/lib/cmake/KF6WindowSystem/KF6WindowSystemTargets.cmake",
+			"/usr/lib/cmake/KF6WindowSystem/KF6WindowSystemConfig.cmake",
+			"/usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake",
+			"/usr/lib/cmake/KF6KIO/KF6KIOConfig.cmake",
+			"/usr/share/ECM/find-modules/FindKF6.cmake",
+			"/usr/lib/cmake/Plasma/PlasmaTargets.cmake",
+			"/usr/lib/cmake/Plasma/PlasmaConfig.cmake",
+			"/usr/share/cmake/Modules/FindOpenGL.cmake",
+			"/usr/lib/cmake/Qt6/FindWrapOpenGL.cmake",
+			"/usr/lib/cmake/Qt6/QtPublicDependencyHelpers.cmake",
+			"/usr/lib/cmake/Qt6Gui/Qt6GuiDependencies.cmake",
+			"/usr/lib/cmake/Qt6Gui/Qt6GuiConfig.cmake",
+			"/usr/lib/cmake/Qt6Qml/Qt6QmlTargets.cmake",
+			"/usr/lib/cmake/Qt6Qml/Qt6QmlConfig.cmake",
+			"/usr/lib/cmake/Qt6Core/Qt6CoreMacros.cmake:921:EVAL",
+			"/usr/share/ECM/kde-modules/KDECompilerSettings.cmake"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 1
+			},
+			{
+				"command" : 3,
+				"file" : 1,
+				"line" : 10,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 2918,
+				"parent" : 1
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 2804,
+				"parent" : 2
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 2891,
+				"parent" : 3
+			},
+			{
+				"command" : 4,
+				"file" : 1,
+				"line" : 18,
+				"parent" : 0
+			},
+			{
+				"command" : 5,
+				"file" : 1,
+				"line" : 12,
+				"parent" : 0
+			},
+			{
+				"file" : 4
+			},
+			{
+				"command" : 8,
+				"file" : 4,
+				"line" : 67,
+				"parent" : 7
+			},
+			{
+				"file" : 3,
+				"parent" : 8
+			},
+			{
+				"command" : 7,
+				"file" : 3,
+				"line" : 47,
+				"parent" : 9
+			},
+			{
+				"file" : 2,
+				"parent" : 10
+			},
+			{
+				"command" : 6,
+				"file" : 2,
+				"line" : 70,
+				"parent" : 11
+			},
+			{
+				"command" : 8,
+				"file" : 4,
+				"line" : 38,
+				"parent" : 7
+			},
+			{
+				"file" : 7,
+				"parent" : 13
+			},
+			{
+				"command" : 8,
+				"file" : 7,
+				"line" : 247,
+				"parent" : 14
+			},
+			{
+				"file" : 6,
+				"parent" : 15
+			},
+			{
+				"command" : 7,
+				"file" : 6,
+				"line" : 62,
+				"parent" : 16
+			},
+			{
+				"file" : 5,
+				"parent" : 17
+			},
+			{
+				"command" : 6,
+				"file" : 5,
+				"line" : 70,
+				"parent" : 18
+			},
+			{
+				"command" : 8,
+				"file" : 4,
+				"line" : 44,
+				"parent" : 7
+			},
+			{
+				"file" : 12,
+				"parent" : 20
+			},
+			{
+				"command" : 8,
+				"file" : 12,
+				"line" : 55,
+				"parent" : 21
+			},
+			{
+				"file" : 11,
+				"parent" : 22
+			},
+			{
+				"command" : 10,
+				"file" : 11,
+				"line" : 59,
+				"parent" : 23
+			},
+			{
+				"command" : 9,
+				"file" : 10,
+				"line" : 125,
+				"parent" : 24
+			},
+			{
+				"command" : 8,
+				"file" : 10,
+				"line" : 93,
+				"parent" : 25
+			},
+			{
+				"file" : 9,
+				"parent" : 26
+			},
+			{
+				"command" : 7,
+				"file" : 9,
+				"line" : 50,
+				"parent" : 27
+			},
+			{
+				"file" : 8,
+				"parent" : 28
+			},
+			{
+				"command" : 6,
+				"file" : 8,
+				"line" : 70,
+				"parent" : 29
+			},
+			{
+				"command" : 8,
+				"file" : 4,
+				"line" : 65,
+				"parent" : 7
+			},
+			{
+				"file" : 14,
+				"parent" : 31
+			},
+			{
+				"command" : 7,
+				"file" : 14,
+				"line" : 39,
+				"parent" : 32
+			},
+			{
+				"file" : 13,
+				"parent" : 33
+			},
+			{
+				"command" : 6,
+				"file" : 13,
+				"line" : 70,
+				"parent" : 34
+			},
+			{
+				"command" : 8,
+				"file" : 7,
+				"line" : 247,
+				"parent" : 14
+			},
+			{
+				"file" : 19,
+				"parent" : 36
+			},
+			{
+				"command" : 7,
+				"file" : 19,
+				"line" : 50,
+				"parent" : 37
+			},
+			{
+				"file" : 18,
+				"parent" : 38
+			},
+			{
+				"command" : 12,
+				"file" : 18,
+				"line" : 37,
+				"parent" : 39
+			},
+			{
+				"command" : 10,
+				"file" : 17,
+				"line" : 36,
+				"parent" : 40
+			},
+			{
+				"command" : 9,
+				"file" : 10,
+				"line" : 125,
+				"parent" : 41
+			},
+			{
+				"command" : 8,
+				"file" : 10,
+				"line" : 93,
+				"parent" : 42
+			},
+			{
+				"file" : 16,
+				"parent" : 43
+			},
+			{
+				"command" : 8,
+				"file" : 16,
+				"line" : 13,
+				"parent" : 44
+			},
+			{
+				"file" : 15,
+				"parent" : 45
+			},
+			{
+				"command" : 11,
+				"file" : 15,
+				"line" : 831,
+				"parent" : 46
+			},
+			{
+				"command" : 6,
+				"file" : 15,
+				"line" : 829,
+				"parent" : 46
+			},
+			{
+				"command" : 8,
+				"file" : 7,
+				"line" : 247,
+				"parent" : 14
+			},
+			{
+				"file" : 21,
+				"parent" : 49
+			},
+			{
+				"command" : 7,
+				"file" : 21,
+				"line" : 65,
+				"parent" : 50
+			},
+			{
+				"file" : 20,
+				"parent" : 51
+			},
+			{
+				"command" : 6,
+				"file" : 20,
+				"line" : 70,
+				"parent" : 52
+			},
+			{
+				"file" : 1,
+				"line" : -1,
+				"parent" : 0
+			},
+			{
+				"command" : 15,
+				"file" : 22,
+				"line" : 1,
+				"parent" : 54
+			},
+			{
+				"command" : 14,
+				"file" : 0,
+				"line" : 907,
+				"parent" : 55
+			},
+			{
+				"command" : 13,
+				"file" : 0,
+				"line" : 1540,
+				"parent" : 56
+			},
+			{
+				"command" : 13,
+				"file" : 0,
+				"line" : 1482,
+				"parent" : 56
+			},
+			{
+				"command" : 16,
+				"file" : 4,
+				"line" : 71,
+				"parent" : 7
+			},
+			{
+				"command" : 16,
+				"file" : 1,
+				"line" : 1,
+				"parent" : 0
+			},
+			{
+				"command" : 7,
+				"file" : 4,
+				"line" : 33,
+				"parent" : 7
+			},
+			{
+				"file" : 23,
+				"parent" : 61
+			},
+			{
+				"command" : 17,
+				"file" : 23,
+				"line" : 320,
+				"parent" : 62
+			},
+			{
+				"command" : 16,
+				"file" : 23,
+				"line" : 305,
+				"parent" : 63
+			},
+			{
+				"command" : 17,
+				"file" : 23,
+				"line" : 327,
+				"parent" : 62
+			},
+			{
+				"command" : 16,
+				"file" : 23,
+				"line" : 305,
+				"parent" : 65
+			},
+			{
+				"command" : 18,
+				"file" : 0,
+				"line" : 1577,
+				"parent" : 56
+			}
+		]
+	},
+	"codemodelVersion" : 
+	{
+		"major" : 2,
+		"minor" : 9
+	},
+	"compileDependencies" : 
+	[
+		{
+			"backtrace" : 6,
+			"id" : "Qt6::Core::@6890427a1f51a3e7e1df"
+		},
+		{
+			"backtrace" : 6,
+			"id" : "Qt6::Qml::@6890427a1f51a3e7e1df"
+		},
+		{
+			"backtrace" : 6,
+			"id" : "Plasma::Plasma::@6890427a1f51a3e7e1df"
+		},
+		{
+			"backtrace" : 6,
+			"id" : "Plasma::PlasmaQuick::@6890427a1f51a3e7e1df"
+		}
+	],
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : " -fno-operator-names -fno-exceptions -Wno-gnu-zero-variadic-macro-arguments  -Wextra -Wcast-align -Wchar-subscripts -Wformat-security -Wno-long-long -Wpointer-arith -Wundef -Wnon-virtual-dtor -Woverloaded-virtual -Werror=return-type -Werror=init-self -Wvla -Wdate-time -fdiagnostics-color=always -Wformat -Werror=format-security -g -std=gnu++20 -fPIC -fvisibility=hidden -fvisibility-inlines-hidden"
+				},
+				{
+					"backtrace" : 6,
+					"fragment" : "-fno-direct-access-external-data"
+				}
+			],
+			"defines" : 
+			[
+				{
+					"backtrace" : 6,
+					"define" : "KCOREADDONS_LIB"
+				},
+				{
+					"backtrace" : 59,
+					"define" : "PLASMA_WORKSPACE_VERSION=\"6.5.3\""
+				},
+				{
+					"backtrace" : 6,
+					"define" : "QT_CORE_LIB"
+				},
+				{
+					"backtrace" : 6,
+					"define" : "QT_GUI_LIB"
+				},
+				{
+					"backtrace" : 6,
+					"define" : "QT_NETWORK_LIB"
+				},
+				{
+					"backtrace" : 6,
+					"define" : "QT_OPENGL_LIB"
+				},
+				{
+					"backtrace" : 6,
+					"define" : "QT_QMLINTEGRATION_LIB"
+				},
+				{
+					"backtrace" : 6,
+					"define" : "QT_QML_LIB"
+				},
+				{
+					"backtrace" : 6,
+					"define" : "QT_QUICK_LIB"
+				},
+				{
+					"backtrace" : 60,
+					"define" : "TRANSLATION_DOMAIN=\"plasma_applet_org.kde.latte.plasmoid\""
+				},
+				{
+					"backtrace" : 64,
+					"define" : "_GNU_SOURCE"
+				},
+				{
+					"backtrace" : 66,
+					"define" : "_LARGEFILE64_SOURCE"
+				},
+				{
+					"define" : "lattetasksplugin_EXPORTS"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"path" : "/home/zolexander/latte-dock/build/plasmoid"
+				},
+				{
+					"path" : "/home/zolexander/latte-dock/plasmoid"
+				},
+				{
+					"backtrace" : 0,
+					"path" : "/home/zolexander/latte-dock/build/plasmoid/lattetasksplugin_autogen/include"
+				},
+				{
+					"backtrace" : 6,
+					"isSystem" : true,
+					"path" : "/usr/include/qt6/QtCore"
+				},
+				{
+					"backtrace" : 6,
+					"isSystem" : true,
+					"path" : "/usr/include/qt6"
+				},
+				{
+					"backtrace" : 6,
+					"isSystem" : true,
+					"path" : "/usr/lib/qt6/mkspecs/linux-g++"
+				},
+				{
+					"backtrace" : 6,
+					"isSystem" : true,
+					"path" : "/usr/include/qt6/QtQml"
+				},
+				{
+					"backtrace" : 6,
+					"isSystem" : true,
+					"path" : "/usr/include/qt6/QtQmlIntegration"
+				},
+				{
+					"backtrace" : 6,
+					"isSystem" : true,
+					"path" : "/usr/include/qt6/QtNetwork"
+				},
+				{
+					"backtrace" : 6,
+					"isSystem" : true,
+					"path" : "/usr/include/Plasma"
+				},
+				{
+					"backtrace" : 6,
+					"isSystem" : true,
+					"path" : "/usr/include/qt6/QtGui"
+				},
+				{
+					"backtrace" : 6,
+					"isSystem" : true,
+					"path" : "/usr/include/KF6/KConfig"
+				},
+				{
+					"backtrace" : 6,
+					"isSystem" : true,
+					"path" : "/usr/include/KF6/KConfigCore"
+				},
+				{
+					"backtrace" : 6,
+					"isSystem" : true,
+					"path" : "/usr/include/KF6/KCoreAddons"
+				},
+				{
+					"backtrace" : 6,
+					"isSystem" : true,
+					"path" : "/usr/include/PlasmaQuick"
+				},
+				{
+					"backtrace" : 6,
+					"isSystem" : true,
+					"path" : "/usr/include/qt6/QtQuick"
+				},
+				{
+					"backtrace" : 6,
+					"isSystem" : true,
+					"path" : "/usr/include/qt6/QtOpenGL"
+				},
+				{
+					"backtrace" : 6,
+					"isSystem" : true,
+					"path" : "/usr/include/KF6/KWindowSystem"
+				}
+			],
+			"language" : "CXX",
+			"languageStandard" : 
+			{
+				"backtraces" : 
+				[
+					6,
+					6
+				],
+				"standard" : "20"
+			},
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2
+			]
+		}
+	],
+	"dependencies" : 
+	[
+		{
+			"id" : "lattetasksplugin_autogen_timestamp_deps::@00b107bf1009fdd347cf"
+		},
+		{
+			"backtrace" : 0,
+			"id" : "lattetasksplugin_autogen::@00b107bf1009fdd347cf"
+		}
+	],
+	"id" : "lattetasksplugin::@00b107bf1009fdd347cf",
+	"install" : 
+	{
+		"destinations" : 
+		[
+			{
+				"backtrace" : 5,
+				"path" : "lib/qt6/qml/org/kde/latte/private/tasks"
+			},
+			{
+				"backtrace" : 5,
+				"path" : "lib/qt6/qml/org/kde/latte/private/tasks"
+			}
+		],
+		"prefix" : 
+		{
+			"path" : "/usr"
+		}
+	},
+	"interfaceCompileDependencies" : 
+	[
+		{
+			"backtrace" : 6,
+			"id" : "Qt6::Core::@6890427a1f51a3e7e1df"
+		},
+		{
+			"backtrace" : 6,
+			"id" : "Qt6::Qml::@6890427a1f51a3e7e1df"
+		},
+		{
+			"backtrace" : 6,
+			"id" : "Plasma::Plasma::@6890427a1f51a3e7e1df"
+		},
+		{
+			"backtrace" : 6,
+			"id" : "Plasma::PlasmaQuick::@6890427a1f51a3e7e1df"
+		}
+	],
+	"interfaceLinkLibraries" : 
+	[
+		{
+			"backtrace" : 6,
+			"id" : "Qt6::Core::@6890427a1f51a3e7e1df"
+		},
+		{
+			"backtrace" : 6,
+			"id" : "Qt6::Qml::@6890427a1f51a3e7e1df"
+		},
+		{
+			"backtrace" : 6,
+			"id" : "Plasma::Plasma::@6890427a1f51a3e7e1df"
+		},
+		{
+			"backtrace" : 6,
+			"id" : "Plasma::PlasmaQuick::@6890427a1f51a3e7e1df"
+		}
+	],
+	"link" : 
+	{
+		"commandFragments" : 
+		[
+			{
+				"fragment" : "-shared",
+				"role" : "flags"
+			},
+			{
+				"fragment" : "-Wl,--no-undefined -Wl,--fatal-warnings -Wl,--enable-new-dtags",
+				"role" : "flags"
+			},
+			{
+				"backtrace" : 6,
+				"fragment" : "/usr/lib/libPlasmaQuick.so.6.5.3",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 6,
+				"fragment" : "/usr/lib/libPlasma.so.6.5.3",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 12,
+				"fragment" : "/usr/lib/libQt6Quick.so.6.10.1",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 19,
+				"fragment" : "/usr/lib/libQt6OpenGL.so.6.10.1",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 12,
+				"fragment" : "/usr/lib/libKF6WindowSystem.so.6.20.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 30,
+				"fragment" : "/usr/lib/libX11.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 35,
+				"fragment" : "/usr/lib/libKF6CoreAddons.so.6.20.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 35,
+				"fragment" : "/usr/lib/libKF6ConfigCore.so.6.20.0",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 35,
+				"fragment" : "/usr/lib/libQt6Gui.so.6.10.1",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 47,
+				"fragment" : "/usr/lib/libGLX.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 48,
+				"fragment" : "/usr/lib/libOpenGL.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 6,
+				"fragment" : "/usr/lib/libQt6Qml.so.6.10.1",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 53,
+				"fragment" : "/usr/lib/libQt6Network.so.6.10.1",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 6,
+				"fragment" : "/usr/lib/libQt6Core.so.6.10.1",
+				"role" : "libraries"
+			}
+		],
+		"language" : "CXX"
+	},
+	"linkLibraries" : 
+	[
+		{
+			"backtrace" : 6,
+			"id" : "Qt6::Core::@6890427a1f51a3e7e1df"
+		},
+		{
+			"backtrace" : 6,
+			"id" : "Qt6::Qml::@6890427a1f51a3e7e1df"
+		},
+		{
+			"backtrace" : 6,
+			"id" : "Plasma::Plasma::@6890427a1f51a3e7e1df"
+		},
+		{
+			"backtrace" : 6,
+			"id" : "Plasma::PlasmaQuick::@6890427a1f51a3e7e1df"
+		}
+	],
+	"name" : "lattetasksplugin",
+	"nameOnDisk" : "liblattetasksplugin.so",
+	"orderDependencies" : 
+	[
+		{
+			"backtrace" : 57,
+			"id" : "Qt6::moc::@6890427a1f51a3e7e1df"
+		},
+		{
+			"backtrace" : 58,
+			"id" : "Qt6::cmake_automoc_parser::@6890427a1f51a3e7e1df"
+		},
+		{
+			"id" : "lattetasksplugin_autogen_timestamp_deps::@00b107bf1009fdd347cf"
+		},
+		{
+			"backtrace" : 0,
+			"id" : "lattetasksplugin_autogen::@00b107bf1009fdd347cf"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "plasmoid",
+		"source" : "plasmoid"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2
+			]
+		},
+		{
+			"name" : "",
+			"sourceIndexes" : 
+			[
+				3,
+				4
+			]
+		},
+		{
+			"name" : "CMake Rules",
+			"sourceIndexes" : 
+			[
+				5,
+				6,
+				7
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 0,
+			"compileGroupIndex" : 0,
+			"isGenerated" : true,
+			"path" : "build/plasmoid/lattetasksplugin_autogen/mocs_compilation.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 0,
+			"path" : "plasmoid/plugin/types.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 0,
+			"path" : "plasmoid/plugin/lattetasksplugin.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 67,
+			"isGenerated" : true,
+			"path" : "build/plasmoid/meta_types/qt6lattetasksplugin_metatypes.json.gen",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/plasmoid/lattetasksplugin_autogen/timestamp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/plasmoid/meta_types/qt6lattetasksplugin_metatypes.json.gen.rule",
+			"sourceGroupIndex" : 2
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/plasmoid/lattetasksplugin_autogen/timestamp.rule",
+			"sourceGroupIndex" : 2
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/plasmoid/meta_types/lattetasksplugin_json_file_list.txt.rule",
+			"sourceGroupIndex" : 2
+		}
+	],
+	"type" : "SHARED_LIBRARY"
+}

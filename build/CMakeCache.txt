@@ -36,26 +36,23 @@ CMAKE_ADDR2LINE:FILEPATH=/usr/bin/addr2line
 //Path to a program.
 CMAKE_AR:FILEPATH=/usr/bin/ar
 
-//Choose the type of build, options are: None Debug Release RelWithDebInfo
-// MinSizeRel ...
+//No help, variable specified on the command line.
 CMAKE_BUILD_TYPE:STRING=Debug
 
-//Enable/Disable color output during build.
-CMAKE_COLOR_MAKEFILE:BOOL=ON
+//No help, variable specified on the command line.
+CMAKE_CXX_COMPILER:FILEPATH=/usr/bin/clang++
 
-//CXX compiler
-CMAKE_CXX_COMPILER:FILEPATH=/usr/bin/c++
+//LLVM archiver
+CMAKE_CXX_COMPILER_AR:FILEPATH=CMAKE_CXX_COMPILER_AR-NOTFOUND
 
-//A wrapper around 'ar' adding the appropriate '--plugin' option
-// for the GCC compiler
-CMAKE_CXX_COMPILER_AR:FILEPATH=/usr/bin/gcc-ar
+//`clang-scan-deps` dependency scanner
+CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS:FILEPATH=/usr/bin/clang-scan-deps
 
-//A wrapper around 'ranlib' adding the appropriate '--plugin' option
-// for the GCC compiler
-CMAKE_CXX_COMPILER_RANLIB:FILEPATH=/usr/bin/gcc-ranlib
+//Generate index for LLVM archive
+CMAKE_CXX_COMPILER_RANLIB:FILEPATH=CMAKE_CXX_COMPILER_RANLIB-NOTFOUND
 
 //Flags used by the CXX compiler during all build types.
-CMAKE_CXX_FLAGS:STRING=-march=x86-64 -mtune=generic -O2 -pipe -fno-plt -fexceptions         -Wp,-D_FORTIFY_SOURCE=3 -Wformat -Werror=format-security         -fstack-clash-protection -fcf-protection         -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer -Wp,-D_GLIBCXX_ASSERTIONS -g -ffile-prefix-map=/home/zolexander/latte-dock/src=/usr/src/debug/latte-dock -flto=auto
+CMAKE_CXX_FLAGS:STRING=
 
 //Flags used by the CXX compiler during DEBUG builds.
 CMAKE_CXX_FLAGS_DEBUG:STRING=-g
@@ -69,19 +66,20 @@ CMAKE_CXX_FLAGS_RELEASE:STRING=-O3 -DNDEBUG
 //Flags used by the CXX compiler during RELWITHDEBINFO builds.
 CMAKE_CXX_FLAGS_RELWITHDEBINFO:STRING=-O2 -g -DNDEBUG
 
-//C compiler
-CMAKE_C_COMPILER:FILEPATH=/usr/bin/cc
+//No help, variable specified on the command line.
+CMAKE_C_COMPILER:FILEPATH=/usr/bin/clang
 
-//A wrapper around 'ar' adding the appropriate '--plugin' option
-// for the GCC compiler
-CMAKE_C_COMPILER_AR:FILEPATH=/usr/bin/gcc-ar
+//LLVM archiver
+CMAKE_C_COMPILER_AR:FILEPATH=CMAKE_C_COMPILER_AR-NOTFOUND
 
-//A wrapper around 'ranlib' adding the appropriate '--plugin' option
-// for the GCC compiler
-CMAKE_C_COMPILER_RANLIB:FILEPATH=/usr/bin/gcc-ranlib
+//`clang-scan-deps` dependency scanner
+CMAKE_C_COMPILER_CLANG_SCAN_DEPS:FILEPATH=/usr/bin/clang-scan-deps
+
+//Generate index for LLVM archive
+CMAKE_C_COMPILER_RANLIB:FILEPATH=CMAKE_C_COMPILER_RANLIB-NOTFOUND
 
 //Flags used by the C compiler during all build types.
-CMAKE_C_FLAGS:STRING=-march=x86-64 -mtune=generic -O2 -pipe -fno-plt -fexceptions         -Wp,-D_FORTIFY_SOURCE=3 -Wformat -Werror=format-security         -fstack-clash-protection -fcf-protection         -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer -g -ffile-prefix-map=/home/zolexander/latte-dock/src=/usr/src/debug/latte-dock -flto=auto
+CMAKE_C_FLAGS:STRING=
 
 //Flags used by the C compiler during DEBUG builds.
 CMAKE_C_FLAGS_DEBUG:STRING=-g
@@ -99,7 +97,7 @@ CMAKE_C_FLAGS_RELWITHDEBINFO:STRING=-O2 -g -DNDEBUG
 CMAKE_DLLTOOL:FILEPATH=CMAKE_DLLTOOL-NOTFOUND
 
 //Flags used by the linker during all build types.
-CMAKE_EXE_LINKER_FLAGS:STRING=-Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now          -Wl,-z,pack-relative-relocs -flto=auto
+CMAKE_EXE_LINKER_FLAGS:STRING=
 
 //Flags used by the linker during DEBUG builds.
 CMAKE_EXE_LINKER_FLAGS_DEBUG:STRING=
@@ -113,8 +111,11 @@ CMAKE_EXE_LINKER_FLAGS_RELEASE:STRING=
 //Flags used by the linker during RELWITHDEBINFO builds.
 CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO:STRING=
 
-//Enable/Disable output of compile commands during generation.
-CMAKE_EXPORT_COMPILE_COMMANDS:BOOL=
+//Enable/Disable output of build database during the build.
+CMAKE_EXPORT_BUILD_DATABASE:BOOL=
+
+//No help, variable specified on the command line.
+CMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE
 
 //Value Computed by CMake.
 CMAKE_FIND_PACKAGE_REDIRECTS_DIR:STATIC=/home/zolexander/latte-dock/build/CMakeFiles/pkgRedirects
@@ -125,7 +126,7 @@ CMAKE_INSTALL_DOCDIR:PATH=
 //C header files for non-gcc (/usr/include)
 CMAKE_INSTALL_OLDINCLUDEDIR:PATH=/usr/include
 
-//Install path prefix, prepended onto install directories.
+//Install path prefix
 CMAKE_INSTALL_PREFIX:PATH=/usr
 
 //Run-time variable data (LOCALSTATEDIR/run)
@@ -134,12 +135,12 @@ CMAKE_INSTALL_RUNSTATEDIR:PATH=
 //Path to a program.
 CMAKE_LINKER:FILEPATH=/usr/bin/ld
 
-//Path to a program.
-CMAKE_MAKE_PROGRAM:FILEPATH=/usr/bin/make
+//Program used to build from build.ninja files.
+CMAKE_MAKE_PROGRAM:FILEPATH=/usr/bin/ninja
 
 //Flags used by the linker during the creation of modules during
 // all build types.
-CMAKE_MODULE_LINKER_FLAGS:STRING=-Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now          -Wl,-z,pack-relative-relocs -flto=auto
+CMAKE_MODULE_LINKER_FLAGS:STRING=
 
 //Flags used by the linker during the creation of modules during
 // DEBUG builds.
@@ -189,7 +190,7 @@ CMAKE_READELF:FILEPATH=/usr/bin/readelf
 
 //Flags used by the linker during the creation of shared libraries
 // during all build types.
-CMAKE_SHARED_LINKER_FLAGS:STRING=-Wl,-O1 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now          -Wl,-z,pack-relative-relocs -flto=auto
+CMAKE_SHARED_LINKER_FLAGS:STRING=
 
 //Flags used by the linker during the creation of shared libraries
 // during DEBUG builds.
@@ -255,8 +256,8 @@ ECM_QMLCACHE_UNITY_BUILD:BOOL=OFF
 //Make use of -Bsymbolic-functions
 ENABLE_BSYMBOLICFUNCTIONS:BOOL=OFF
 
-//No help, variable specified on the command line.
-ENABLE_MAKE_UNIQUE:UNINITIALIZED=OFF
+//Enable Clazy warnings
+ENABLE_CLAZY:BOOL=OFF
 
 //Path to a program.
 FISH_EXECUTABLE:FILEPATH=FISH_EXECUTABLE-NOTFOUND
@@ -439,9 +440,6 @@ KDE_INSTALL_WALLPAPERDIR:PATH=
 //Zsh functions and autocompletion definitions (DATAROOTDIR/zsh/site-functions)
 KDE_INSTALL_ZSHAUTOCOMPLETEDIR:PATH=
 
-//No help, variable specified on the command line.
-KDE_L10N_AUTO_TRANSLATIONS:UNINITIALIZED=OFF
-
 //Prevent an "uninstall" target from being generated.
 KDE_SKIP_UNINSTALL_TARGET:BOOL=OFF
 
@@ -593,22 +591,22 @@ OPENGL_opengl_LIBRARY:FILEPATH=/usr/lib/libOpenGL.so
 OPENGL_xmesa_INCLUDE_DIR:PATH=OPENGL_xmesa_INCLUDE_DIR-NOTFOUND
 
 //CXX compiler flags for OpenMP parallelization
-OpenMP_CXX_FLAGS:STRING=-fopenmp
+OpenMP_CXX_FLAGS:STRING=-fopenmp=libomp
 
 //CXX compiler libraries for OpenMP parallelization
-OpenMP_CXX_LIB_NAMES:STRING=gomp;pthread
+OpenMP_CXX_LIB_NAMES:STRING=omp;pthread
 
 //C compiler flags for OpenMP parallelization
-OpenMP_C_FLAGS:STRING=-fopenmp
+OpenMP_C_FLAGS:STRING=-fopenmp=libomp
 
 //C compiler libraries for OpenMP parallelization
-OpenMP_C_LIB_NAMES:STRING=gomp;pthread
+OpenMP_C_LIB_NAMES:STRING=omp;pthread
 
-//Path to the gomp library for OpenMP
-OpenMP_gomp_LIBRARY:FILEPATH=/usr/lib/libgomp.so
+//Path to the omp library for OpenMP
+OpenMP_omp_LIBRARY:FILEPATH=/usr/lib64/libomp.so
 
 //Path to the pthread library for OpenMP
-OpenMP_pthread_LIBRARY:FILEPATH=/usr/lib/libpthread.a
+OpenMP_pthread_LIBRARY:FILEPATH=/usr/lib64/libpthread.a
 
 //Arguments to supply to pkg-config
 PKG_CONFIG_ARGN:STRING=
@@ -1279,8 +1277,6 @@ CMAKE_CACHE_MAJOR_VERSION:INTERNAL=4
 CMAKE_CACHE_MINOR_VERSION:INTERNAL=2
 //Patch version of cmake used to create the current loaded cache
 CMAKE_CACHE_PATCH_VERSION:INTERNAL=0
-//ADVANCED property for variable: CMAKE_COLOR_MAKEFILE
-CMAKE_COLOR_MAKEFILE-ADVANCED:INTERNAL=1
 //Path to CMake executable.
 CMAKE_COMMAND:INTERNAL=/usr/bin/cmake
 //Path to cpack program executable.
@@ -1291,6 +1287,8 @@ CMAKE_CTEST_COMMAND:INTERNAL=/usr/bin/ctest
 CMAKE_CXX_COMPILER-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_CXX_COMPILER_AR
 CMAKE_CXX_COMPILER_AR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS
+CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_CXX_COMPILER_RANLIB
 CMAKE_CXX_COMPILER_RANLIB-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_CXX_FLAGS
@@ -1307,6 +1305,8 @@ CMAKE_CXX_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 CMAKE_C_COMPILER-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_C_COMPILER_AR
 CMAKE_C_COMPILER_AR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_C_COMPILER_CLANG_SCAN_DEPS
+CMAKE_C_COMPILER_CLANG_SCAN_DEPS-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_C_COMPILER_RANLIB
 CMAKE_C_COMPILER_RANLIB-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_C_FLAGS
@@ -1323,8 +1323,6 @@ CMAKE_C_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 CMAKE_DLLTOOL-ADVANCED:INTERNAL=1
 //Path to cache edit program executable.
 CMAKE_EDIT_COMMAND:INTERNAL=/usr/bin/ccmake
-//Whether to issue deprecation errors for macros and functions.
-CMAKE_ERROR_DEPRECATED:INTERNAL=FALSE
 //Executable file format
 CMAKE_EXECUTABLE_FORMAT:INTERNAL=ELF
 //ADVANCED property for variable: CMAKE_EXE_LINKER_FLAGS
@@ -1337,12 +1335,12 @@ CMAKE_EXE_LINKER_FLAGS_MINSIZEREL-ADVANCED:INTERNAL=1
 CMAKE_EXE_LINKER_FLAGS_RELEASE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO
 CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CMAKE_EXPORT_COMPILE_COMMANDS
-CMAKE_EXPORT_COMPILE_COMMANDS-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_EXPORT_BUILD_DATABASE
+CMAKE_EXPORT_BUILD_DATABASE-ADVANCED:INTERNAL=1
 //Name of external makefile project generator.
 CMAKE_EXTRA_GENERATOR:INTERNAL=
 //Name of generator.
-CMAKE_GENERATOR:INTERNAL=Unix Makefiles
+CMAKE_GENERATOR:INTERNAL=Ninja
 //Generator instance identifier.
 CMAKE_GENERATOR_INSTANCE:INTERNAL=
 //Name of generator platform.
@@ -1430,20 +1428,12 @@ CMAKE_STATIC_LINKER_FLAGS_RELEASE-ADVANCED:INTERNAL=1
 CMAKE_STATIC_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_STRIP
 CMAKE_STRIP-ADVANCED:INTERNAL=1
-//Suppress errors that are meant for the author of the CMakeLists.txt
-// files.
-CMAKE_SUPPRESS_DEVELOPER_ERRORS:INTERNAL=TRUE
-//Suppress Warnings that are meant for the author of the CMakeLists.txt
-// files.
-CMAKE_SUPPRESS_DEVELOPER_WARNINGS:INTERNAL=TRUE
 //ADVANCED property for variable: CMAKE_TAPI
 CMAKE_TAPI-ADVANCED:INTERNAL=1
 //uname command
 CMAKE_UNAME:INTERNAL=/usr/bin/uname
 //ADVANCED property for variable: CMAKE_VERBOSE_MAKEFILE
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
-//Whether to issue warnings for deprecated functionality.
-CMAKE_WARN_DEPRECATED:INTERNAL=FALSE
 //Details about finding Gettext
 FIND_PACKAGE_MESSAGE_DETAILS_Gettext:INTERNAL=[/usr/bin/msgmerge][/usr/bin/msgfmt][v0.26()]
 //Details about finding KF6
@@ -1487,11 +1477,11 @@ FIND_PACKAGE_MESSAGE_DETAILS_KF6XmlGui:INTERNAL=[/usr/lib/cmake/KF6XmlGui/KF6Xml
 //Details about finding OpenGL
 FIND_PACKAGE_MESSAGE_DETAILS_OpenGL:INTERNAL=[/usr/lib/libOpenGL.so][/usr/lib/libGLX.so][/usr/include][ ][v()]
 //Details about finding OpenMP
-FIND_PACKAGE_MESSAGE_DETAILS_OpenMP:INTERNAL=[TRUE][TRUE][ ][v4.5()]
+FIND_PACKAGE_MESSAGE_DETAILS_OpenMP:INTERNAL=[TRUE][TRUE][ ][v5.1()]
 //Details about finding OpenMP_C
-FIND_PACKAGE_MESSAGE_DETAILS_OpenMP_C:INTERNAL=[-fopenmp][/usr/lib/libgomp.so][/usr/lib/libpthread.a][v4.5()]
+FIND_PACKAGE_MESSAGE_DETAILS_OpenMP_C:INTERNAL=[-fopenmp=libomp][/usr/lib64/libomp.so][/usr/lib64/libpthread.a][v5.1()]
 //Details about finding OpenMP_CXX
-FIND_PACKAGE_MESSAGE_DETAILS_OpenMP_CXX:INTERNAL=[-fopenmp][/usr/lib/libgomp.so][/usr/lib/libpthread.a][v4.5()]
+FIND_PACKAGE_MESSAGE_DETAILS_OpenMP_CXX:INTERNAL=[-fopenmp=libomp][/usr/lib64/libomp.so][/usr/lib64/libpthread.a][v5.1()]
 //Details about finding QtWaylandScanner
 FIND_PACKAGE_MESSAGE_DETAILS_QtWaylandScanner:INTERNAL=[/usr/lib/qt6/qtwaylandscanner][v()]
 //Details about finding Wayland
@@ -1525,7 +1515,7 @@ FIND_PACKAGE_MESSAGE_DETAILS_XCB_SHAPE:INTERNAL=[/usr/lib/libxcb-shape.so][/usr/
 //Details about finding XCB_XCB
 FIND_PACKAGE_MESSAGE_DETAILS_XCB_XCB:INTERNAL=[/usr/lib/libxcb.so][/usr/include][v1.17.0()]
 //Details about finding XKB
-FIND_PACKAGE_MESSAGE_DETAILS_XKB:INTERNAL=[/usr/lib/libxkbcommon.so][/usr/include][v1.13.0(0.9.0)]
+FIND_PACKAGE_MESSAGE_DETAILS_XKB:INTERNAL=[/usr/lib/libxkbcommon.so][/usr/include][v1.13.1(0.9.0)]
 //Details about finding org.kde.kquickcontrolsaddons-QMLModule
 FIND_PACKAGE_MESSAGE_DETAILS_org.kde.kquickcontrolsaddons-QMLModule:INTERNAL=[TRUE][ ][v6.20.0()]
 //Details about finding org.kde.plasma.components-QMLModule
@@ -1669,27 +1659,27 @@ OPENGL_opengl_LIBRARY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: OPENGL_xmesa_INCLUDE_DIR
 OPENGL_xmesa_INCLUDE_DIR-ADVANCED:INTERNAL=1
 //Result of TRY_COMPILE
-OpenMP_COMPILE_RESULT_CXX_fopenmp:INTERNAL=TRUE
+OpenMP_COMPILE_RESULT_CXX_fopenmplibomp:INTERNAL=TRUE
 //Result of TRY_COMPILE
-OpenMP_COMPILE_RESULT_C_fopenmp:INTERNAL=TRUE
+OpenMP_COMPILE_RESULT_C_fopenmplibomp:INTERNAL=TRUE
 //ADVANCED property for variable: OpenMP_CXX_FLAGS
 OpenMP_CXX_FLAGS-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: OpenMP_CXX_LIB_NAMES
 OpenMP_CXX_LIB_NAMES-ADVANCED:INTERNAL=1
 //CXX compiler's OpenMP specification date
-OpenMP_CXX_SPEC_DATE:INTERNAL=201511
+OpenMP_CXX_SPEC_DATE:INTERNAL=202011
 //ADVANCED property for variable: OpenMP_C_FLAGS
 OpenMP_C_FLAGS-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: OpenMP_C_LIB_NAMES
 OpenMP_C_LIB_NAMES-ADVANCED:INTERNAL=1
 //C compiler's OpenMP specification date
-OpenMP_C_SPEC_DATE:INTERNAL=201511
+OpenMP_C_SPEC_DATE:INTERNAL=202011
 //Result of TRY_COMPILE
 OpenMP_SPECTEST_CXX_:INTERNAL=TRUE
 //Result of TRY_COMPILE
 OpenMP_SPECTEST_C_:INTERNAL=TRUE
-//ADVANCED property for variable: OpenMP_gomp_LIBRARY
-OpenMP_gomp_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OpenMP_omp_LIBRARY
+OpenMP_omp_LIBRARY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: OpenMP_pthread_LIBRARY
 OpenMP_pthread_LIBRARY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: PKG_CONFIG_ARGN
@@ -2041,7 +2031,7 @@ PKG_XKB_STATIC_LIBS:INTERNAL=
 PKG_XKB_STATIC_LIBS_L:INTERNAL=
 PKG_XKB_STATIC_LIBS_OTHER:INTERNAL=
 PKG_XKB_STATIC_LIBS_PATHS:INTERNAL=
-PKG_XKB_VERSION:INTERNAL=1.13.0
+PKG_XKB_VERSION:INTERNAL=1.13.1
 PKG_XKB_xkbcommon_INCLUDEDIR:INTERNAL=
 PKG_XKB_xkbcommon_LIBDIR:INTERNAL=
 PKG_XKB_xkbcommon_PREFIX:INTERNAL=
@@ -3392,5 +3382,5 @@ pkgcfg_lib_PKG_XCB_SHAPE_xcb-shape-ADVANCED:INTERNAL=1
 pkgcfg_lib_PKG_XCB_XCB_xcb-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: pkgcfg_lib_PKG_XKB_xkbcommon
 pkgcfg_lib_PKG_XKB_xkbcommon-ADVANCED:INTERNAL=1
-prefix_result:INTERNAL=/usr/lib
+prefix_result:INTERNAL=//usr/share/wayland
 

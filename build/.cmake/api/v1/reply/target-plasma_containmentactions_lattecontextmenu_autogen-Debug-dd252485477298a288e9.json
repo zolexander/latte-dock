@@ -1,0 +1,85 @@
+{
+	"backtrace" : 0,
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : 
+		[
+			"containmentactions/contextmenu/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			}
+		]
+	},
+	"codemodelVersion" : 
+	{
+		"major" : 2,
+		"minor" : 9
+	},
+	"dependencies" : 
+	[
+		{
+			"id" : "plasma_containmentactions_lattecontextmenu_autogen_timestamp_deps::@885b322b126f55fe45ae"
+		}
+	],
+	"id" : "plasma_containmentactions_lattecontextmenu_autogen::@885b322b126f55fe45ae",
+	"isGeneratorProvided" : true,
+	"name" : "plasma_containmentactions_lattecontextmenu_autogen",
+	"orderDependencies" : 
+	[
+		{
+			"id" : "Qt6::moc::@6890427a1f51a3e7e1df"
+		},
+		{
+			"id" : "plasma_containmentactions_lattecontextmenu_autogen_timestamp_deps::@885b322b126f55fe45ae"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "containmentactions/contextmenu",
+		"source" : "containmentactions/contextmenu"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		},
+		{
+			"name" : "CMake Rules",
+			"sourceIndexes" : 
+			[
+				1,
+				2
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/containmentactions/contextmenu/CMakeFiles/plasma_containmentactions_lattecontextmenu_autogen",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/containmentactions/contextmenu/CMakeFiles/plasma_containmentactions_lattecontextmenu_autogen.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/containmentactions/contextmenu/plasma_containmentactions_lattecontextmenu_autogen/timestamp.rule",
+			"sourceGroupIndex" : 1
+		}
+	],
+	"type" : "UTILITY"
+}

@@ -18,8 +18,8 @@ Q_SIGNALS:
     void updated();
 
 private:
-    KActivities::Consumer *m_consumer{nullptr};
+    std::unique_ptr<KActivities::Consumer> m_consumer;
     ActivitiesTable m_table;
 };
 
-}} // namespace
+}} // namespace Latte::Data

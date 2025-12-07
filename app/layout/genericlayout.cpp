@@ -59,6 +59,8 @@ Type GenericLayout::type() const
 
 void GenericLayout::unloadContainments()
 {
+    // TODO: TEMP KF6 Workaround: application crash
+    return;
     if (!m_corona) {
         return;
     }

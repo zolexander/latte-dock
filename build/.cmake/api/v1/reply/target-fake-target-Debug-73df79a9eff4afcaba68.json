@@ -1,0 +1,861 @@
+{
+	"backtrace" : 3,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_custom_target",
+			"include"
+		],
+		"files" : 
+		[
+			"app/FakeTarget.cmake",
+			"app/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 1
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 55,
+				"parent" : 0
+			},
+			{
+				"file" : 0,
+				"parent" : 1
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 8,
+				"parent" : 2
+			}
+		]
+	},
+	"codemodelVersion" : 
+	{
+		"major" : 2,
+		"minor" : 9
+	},
+	"id" : "fake-target::@5f5a17c01335469806cb",
+	"name" : "fake-target",
+	"paths" : 
+	{
+		"build" : "app",
+		"source" : "app"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "",
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18,
+				19,
+				20,
+				21,
+				22,
+				23,
+				24,
+				25,
+				26,
+				27,
+				28,
+				29,
+				30,
+				31,
+				32,
+				33,
+				34,
+				35,
+				36,
+				37,
+				38,
+				39,
+				40,
+				41,
+				42,
+				43,
+				44,
+				45,
+				46,
+				47,
+				48,
+				49,
+				50,
+				51,
+				52,
+				53,
+				54,
+				55,
+				56,
+				57,
+				58,
+				59,
+				60,
+				61,
+				62,
+				63,
+				64,
+				65,
+				66,
+				67,
+				68,
+				69,
+				70,
+				71,
+				72,
+				73,
+				74,
+				75,
+				76,
+				77,
+				78,
+				79,
+				80,
+				81,
+				82,
+				83,
+				84,
+				85,
+				86,
+				87,
+				88,
+				89,
+				90,
+				91,
+				92,
+				93,
+				94,
+				95,
+				96,
+				97,
+				98,
+				99,
+				100,
+				101,
+				102,
+				103,
+				104,
+				105,
+				106,
+				107,
+				108,
+				109,
+				110,
+				111,
+				112,
+				113,
+				114,
+				115,
+				116,
+				117,
+				118,
+				119,
+				120,
+				121,
+				122,
+				123,
+				124,
+				125,
+				126,
+				127,
+				128,
+				129,
+				130,
+				131,
+				132
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 3,
+			"path" : "shell/package/contents/applet/CompactApplet.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "shell/package/contents/configuration/canvas/controls/GraphicIcon.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "shell/package/contents/configuration/canvas/controls/RearrangeIcon.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "shell/package/contents/configuration/canvas/controls/StickIcon.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "shell/package/contents/configuration/canvas/controls/Button.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "shell/package/contents/configuration/canvas/maxlength/Ruler.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "shell/package/contents/configuration/canvas/maxlength/RulerMouseArea.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "shell/package/contents/configuration/canvas/HeaderSettings.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "shell/package/contents/configuration/canvas/SettingsOverlay.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "shell/package/contents/configuration/config.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "shell/package/contents/configuration/pages/AppearanceConfig.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "shell/package/contents/configuration/pages/BehaviorConfig.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "shell/package/contents/configuration/pages/EffectsConfig.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "shell/package/contents/configuration/pages/TasksConfig.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "shell/package/contents/configuration/CanvasConfiguration.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "shell/package/contents/configuration/LatteDockConfiguration.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "shell/package/contents/configuration/LatteDockSecondaryConfiguration.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "shell/package/contents/controls/CustomIndicatorButton.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "shell/package/contents/controls/CustomVisibilityModeButton.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "shell/package/contents/controls/DragCorner.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "shell/package/contents/controls/IndicatorConfigUiManager.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "shell/package/contents/controls/InnerShadow.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "shell/package/contents/controls/TypeSelection.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "shell/package/contents/views/AppletDelegate.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "shell/package/contents/views/InfoView.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "shell/package/contents/views/WidgetExplorer.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "shell/package/contents/views/Panel.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/code/AppletIdentifier.js",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/code/ColorizerTools.js",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/code/MathTools.js",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/BindingsExternal.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/DragDropArea.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/VisibilityManager.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/abilities/Animations.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/abilities/AutoSize.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/abilities/Debug.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/abilities/Indexer.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/abilities/Indicators.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/abilities/Launchers.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/abilities/Layouter.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/abilities/Metrics.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/abilities/MyView.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/abilities/ParabolicEffect.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/abilities/PositionShortcuts.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/abilities/ThinTooltip.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/abilities/UserRequests.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/abilities/privates/AnimationsPrivate.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/abilities/privates/IndexerPrivate.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/abilities/privates/IndicatorsPrivate.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/abilities/privates/LaunchersPrivate.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/abilities/privates/LayouterPrivate.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/abilities/privates/MetricsPrivate.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/abilities/privates/MyViewPrivate.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/abilities/privates/ParabolicEffectPrivate.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/abilities/privates/PositionShortcutsPrivate.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/abilities/privates/ThinTooltipPrivate.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/abilities/privates/layouter/AppletsContainer.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/abilities/privates/metrics/Fraction.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/applet/EventsSink.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/applet/EventsSinkOriginArea.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/applet/HiddenSpacer.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/applet/IndicatorLevel.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/applet/PaddingsInConfigureApplets.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/applet/TitleTooltipParent.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/applet/colorizer/Applet.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/applet/communicator/Actions.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/applet/communicator/Engine.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/applet/communicator/LatteBridge.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/applet/ParabolicArea.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/applet/AppletItem.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/applet/ItemWrapper.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/applet/ShortcutBadge.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/background/BackgroundProperties.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/background/types/Paddings.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/background/types/Shadows.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/background/types/Totals.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/background/MultiLayered.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/colorizer/CustomBackground.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/colorizer/KirigamiShadowedRectangle.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/colorizer/NormalRectangle.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/colorizer/Manager.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/debugger/Tag.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/debugger/DebugWindow.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/editmode/ConfigOverlay.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/layouts/AppletsContainer.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/layouts/EnvironmentActions.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/layouts/LayoutsContainer.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/layouts/ParabolicEdgeSpacer.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/layouts/loaders/Tasks.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/Upgrader.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "containment/package/contents/ui/main.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "plasmoid/package/contents/code/ColorizerTools.js",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "plasmoid/package/contents/code/activitiesTools.js",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "plasmoid/package/contents/code/layout.js",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "plasmoid/package/contents/code/tools.js",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "plasmoid/package/contents/config/config.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "plasmoid/package/contents/ui/AppletAbilities.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "plasmoid/package/contents/ui/PulseAudio.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "plasmoid/package/contents/ui/abilities/Launchers.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "plasmoid/package/contents/ui/abilities/launchers/Validator.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "plasmoid/package/contents/ui/abilities/launchers/Syncer.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "plasmoid/package/contents/ui/config/ConfigAppearance.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "plasmoid/package/contents/ui/config/ConfigInteraction.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "plasmoid/package/contents/ui/config/ConfigPanel.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "plasmoid/package/contents/ui/previews/PipeWireThumbnail.5.24.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "plasmoid/package/contents/ui/previews/PipeWireThumbnail.5.25.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "plasmoid/package/contents/ui/previews/PipeWireThumbnail.5.26.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "plasmoid/package/contents/ui/previews/PlasmaCoreThumbnail.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "plasmoid/package/contents/ui/previews/ToolTipDelegate2.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "plasmoid/package/contents/ui/previews/ToolTipInstance.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "plasmoid/package/contents/ui/previews/ToolTipWindowMouseArea.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "plasmoid/package/contents/ui/task/AudioStream.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "plasmoid/package/contents/ui/task/ProgressOverlay.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "plasmoid/package/contents/ui/task/TaskMouseArea.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "plasmoid/package/contents/ui/task/animations/ClickedAnimation.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "plasmoid/package/contents/ui/task/animations/LauncherAnimation.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "plasmoid/package/contents/ui/task/animations/NewWindowAnimation.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "plasmoid/package/contents/ui/task/animations/RealRemovalAnimation.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "plasmoid/package/contents/ui/task/animations/ShowWindowAnimation.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "plasmoid/package/contents/ui/task/animations/launcher/BounceAnimation.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "plasmoid/package/contents/ui/task/animations/newwindow/BounceAnimation.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "plasmoid/package/contents/ui/task/animations/RemoveWindowFromGroupAnimation.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "plasmoid/package/contents/ui/task/SubWindows.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "plasmoid/package/contents/ui/task/TaskIcon.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "plasmoid/package/contents/ui/task/TaskItem.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "plasmoid/package/contents/ui/taskslayout/MouseHandler.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "plasmoid/package/contents/ui/taskslayout/ScrollPositioner.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "plasmoid/package/contents/ui/taskslayout/ScrollableList.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "plasmoid/package/contents/ui/taskslayout/ScrollEdgeShadows.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "plasmoid/package/contents/ui/taskslayout/ScrollOpacityMask.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "plasmoid/package/contents/ui/TasksExtendedManager.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "plasmoid/package/contents/ui/ContextMenu.qml",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "plasmoid/package/contents/ui/main.qml",
+			"sourceGroupIndex" : 0
+		}
+	],
+	"type" : "UTILITY"
+}

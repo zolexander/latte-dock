@@ -25,11 +25,11 @@ class Activity : public Generic
 {
 public:
     Activity();
-    Activity(Activity &&o);
-    Activity(const Activity &o);
+    Activity(Activity &&o) noexcept;
+    Activity(const Activity &other);
 
     //! Activity data
-    QString icon;
+    QString iconName;
     bool isCurrent{false};
     bool available{false};
 

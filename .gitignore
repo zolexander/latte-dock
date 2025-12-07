@@ -7,9 +7,12 @@
 .vscode
 
 # build directory
-build*/
+#build*/
 /cmake-build*
-
+#build/
+#build/*
+#build/**
+#build/**/**
 # backup files
 *.autosave
 *.desktop~
@@ -45,4 +48,6 @@ build*/
 
 CMakeLists.txt.user*
 /compile_commands.json
-
+pkgbuild-*.log
+pkg/
+.envrc

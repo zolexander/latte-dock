@@ -1,0 +1,146 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"app/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 100,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 101,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 102,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 103,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 104,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 105,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 106,
+				"parent" : 0
+			}
+		]
+	},
+	"codemodelVersion" : 
+	{
+		"major" : 2,
+		"minor" : 9
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "lattedock",
+			"destination" : "bin",
+			"paths" : 
+			[
+				"bin/latte-dock"
+			],
+			"targetId" : "latte-dock::@5f5a17c01335469806cb",
+			"targetIndex" : 1,
+			"type" : "target"
+		},
+		{
+			"backtrace" : 2,
+			"component" : "lattedock",
+			"destination" : "share/applications",
+			"paths" : 
+			[
+				"build/app/org.kde.latte-dock.desktop"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 3,
+			"component" : "lattedock",
+			"destination" : "share/metainfo",
+			"paths" : 
+			[
+				"build/app/org.kde.latte-dock.appdata.xml"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 4,
+			"component" : "lattedock",
+			"destination" : "share/dbus-1/interfaces",
+			"paths" : 
+			[
+				"app/dbus/org.kde.LatteDock.xml"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 5,
+			"component" : "lattedock",
+			"destination" : "share/knotifications6",
+			"paths" : 
+			[
+				"app/lattedock.notifyrc"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 6,
+			"component" : "lattedock",
+			"destination" : "share/knsrcfiles",
+			"paths" : 
+			[
+				"app/latte-layouts.knsrc"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 7,
+			"component" : "lattedock",
+			"destination" : "share/knsrcfiles",
+			"paths" : 
+			[
+				"app/latte-indicators.knsrc"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "app",
+		"source" : "app"
+	}
+}

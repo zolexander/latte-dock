@@ -1,0 +1,188 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install",
+			"ecm_install_icons",
+			"_ecm_update_iconcache"
+		],
+		"files" : 
+		[
+			"/usr/share/ECM/modules/ECMInstallIcons.cmake",
+			"icons/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 1
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 3,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 268,
+				"parent" : 1
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 268,
+				"parent" : 1
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 268,
+				"parent" : 1
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 268,
+				"parent" : 1
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 268,
+				"parent" : 1
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 268,
+				"parent" : 1
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 275,
+				"parent" : 1
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 199,
+				"parent" : 8
+			},
+			{
+				"command" : 0,
+				"file" : 1,
+				"line" : 13,
+				"parent" : 0
+			}
+		]
+	},
+	"codemodelVersion" : 
+	{
+		"major" : 2,
+		"minor" : 9
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 2,
+			"component" : "lattedock",
+			"destination" : "share/icons/hicolor/16x16/apps",
+			"paths" : 
+			[
+				{
+					"from" : "icons/16-apps-latte-dock.svg",
+					"to" : "latte-dock.svg"
+				}
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 3,
+			"component" : "lattedock",
+			"destination" : "share/icons/hicolor/22x22/apps",
+			"paths" : 
+			[
+				{
+					"from" : "icons/22-apps-latte-dock.svg",
+					"to" : "latte-dock.svg"
+				}
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 4,
+			"component" : "lattedock",
+			"destination" : "share/icons/hicolor/24x24/apps",
+			"paths" : 
+			[
+				{
+					"from" : "icons/24-apps-latte-dock.svg",
+					"to" : "latte-dock.svg"
+				}
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 5,
+			"component" : "lattedock",
+			"destination" : "share/icons/hicolor/32x32/apps",
+			"paths" : 
+			[
+				{
+					"from" : "icons/32-apps-latte-dock.svg",
+					"to" : "latte-dock.svg"
+				}
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 6,
+			"component" : "lattedock",
+			"destination" : "share/icons/hicolor/48x48/apps",
+			"paths" : 
+			[
+				{
+					"from" : "icons/48-apps-latte-dock.svg",
+					"to" : "latte-dock.svg"
+				}
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 7,
+			"component" : "lattedock",
+			"destination" : "share/icons/hicolor/scalable/apps",
+			"paths" : 
+			[
+				{
+					"from" : "icons/sc-apps-latte-dock.svg",
+					"to" : "latte-dock.svg"
+				}
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 9,
+			"component" : "lattedock",
+			"type" : "code"
+		},
+		{
+			"backtrace" : 10,
+			"component" : "lattedock",
+			"destination" : "share/icons/breeze/applets/256",
+			"paths" : 
+			[
+				"icons/org.kde.latte.plasmoid.svg"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "icons",
+		"source" : "icons"
+	}
+}

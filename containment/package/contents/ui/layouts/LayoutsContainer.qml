@@ -23,7 +23,9 @@ Item{
     //! That approach can create a conflict with Latte Tasks that after showing the view they reshow windows
     //! that were already shown before hiding.
     //! visible: !(latteView && latteView.visibility.isHidden)
-    opacity: !(latteView && latteView.visibility.isHidden) ? 1 : 0
+    // Plasma 6 temporary workaround: always draw layoutsContainer, ignore latteView.visibility.isHidden,
+    // otherwise all applets end up fully transparent while we are debugging visibility.
+    opacity: 1
 
     readonly property bool isHidden: root.inStartup || (latteView && latteView.visibility && latteView.visibility.isHidden)
 
@@ -292,6 +294,12 @@ Item{
         z:10 //be on top of start and end layouts
         beginIndex: 100
         offset: {
+            if (plasmoid.location === PlasmaCore.Types.BottomEdge) {
+                // Plasma 6 temporary behavior: keep the main layout truly
+                // centered at the bottom without extra horizontal offset.
+                return 0;
+            }
+
             if (!centered) {
                 //! it is used for Top/Bottom/Left/Right alignments when they show both background length shadows
                 return background.offset + lengthTailPadding;
@@ -324,17 +332,9 @@ Item{
             }
 
             if (plasmoid.location === PlasmaCore.Types.BottomEdge) {
-                if (centered) return LatteCore.Types.BottomEdgeCenterAlign;
-
-                if ((root.myView.alignment === LatteCore.Types.Left && !reversed)
-                        || (root.myView.alignment === LatteCore.Types.Right && reversed)) {
-                    return LatteCore.Types.BottomEdgeLeftAlign;
-                }
-
-                if ((root.myView.alignment === LatteCore.Types.Right && !reversed)
-                        || (root.myView.alignment === LatteCore.Types.Left && reversed)) {
-                    return LatteCore.Types.BottomEdgeRightAlign;
-                }
+                // Plasma 6 temporary behavior: always keep the main layout
+                // centered at the bottom, regardless of view alignment.
+                return LatteCore.Types.BottomEdgeCenterAlign;
             }
 
             if (plasmoid.location === PlasmaCore.Types.TopEdge) {
