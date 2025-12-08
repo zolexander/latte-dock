@@ -312,8 +312,10 @@ PlasmaComponents.Menu {
 
         enabled: visible
         checkable: true
-        // leer oder undefined bedeutet "alle Activities"
-        checked: !visualParent.m.Activities || visualParent.m.Activities.length === 0
+        // leer oder undefined bedeutet "alle Activities"; nur zugreifen, wenn visualParent/m gültig sind
+        checked: visualParent && visualParent.m
+                 ? (!visualParent.m.Activities || visualParent.m.Activities.length === 0)
+                 : false
 
         text: i18n("All Activities")
 

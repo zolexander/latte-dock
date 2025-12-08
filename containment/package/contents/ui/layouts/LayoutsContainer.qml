@@ -65,6 +65,28 @@ Item{
                         }
                     }
                 } else {
+                   // Plasma 6: zentriere den gesamten Layout-Block auf Basis
+                    // seiner tatsächlichen Breite inkl. Paddings.
+                    if (root.isHorizontal && parent) {
+                        var cw = layoutsContainer.contentsWidth;
+                        var pw = parent.width;
+                        var total = cw + layoutsContainer.lengthTailPadding + layoutsContainer.lengthHeadPadding;
+
+                        console.log("LATTE DEBUG LAYOUTS:",
+                                    "viewWidth=", pw,
+                                    "contentsWidth=", cw,
+                                    "tailPadding=", layoutsContainer.lengthTailPadding,
+                                    "headPadding=", layoutsContainer.lengthHeadPadding,
+                                    "total=", total);
+                        console.log("LATTE DEBUG LAYOUTS LAYOUTS:",
+                                    "startWidth=", _startLayout.width,
+                                    "mainWidth=", _mainLayout.width,
+                                    "endWidth=", _endLayout.width);
+                        if (total > 0 && pw > total) {
+                            // Mitte des Docks minus halbe Block-Breite
+                            return (pw - total) / 2 + layoutsContainer.lengthTailPadding;
+                        }
+                    }
                     return 0;
                 }
             }
@@ -111,10 +133,15 @@ Item{
     property bool animationSent: false
     property bool shouldCheckHalfs: (plasmoid.configuration.alignment === LatteCore.Types.Justify) && (_mainLayout.children>1)
 
-    property int contentsWidth: root.isHorizontal ? _startLayout.width + _mainLayout.width + _endLayout.width :
-                                                    Math.max(_startLayout.width, _mainLayout.width ,_endLayout.width)
-    property int contentsHeight: root.isVertical ? _startLayout.height + _mainLayout.height + _endLayout.height :
-                                                   Math.max(_startLayout.height, _mainLayout.height, _endLayout.height)
+    // Use the AppletsContainer "length" (effective occupied length minus
+    // ignoredLength) instead of raw width/height. The raw widths are always
+    // stretched to the full panel size in Plasma 6, which makes
+    // contentsWidth artificially large (e.g. 3 * panelWidth). The "length"
+    // properties track the actual icon/app-layout extent.
+    property int contentsWidth: root.isHorizontal ? _startLayout.length + _mainLayout.length + _endLayout.length :
+                                                    Math.max(_startLayout.length, _mainLayout.length ,_endLayout.length)
+    property int contentsHeight: root.isVertical ? _startLayout.length + _mainLayout.length + _endLayout.length :
+                                                   Math.max(_startLayout.length, _mainLayout.length, _endLayout.length)
 
 
     readonly property int backgroundShadowTailLength: {

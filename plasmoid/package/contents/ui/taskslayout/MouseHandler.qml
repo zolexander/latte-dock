@@ -77,7 +77,8 @@ Item {
         function isDroppingOnlyLaunchers(event) {
             if (event.mimeData.hasUrls || (event.mimeData.formats.indexOf("text/x-plasmoidservicename") !== 0)) {
                 var onlyLaunchers = event.mimeData.urls.every(function (item) {
-                    return backend.isApplication(item)
+                    return backend.isApplication(item);
+
                 });
 
                 return onlyLaunchers;
@@ -103,7 +104,7 @@ Item {
             }
         }
 
-        onDragEnter:{          
+        onDragEnter: function(event){          
             inMovingTask = isMovingTask(event);
             inDroppingOnlyLaunchers = !inMovingTask && isDroppingOnlyLaunchers(event);
             inDroppingSeparator = !inMovingTask && isDroppingSeparator(event);
@@ -124,7 +125,7 @@ Item {
             dArea.containsDrag = true;
         }
 
-        onDragMove: {
+        onDragMove: function(event){
             if (!eventIsAccepted) {
                 clearDroppingFlags();
                 event.ignore();
@@ -194,7 +195,7 @@ Item {
             }
         }
 
-        onDragLeave: {
+        onDragLeave: function(event){
             dArea.containsDrag = false;
             hoveredItem = null;
             clearDroppingFlags();
@@ -202,7 +203,7 @@ Item {
             activationTimer.stop();
         }
 
-        onDrop: {
+        onDrop: function(event){
             if (!eventIsAccepted) {
                 clearDroppingFlags();
                 event.ignore();

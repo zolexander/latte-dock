@@ -9,10 +9,14 @@
 # build directory
 #build*/
 /cmake-build*
-#build/
-#build/*
-#build/**
-#build/**/**
+build/
+build/*
+build/**
+build/**/**
+latte-dock/
+latte-dock/*
+latte-dock/**
+latte-dock/**/**
 # backup files
 *.autosave
 *.desktop~

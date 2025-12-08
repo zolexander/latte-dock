@@ -3,57 +3,58 @@
     SPDX-FileCopyrightText: 2016 Michail Vourlakos <mvourlakos@gmail.com>
     SPDX-License-Identifier: GPL-2.0-or-later
 */
-
-import QtQuick 2.8
-import QtQuick.Layouts
-
-import Qt5Compat.GraphicalEffects
-
-import org.kde.kirigami 2.20 as Kirigami
-import org.kde.ksvg 1.0 as KSvg
-import org.kde.plasma.core 2.0 as PlasmaCore
-import org.kde.plasma.components 3.0 as PlasmaComponents
-import org.kde.plasma.plasmoid 2.0
-
-import org.kde.taskmanager 0.1 as TaskManager
 //import org.kde.plasma.private.taskmanager 0.1 as TaskManagerApplet
 
-import org.kde.activities 0.1 as Activities
-
-import org.kde.latte.core 0.2 as LatteCore
-import org.kde.latte.components 1.0 as LatteComponents
-
-import org.kde.latte.private.tasks 0.1 as LatteTasks
-
+import "../code/ColorizerTools.js" as ColorizerTools
+import "../code/activitiesTools.js" as ActivitiesTools
+import "../code/tools.js" as TaskTools
+import Qt5Compat.GraphicalEffects
+import QtQuick 2.8
+import QtQuick.Layouts
 import "abilities" as Ability
+import org.kde.activities 0.1 as Activities
+import org.kde.kirigami 2.20 as Kirigami
+import org.kde.ksvg 1.0 as KSvg
+import org.kde.latte.components 1.0 as LatteComponents
+import org.kde.latte.core 0.2 as LatteCore
+import org.kde.latte.private.tasks 0.1 as LatteTasks
+import org.kde.plasma.components 3.0 as PlasmaComponents
+import org.kde.plasma.core 2.0 as PlasmaCore
+import org.kde.plasma.plasmoid 2.0
+import org.kde.taskmanager 0.1 as TaskManager
 import "previews" as Previews
 import "task" as Task
 import "taskslayout" as TasksLayout
-import "../code/tools.js" as TaskTools
-import "../code/activitiesTools.js" as ActivitiesTools
-import "../code/ColorizerTools.js" as ColorizerTools
 
 PlasmoidItem {
-    id:root
-    Layout.fillWidth: scrollingEnabled && !root.vertical
-    Layout.fillHeight: scrollingEnabled && root.vertical
+    //END Latte Dock Panel properties
+    //END  Latte Dock Communicator
+    /////
+    //Kirigami.ColorSet {
+    //    id: colorScopePalette
+    //}
+    /////Window previews///////////
+    ////BEGIN interfaces
+    /////Window Previews/////////
+    //// helpers
+    /////////
+    ///REMOVE
+    /*function createContextMenu(task) {
+        var menu = root.contextMenuComponent.createObject(task);
+        menu.visualParent = task;
+        menu.mpris2Source = mpris2Source;
+        menu.activitiesCount = activityModelInstance.count;
+        return menu;
+    }*/
+    //END states
 
-    Layout.minimumWidth: inPlasma && root.isHorizontal ? minimumLength : -1
-    Layout.minimumHeight: inPlasma && !root.isHorizontal ? minimumLength : -1
-    Layout.preferredWidth: tasksWidth
-    Layout.preferredHeight: tasksHeight
-    Layout.maximumWidth: -1
-    Layout.maximumHeight: -1
-
-    LayoutMirroring.enabled: Qt.application.layoutDirection === Qt.RightToLeft && !root.vertical
-    LayoutMirroring.childrenInherit: true
+    id: root
 
     // Plasma 6: PlasmaCore.Theme and Kirigami.Units are singletons
     // and not creatable as QML elements. Expose them via readonly
     // properties so existing theme.* / units.* usages keep working.
     readonly property var theme: PlasmaCore.Theme
     readonly property var units: Kirigami.Units
-
     property bool disableRestoreZoom: false //blocks restore animation in rightClick
     property bool disableAllWindowsFunctionality: plasmoid.configuration.hideAllTasks
     property bool inActivityChange: false
@@ -66,76 +67,54 @@ PlasmoidItem {
     property bool transparentPanel: plasmoid.configuration.transparentPanel
     property bool vertical: plasmoid.formFactor === PlasmaCore.Types.Vertical ? true : false
     property bool isHorizontal: plasmoid.formFactor === PlasmaCore.Types.Horizontal ? true : false
-
     property bool hasTaskDemandingAttention: false
-
     property int clearWidth
     property int clearHeight
-
     property int newDroppedPosition: -1
     property int noTasksInAnimation: 0
     property int themePanelSize: plasmoid.configuration.panelSize
-
-    property int location : {
-        if (plasmoid.location === PlasmaCore.Types.LeftEdge
-                || plasmoid.location === PlasmaCore.Types.RightEdge
-                || plasmoid.location === PlasmaCore.Types.TopEdge) {
+    property int location: {
+        if (plasmoid.location === PlasmaCore.Types.LeftEdge || plasmoid.location === PlasmaCore.Types.RightEdge || plasmoid.location === PlasmaCore.Types.TopEdge)
             return plasmoid.location;
-        }
 
         return PlasmaCore.Types.BottomEdge;
     }
-
     ///Don't use Math.floor it adds one pixel in animations and creates glitches
     property int widthMargins: root.vertical ? appletAbilities.metrics.totals.thicknessEdges : appletAbilities.metrics.totals.lengthEdges
     property int heightMargins: !root.vertical ? appletAbilities.metrics.totals.thicknessEdges : appletAbilities.metrics.totals.lengthEdges
-
     property int internalWidthMargins: root.vertical ? appletAbilities.metrics.totals.thicknessEdges : appletAbilities.metrics.totals.lengthPaddings
     property int internalHeightMargins: !root.vertical ? appletAbilities.metrics.totals.thicknessEdges : appletAbilities.metrics.totals.lengthPaddings
-
-    readonly property int minimumLength: inPlasma ? (root.isHorizontal ? tasksWidth : tasksHeight) : -1;
-
+    readonly property int minimumLength: inPlasma ? (root.isHorizontal ? tasksWidth : tasksHeight) : -1
     property real textColorBrightness: ColorizerTools.colorBrightness(themeTextColor)
-
     property color themeTextColor: theme.textColor
     property color themeBackgroundColor: theme.backgroundColor
-
     property color lightTextColor: textColorBrightness > 127.5 ? themeTextColor : themeBackgroundColor
-
     //a small badgers record (id,value)
     //in order to track badgers when there are changes
     //in launcher reference from libtaskmanager
-    property variant badgers:[]
+    property variant badgers: []
     property variant launchersOnActivities: []
-
     //global plasmoid reference to the context menu
     property QtObject contextMenu: null
-    property QtObject contextMenuComponent: Qt.createComponent("ContextMenu.qml");
+    property QtObject contextMenuComponent: Qt.createComponent("ContextMenu.qml")
     property Item dragSource: null
-
     property Item tasksExtendedManager: _tasksExtendedManager
     readonly property alias appletAbilities: _appletAbilities
-
     readonly property alias containsDrag: mouseHandler.containsDrag
-
     //! Animations
     readonly property bool launcherBouncingEnabled: appletAbilities.animations.active && plasmoid.configuration.animationLauncherBouncing
     readonly property bool newWindowSlidingEnabled: appletAbilities.animations.active && plasmoid.configuration.animationNewWindowSliding
     readonly property bool windowInAttentionEnabled: appletAbilities.animations.active && plasmoid.configuration.animationWindowInAttention
     readonly property bool windowAddedInGroupEnabled: appletAbilities.animations.active && plasmoid.configuration.animationWindowAddedInGroup
     readonly property bool windowRemovedFromGroupEnabled: appletAbilities.animations.active && plasmoid.configuration.animationWindowRemovedFromGroup
-
     readonly property bool hasHighThicknessAnimation: launcherBouncingEnabled || windowInAttentionEnabled || windowAddedInGroupEnabled
-
     //BEGIN properties
     property bool groupTasksByDefault: plasmoid.configuration.groupTasksByDefault
     property bool highlightWindows: hoverAction === LatteTasks.Types.HighlightWindows || hoverAction === LatteTasks.Types.PreviewAndHighlightWindows
-
     property bool scrollingEnabled: plasmoid.configuration.scrollTasksEnabled
     property bool autoScrollTasksEnabled: scrollingEnabled && plasmoid.configuration.autoScrollTasksEnabled
-    property bool manualScrollTasksEnabled: scrollingEnabled &&  manualScrollTasksType !== LatteTasks.Types.ManualScrollDisabled
+    property bool manualScrollTasksEnabled: scrollingEnabled && manualScrollTasksType !== LatteTasks.Types.ManualScrollDisabled
     property int manualScrollTasksType: plasmoid.configuration.manualScrollTasksType
-
     property bool showInfoBadge: plasmoid.configuration.showInfoBadge
     property bool showProgressBadge: plasmoid.configuration.showProgressBadge
     property bool showAudioBadge: plasmoid.configuration.showAudioBadge
@@ -144,19 +123,17 @@ PlasmoidItem {
     property bool showOnlyCurrentScreen: plasmoid.configuration.showOnlyCurrentScreen
     property bool showOnlyCurrentDesktop: plasmoid.configuration.showOnlyCurrentDesktop
     property bool showOnlyCurrentActivity: plasmoid.configuration.showOnlyCurrentActivity
-    property bool showPreviews:  hoverAction === LatteTasks.Types.PreviewWindows || hoverAction === LatteTasks.Types.PreviewAndHighlightWindows
+    property bool showPreviews: hoverAction === LatteTasks.Types.PreviewWindows || hoverAction === LatteTasks.Types.PreviewAndHighlightWindows
     property bool showWindowActions: plasmoid.configuration.showWindowActions && !disableAllWindowsFunctionality
     property bool showWindowsOnlyFromLaunchers: plasmoid.configuration.showWindowsOnlyFromLaunchers && !disableAllWindowsFunctionality
-
     property alias windowPreviewIsShown: windowsPreviewDlg.visible
-
     property int leftClickAction: plasmoid.configuration.leftClickAction
     property int middleClickAction: plasmoid.configuration.middleClickAction
     property int hoverAction: plasmoid.configuration.hoverAction
     property int modifier: plasmoid.configuration.modifier
     property int modifierClickAction: plasmoid.configuration.modifierClickAction
     property int modifierClick: plasmoid.configuration.modifierClick
-    property int modifierQt:{
+    property int modifierQt: {
         if (modifier === LatteTasks.Types.Shift)
             return Qt.ShiftModifier;
         else if (modifier === LatteTasks.Types.Ctrl)
@@ -165,62 +142,448 @@ PlasmoidItem {
             return Qt.AltModifier;
         else if (modifier === LatteTasks.Types.Meta)
             return Qt.MetaModifier;
-        else return -1;
+        else
+            return -1;
     }
     property int taskScrollAction: plasmoid.configuration.taskScrollAction
+    //! Real properties are need in order for parabolic effect to be 1px precise perfect.
+    //! This way moving from Tasks to Applets and vice versa is pretty stable when hovering with parabolic effect.
+    property real tasksHeight: mouseHandler.height
+    property real tasksWidth: mouseHandler.width
+    property real tasksLength: root.vertical ? mouseHandler.height : mouseHandler.width
+    readonly property int alignment: appletAbilities.containment.alignment
+    property alias tasksCount: tasksModel.count
+    readonly property bool inEditMode: latteInEditMode || plasmoid.userConfiguring
+    //BEGIN Latte Dock Communicator
+    property QtObject latteBridge: null
+    readonly property bool inPlasma: latteBridge === null
+    readonly property bool inPlasmaDesktop: inPlasma && !inPlasmaPanel
+    readonly property bool inPlasmaPanel: inPlasma && (plasmoid.location === PlasmaCore.Types.LeftEdge || plasmoid.location === PlasmaCore.Types.RightEdge || plasmoid.location === PlasmaCore.Types.BottomEdge || plasmoid.location === PlasmaCore.Types.TopEdge)
+    readonly property bool latteInEditMode: latteBridge && latteBridge.inEditMode
 
-    onTaskScrollActionChanged: {
-        if (taskScrollAction > LatteTasks.Types.ScrollToggleMinimized) {
-            //! migrating scroll action to LatteTasks.Types.ScrollAction
-            plasmoid.configuration.taskScrollAction = plasmoid.configuration.taskScrollAction-LatteTasks.Types.ScrollToggleMinimized;
+    signal draggingFinished()
+    signal hiddenTasksUpdated()
+    signal presentWindows(variant winIds)
+    signal activateWindowView(variant winIds)
+    signal requestLayout()
+    signal signalPreviewsShown()
+    //signal signalDraggingState(bool value);
+    signal showPreviewForTasks(QtObject group)
+    //trigger updating scaling of neighbour delegates of zoomed delegate
+    signal updateScale(int delegateIndex, real newScale, real step)
+    signal publishTasksGeometries()
+    signal windowsHovered(variant winIds, bool hovered)
+
+    ///UPDATE
+    function updateListViewParent() {
+        if (scrollingEnabled)
+            icList.parent = listViewBase;
+        else
+            icList.parent = barLine;
+    }
+
+    function launcherExists(url) {
+        return (ActivitiesTools.getIndex(url, tasksModel.launcherList) >= 0);
+    }
+
+    function taskExists(url) {
+        var tasks = icList.contentItem.children;
+        for (var i = 0; i < tasks.length; ++i) {
+            var task = tasks[i];
+            if (task.launcherUrl === url && task.isWindow)
+                return true;
+
+        }
+        return false;
+    }
+
+    function forcePreviewsHiding(debug) {
+        // console.log(" org.kde.latte   Tasks: Force hide previews event called: "+debug);
+        windowsPreviewDlg.activeItem = null;
+        windowsPreviewDlg.visible = false;
+    }
+
+    function hidePreview() {
+        windowsPreviewDlg.hide(11);
+    }
+
+    //// functions
+    function activateTaskAtIndex(index) {
+        // This is called with Meta+number shortcuts by plasmashell when Tasks are in a plasma panel.
+        appletAbilities.shortcuts.sglActivateEntryAtIndex(index);
+    }
+
+    function newInstanceForTaskAtIndex(index) {
+        // This is called with Meta+Alt+number shortcuts by plasmashell when Tasks are in a plasma panel.
+        appletAbilities.shortcuts.sglNewInstanceForEntryAtIndex(index);
+    }
+
+    function getBadger(identifier) {
+        var ident1 = identifier;
+        var n = ident1.lastIndexOf('/');
+        var result = n >= 0 ? ident1.substring(n + 1) : identifier;
+        for (var i = 0; i < badgers.length; ++i) {
+            if (result.indexOf(badgers[i].id) >= 0)
+                return badgers[i];
+
         }
     }
 
-    //! Real properties are need in order for parabolic effect to be 1px precise perfect.
-    //! This way moving from Tasks to Applets and vice versa is pretty stable when hovering with parabolic effect.
-    property real tasksHeight:  mouseHandler.height
-    property real tasksWidth: mouseHandler.width
-    property real tasksLength: root.vertical ? mouseHandler.height : mouseHandler.width
+    function updateBadge(identifier, value) {
+        var tasks = icList.contentItem.children;
+        var identifierF = identifier.concat(".desktop");
+        for (var i = 0; i < tasks.length; ++i) {
+            var task = tasks[i];
+            if (task && task.launcherUrl && task.launcherUrl.indexOf(identifierF) >= 0) {
+                task.badgeIndicator = value === "" ? 0 : Number(value);
+                var badge = getBadger(identifierF);
+                if (badge)
+                    badge.value = value;
+                else
+                    badgers.push({
+                        "id": identifierF,
+                        "value": value
+                    });
+            }
+        }
+    }
 
-    readonly property int alignment: appletAbilities.containment.alignment
+    function getLauncherList() {
+        return plasmoid.configuration.launchers59;
+    }
 
-    property alias tasksCount: tasksModel.count
+    function previewContainsMouse() {
+        return windowsPreviewDlg.containsMouse;
+    }
 
-    //END Latte Dock Panel properties
+    function containsMouse() {
+        //if (previewContainsMouse())
+        //  windowsPreviewDlg.hide(4);
 
-    readonly property bool inEditMode: latteInEditMode || plasmoid.userConfiguring
+        //console.log("s1...");
+        if (disableRestoreZoom && (root.contextMenu || windowsPreviewDlg.visible))
+            return ;
+        else
+            disableRestoreZoom = false;
+        if (previewContainsMouse())
+            return true;
 
-    //BEGIN Latte Dock Communicator
-    property QtObject latteBridge: null
+        //console.log("s3...");
+        var tasks = icList.contentItem.children;
+        for (var i = 0; i < tasks.length; ++i) {
+            var task = tasks[i];
+            if (task && task.containsMouse)
+                // console.log("Checking "+i+" - "+task.index+" - "+task.containsMouse);
+                return true;
 
-    readonly property bool inPlasma: latteBridge === null
-    readonly property bool inPlasmaDesktop: inPlasma && !inPlasmaPanel
-    readonly property bool inPlasmaPanel: inPlasma && (plasmoid.location === PlasmaCore.Types.LeftEdge
-                                                       || plasmoid.location === PlasmaCore.Types.RightEdge
-                                                       || plasmoid.location === PlasmaCore.Types.BottomEdge
-                                                       || plasmoid.location === PlasmaCore.Types.TopEdge)
-    readonly property bool latteInEditMode: latteBridge && latteBridge.inEditMode
-    //END  Latte Dock Communicator
+        }
+        return false;
+    }
 
+    function createContextMenu(rootTask, modelIndex, args) {
+        var initialArgs = args || {
+        };
+        initialArgs.visualParent = rootTask;
+        initialArgs.modelIndex = modelIndex;
+        initialArgs.mpris2Source = mpris2Source;
+        initialArgs.backend = backend;
+        // Plasma 6: protect against using the component before it is ready.
+        // If the component is still loading or in error, just skip creating
+        // the menu instead of spamming 'QQmlComponent: Component is not ready'.
+        if (!root.contextMenuComponent)
+            root.contextMenuComponent = Qt.createComponent("ContextMenu.qml");
+
+        if (root.contextMenuComponent.status !== Component.Ready) {
+            console.log("LATTE DEBUG: ContextMenu.qml not ready, status=", root.contextMenuComponent.status, "error=", root.contextMenuComponent.errorString());
+            return null;
+        }
+        root.contextMenu = root.contextMenuComponent.createObject(rootTask, initialArgs);
+        return root.contextMenu;
+    }
+
+    Layout.fillWidth: scrollingEnabled && !root.vertical
+    Layout.fillHeight: scrollingEnabled && root.vertical
+    Layout.minimumWidth: inPlasma && root.isHorizontal ? minimumLength : -1
+    Layout.minimumHeight: inPlasma && !root.isHorizontal ? minimumLength : -1
+    Layout.preferredWidth: tasksWidth
+    Layout.preferredHeight: tasksHeight
+    Layout.maximumWidth: -1
+    Layout.maximumHeight: -1
+    LayoutMirroring.enabled: Qt.application.layoutDirection === Qt.RightToLeft && !root.vertical
+    LayoutMirroring.childrenInherit: true
+    onTaskScrollActionChanged: {
+        if (taskScrollAction > LatteTasks.Types.ScrollToggleMinimized)
+            //! migrating scroll action to LatteTasks.Types.ScrollAction
+            plasmoid.configuration.taskScrollAction = plasmoid.configuration.taskScrollAction - LatteTasks.Types.ScrollToggleMinimized;
+
+    }
     Plasmoid.backgroundHints: inPlasmaDesktop ? PlasmaCore.Types.StandardBackground : PlasmaCore.Types.NoBackground
-
-    signal draggingFinished();
-    signal hiddenTasksUpdated();
-    signal presentWindows(variant winIds);
-    signal activateWindowView(variant winIds);
-    signal requestLayout;
-    signal signalPreviewsShown();
-    //signal signalDraggingState(bool value);
-    signal showPreviewForTasks(QtObject group);
-    //trigger updating scaling of neighbour delegates of zoomed delegate
-    signal updateScale(int delegateIndex, real newScale, real step)
-    signal publishTasksGeometries();
-    signal windowsHovered(variant winIds, bool hovered)
-
-
     onScrollingEnabledChanged: {
         updateListViewParent();
     }
+    onDragSourceChanged: {
+        if (dragSource == null) {
+            root.draggingFinished();
+            tasksModel.syncLaunchers();
+            restoreDraggingPhaseTimer.start();
+        } else {
+            inDraggingPhase = true;
+        }
+    }
+    Component.onCompleted: {
+        if (backend && backend.activateWindowView)
+            root.activateWindowView.connect(backend.activateWindowView);
+
+        if (backend && backend.windowsHovered)
+            root.windowsHovered.connect(backend.windowsHovered);
+
+        updateListViewParent();
+    }
+    Component.onDestruction: {
+        if (backend && backend.activateWindowView)
+            root.activateWindowView.disconnect(backend.activateWindowView);
+
+        if (backend && backend.windowsHovered)
+            root.windowsHovered.disconnect(backend.windowsHovered);
+
+    }
+    //BEGIN states
+    // Alignments
+    // 0-Center, 1-Left, 2-Right, 3-Top, 4-Bottom
+    states: [
+        ///Bottom Edge
+        State {
+            name: "bottomCenter"
+            when: (root.location === PlasmaCore.Types.BottomEdge && root.alignment === LatteCore.Types.Center)
+
+            AnchorChanges {
+                target: barLine
+
+                anchors {
+                    top: undefined
+                    bottom: parent.bottom
+                    left: undefined
+                    right: undefined
+                    horizontalCenter: parent.horizontalCenter
+                    verticalCenter: undefined
+                }
+
+            }
+
+        },
+        State {
+            name: "bottomLeft"
+            when: (root.location === PlasmaCore.Types.BottomEdge && root.alignment === LatteCore.Types.Left)
+
+            AnchorChanges {
+                target: barLine
+
+                anchors {
+                    top: undefined
+                    bottom: parent.bottom
+                    left: parent.left
+                    right: undefined
+                    horizontalCenter: undefined
+                    verticalCenter: undefined
+                }
+
+            }
+
+        },
+        State {
+            name: "bottomRight"
+            when: (root.location === PlasmaCore.Types.BottomEdge && root.alignment === LatteCore.Types.Right)
+
+            AnchorChanges {
+                target: barLine
+
+                anchors {
+                    top: undefined
+                    bottom: parent.bottom
+                    left: undefined
+                    right: parent.right
+                    horizontalCenter: undefined
+                    verticalCenter: undefined
+                }
+
+            }
+
+        },
+        ///Top Edge
+        State {
+            name: "topCenter"
+            when: (root.location === PlasmaCore.Types.TopEdge && root.alignment === LatteCore.Types.Center)
+
+            AnchorChanges {
+                target: barLine
+
+                anchors {
+                    top: parent.top
+                    bottom: undefined
+                    left: undefined
+                    right: undefined
+                    horizontalCenter: parent.horizontalCenter
+                    verticalCenter: undefined
+                }
+
+            }
+
+        },
+        State {
+            name: "topLeft"
+            when: (root.location === PlasmaCore.Types.TopEdge && root.alignment === LatteCore.Types.Left)
+
+            AnchorChanges {
+                target: barLine
+
+                anchors {
+                    top: parent.top
+                    bottom: undefined
+                    left: parent.left
+                    right: undefined
+                    horizontalCenter: undefined
+                    verticalCenter: undefined
+                }
+
+            }
+
+        },
+        State {
+            name: "topRight"
+            when: (root.location === PlasmaCore.Types.TopEdge && root.alignment === LatteCore.Types.Right)
+
+            AnchorChanges {
+                target: barLine
+
+                anchors {
+                    top: parent.top
+                    bottom: undefined
+                    left: undefined
+                    right: parent.right
+                    horizontalCenter: undefined
+                    verticalCenter: undefined
+                }
+
+            }
+
+        },
+        ////Left Edge
+        State {
+            name: "leftCenter"
+            when: (root.location === PlasmaCore.Types.LeftEdge && root.alignment === LatteCore.Types.Center)
+
+            AnchorChanges {
+                target: barLine
+
+                anchors {
+                    top: undefined
+                    bottom: undefined
+                    left: parent.left
+                    right: undefined
+                    horizontalCenter: undefined
+                    verticalCenter: parent.verticalCenter
+                }
+
+            }
+
+        },
+        State {
+            name: "leftTop"
+            when: (root.location === PlasmaCore.Types.LeftEdge && root.alignment === LatteCore.Types.Top)
+
+            AnchorChanges {
+                target: barLine
+
+                anchors {
+                    top: parent.top
+                    bottom: undefined
+                    left: parent.left
+                    right: undefined
+                    horizontalCenter: undefined
+                    verticalCenter: undefined
+                }
+
+            }
+
+        },
+        State {
+            name: "leftBottom"
+            when: (root.location === PlasmaCore.Types.LeftEdge && root.alignment === LatteCore.Types.Bottom)
+
+            AnchorChanges {
+                target: barLine
+
+                anchors {
+                    top: undefined
+                    bottom: parent.bottom
+                    left: parent.left
+                    right: undefined
+                    horizontalCenter: undefined
+                    verticalCenter: undefined
+                }
+
+            }
+
+        },
+        ///Right Edge
+        State {
+            name: "rightCenter"
+            when: (root.location === PlasmaCore.Types.RightEdge && root.alignment === LatteCore.Types.Center)
+
+            AnchorChanges {
+                target: barLine
+
+                anchors {
+                    top: undefined
+                    bottom: undefined
+                    left: undefined
+                    right: parent.right
+                    horizontalCenter: undefined
+                    verticalCenter: parent.verticalCenter
+                }
+
+            }
+
+        },
+        State {
+            name: "rightTop"
+            when: (root.location === PlasmaCore.Types.RightEdge && root.alignment === LatteCore.Types.Top)
+
+            AnchorChanges {
+                target: barLine
+
+                anchors {
+                    top: parent.top
+                    bottom: undefined
+                    left: undefined
+                    right: parent.right
+                    horizontalCenter: undefined
+                    verticalCenter: undefined
+                }
+
+            }
+
+        },
+        State {
+            name: "rightBottom"
+            when: (root.location === PlasmaCore.Types.RightEdge && root.alignment === LatteCore.Types.Bottom)
+
+            AnchorChanges {
+                target: barLine
+
+                anchors {
+                    top: undefined
+                    bottom: parent.bottom
+                    left: undefined
+                    right: parent.right
+                    horizontalCenter: undefined
+                    verticalCenter: undefined
+                }
+
+            }
+
+        }
+    ]
 
     Connections {
         target: plasmoid
@@ -231,28 +594,24 @@ PlasmoidItem {
 
     Connections {
         target: plasmoid.configuration
-
         // onLaunchersChanged: tasksModel.launcherList = plasmoid.configuration.launchers
-        onGroupingAppIdBlacklistChanged: tasksModel.groupingAppIdBlacklist = plasmoid.configuration.groupingAppIdBlacklist;
-        onGroupingLauncherUrlBlacklistChanged: tasksModel.groupingLauncherUrlBlacklist = plasmoid.configuration.groupingLauncherUrlBlacklist;
+        onGroupingAppIdBlacklistChanged: tasksModel.groupingAppIdBlacklist = plasmoid.configuration.groupingAppIdBlacklist
+        onGroupingLauncherUrlBlacklistChanged: tasksModel.groupingLauncherUrlBlacklist = plasmoid.configuration.groupingLauncherUrlBlacklist
     }
-
 
     Connections {
         target: appletAbilities.myView
         onIsHiddenChanged: {
-            if (appletAbilities.myView.isHidden) {
+            if (appletAbilities.myView.isHidden)
                 windowsPreviewDlg.hide("3.3");
-            }
-        }
 
+        }
         onIsReadyChanged: {
-            if (appletAbilities.myView.isReady
-                    && plasmoid && plasmoid.action) {
+            if (appletAbilities.myView.isReady && plasmoid && plasmoid.action) {
                 var cfgAction = plasmoid.action("configure");
-                if (cfgAction) {
+                if (cfgAction)
                     cfgAction.visible = false;
-                }
+
                 plasmoid.configuration.isInLatteDock = true;
             }
         }
@@ -272,93 +631,79 @@ PlasmoidItem {
         property: "hasTaskDemandingAttention"
         when: appletAbilities.indexer.isReady
         value: {
-            for (var i=0; i<appletAbilities.indexer.layout.children.length; ++i){
+            for (var i = 0; i < appletAbilities.indexer.layout.children.length; ++i) {
                 var item = appletAbilities.indexer.layout.children[i];
-                if (item && item.isDemandingAttention) {
+                if (item && item.isDemandingAttention)
                     return true;
-                }
-            }
 
+            }
             return false;
         }
     }
 
-    /////
-    //Kirigami.ColorSet {
-    //    id: colorScopePalette
-    //}
-
-    ///UPDATE
-    function updateListViewParent() {
-        if (scrollingEnabled) {
-            icList.parent = listViewBase;
-        } else {
-            icList.parent = barLine;
-        }
-    }
-
-    function launcherExists(url) {
-        return (ActivitiesTools.getIndex(url, tasksModel.launcherList)>=0);
-    }
-
-    function taskExists(url) {
-        var tasks = icList.contentItem.children;
-        for(var i=0; i<tasks.length; ++i){
-            var task = tasks[i];
-
-            if (task.launcherUrl===url && task.isWindow) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-
-    function forcePreviewsHiding(debug) {
-        // console.log(" org.kde.latte   Tasks: Force hide previews event called: "+debug);
-        windowsPreviewDlg.activeItem = null;
-        windowsPreviewDlg.visible = false;
-    }
-
-    function hidePreview(){
-        windowsPreviewDlg.hide(11);
-    }
-
-    onDragSourceChanged: {
-        if (dragSource == null) {
-            root.draggingFinished();
-            tasksModel.syncLaunchers();
-
-            restoreDraggingPhaseTimer.start();
-        } else {
-            inDraggingPhase = true;
-        }
-    }
-
-    /////Window previews///////////
-
     Previews.ToolTipDelegate2 {
         id: toolTipDelegate
+
         visible: false
     }
 
-    ////BEGIN interfaces
-
-    LatteCore.Dialog{
+    LatteCore.Dialog {
         id: windowsPreviewDlg
-        type: plasmoid.configuration.previewWindowAsPopup ? PlasmaCore.Dialog.PopupMenu : PlasmaCore.Dialog.Tooltip
-        flags: plasmoid.configuration.previewWindowAsPopup ? Qt.WindowStaysOnTopHint | Qt.WindowDoesNotAcceptFocus | Qt.Popup :
-                                                             Qt.WindowStaysOnTopHint | Qt.WindowDoesNotAcceptFocus | Qt.ToolTip
-        location: root.location
-        edge: root.location
-        mainItem: toolTipDelegate
-        visible: false
 
         property bool signalSent: false
         property Item activeItem: null
 
-        Component.onCompleted: mainItem.visible = true;
+        function hide(debug) {
+            //console.log("   Tasks: hide previews event called: "+debug);
+            if (containsMouse || !visible)
+                return ;
 
+            if (appletAbilities.myView.isReady && signalSent)
+                //it is used to unblock dock hiding
+                signalSent = false;
+
+            if (!root.contextMenu)
+                root.disableRestoreZoom = false;
+
+            hidePreviewWinTimer.start();
+        }
+
+        function show(taskItem) {
+            //console.log("preview show called: accepted...");
+            //mainItem.visible = true;
+
+            if (root.disableAllWindowsFunctionality)
+                return ;
+
+            hidePreviewWinTimer.stop();
+            // console.log("preview show called...");
+            if ((!activeItem || (activeItem !== taskItem)) && !root.contextMenu) {
+                //this can be used from others to hide their appearance
+                //e.g but applets from the dock to hide themselves
+                if (!visible)
+                    root.signalPreviewsShown();
+
+                activeItem = taskItem;
+                toolTipDelegate.parentTask = taskItem;
+                if (appletAbilities.myView.isReady && !signalSent)
+                    //it is used to block dock hiding
+                    signalSent = true;
+
+                //! Workaround in order to update properly the previews thumbnails
+                //! when switching between single thumbnail to another single thumbnail
+                //! maybe is not needed any more, let's disable it
+                //mainItem.visible = false;
+                visible = true;
+            }
+        }
+
+        type: plasmoid.configuration.previewWindowAsPopup ? PlasmaCore.Dialog.PopupMenu : PlasmaCore.Dialog.Tooltip
+        flags: plasmoid.configuration.previewWindowAsPopup ? Qt.WindowStaysOnTopHint | Qt.WindowDoesNotAcceptFocus | Qt.Popup : Qt.WindowStaysOnTopHint | Qt.WindowDoesNotAcceptFocus | Qt.ToolTip
+        location: root.location
+        edge: root.location
+        mainItem: toolTipDelegate
+        visible: false
+        Component.onCompleted: mainItem.visible = true
         onContainsMouseChanged: {
             //! Orchestrate restore zoom and previews window hiding. Both should be
             //! triggered together.
@@ -369,77 +714,23 @@ PlasmoidItem {
                 hide(7.3);
             }
         }
-
-        function hide(debug){
-            //console.log("   Tasks: hide previews event called: "+debug);
-            if (containsMouse || !visible) {
-                return;
-            }
-
-            if (appletAbilities.myView.isReady && signalSent) {
-                //it is used to unblock dock hiding
-                signalSent = false;
-            }
-
-            if (!root.contextMenu) {
-                root.disableRestoreZoom = false;
-            }
-
-            hidePreviewWinTimer.start();
-        }
-
-        function show(taskItem){
-            if (root.disableAllWindowsFunctionality) {
-                return;
-            }
-
-            hidePreviewWinTimer.stop();
-
-            // console.log("preview show called...");
-            if ((!activeItem || (activeItem !== taskItem)) && !root.contextMenu) {
-                //console.log("preview show called: accepted...");
-
-                //this can be used from others to hide their appearance
-                //e.g but applets from the dock to hide themselves
-                if (!visible) {
-                    root.signalPreviewsShown();
-                }
-
-                activeItem = taskItem;
-                toolTipDelegate.parentTask = taskItem;
-
-                if (appletAbilities.myView.isReady && !signalSent) {
-                    //it is used to block dock hiding
-                    signalSent = true;
-                }
-
-                //! Workaround in order to update properly the previews thumbnails
-                //! when switching between single thumbnail to another single thumbnail
-                //! maybe is not needed any more, let's disable it
-                //mainItem.visible = false;
-                visible = true;
-                //mainItem.visible = true;
-            }
-        }
     }
 
     //! Delay windows previews hiding
     Timer {
         id: hidePreviewWinTimer
+
         interval: 300
         onTriggered: {
+            //main task
+            //dragging file(s) from outside
+
             //! Orchestrate restore zoom and previews window hiding. Both should be
             //! triggered together.
-            var contains = (windowsPreviewDlg.containsMouse
-                            || (windowsPreviewDlg.activeItem && windowsPreviewDlg.activeItem.containsMouse) /*main task*/
-                            || (windowsPreviewDlg.activeItem /*dragging file(s) from outside*/
-                                && mouseHandler.hoveredItem
-                                && !root.dragSource
-                                && mouseHandler.hoveredItem === windowsPreviewDlg.activeItem));
-
-            if (!contains) {
+            var contains = (windowsPreviewDlg.containsMouse || (windowsPreviewDlg.activeItem && windowsPreviewDlg.activeItem.containsMouse) || (windowsPreviewDlg.activeItem && mouseHandler.hoveredItem && !root.dragSource && mouseHandler.hoveredItem === windowsPreviewDlg.activeItem));
+            if (!contains)
                 root.forcePreviewsHiding(9.9);
-            }
+
         }
     }
 
@@ -449,107 +740,89 @@ PlasmoidItem {
     //! case the previews window must become hidden
     Timer {
         id: windowsPreviewCheckerToNotShowTimer
-        interval: 250
 
+        interval: 250
         onTriggered: {
-            if (windowsPreviewDlg.visible && root.contextMenu) {
+            if (windowsPreviewDlg.visible && root.contextMenu)
                 windowsPreviewDlg.hide("8.2");
-            }
+
         }
     }
 
     //! Timer to delay the removal of the window through the context menu in case the
     //! the window is zoomed
-    Timer{
+    Timer {
         id: delayWindowRemovalTimer
-        //this is the animation time needed in order for tasks to restore their zoom first
-        interval: 7 * (appletAbilities.animations.speedFactor.current * appletAbilities.animations.duration.small)
 
         property var modelIndex
 
+        //this is the animation time needed in order for tasks to restore their zoom first
+        interval: 7 * (appletAbilities.animations.speedFactor.current * appletAbilities.animations.duration.small)
         onTriggered: {
-            tasksModel.requestClose(delayWindowRemovalTimer.modelIndex)
-
-            if (appletAbilities.debug.timersEnabled) {
+            tasksModel.requestClose(delayWindowRemovalTimer.modelIndex);
+            if (appletAbilities.debug.timersEnabled)
                 console.log("plasmoid timer: delayWindowRemovalTimer called...");
-            }
+
         }
     }
 
     Timer {
         id: activityChangeDelayer
+
         interval: 150
         onTriggered: {
             root.inActivityChange = false;
             root.publishTasksGeometries();
             activityInfo.previousActivity = activityInfo.currentActivity;
-
-            if (appletAbilities.debug.timersEnabled) {
+            if (appletAbilities.debug.timersEnabled)
                 console.log("plasmoid timer: activityChangeDelayer called...");
-            }
+
         }
     }
 
-    /////Window Previews/////////
-
-
     TaskManager.TasksModel {
         id: tasksModel
+
+        property bool anyTaskDemandsAttentionInValidTime: false
 
         virtualDesktop: virtualDesktopInfo.currentDesktop
         screenGeometry: appletAbilities.myView.screenGeometry
         // comment in order to support LTS Plasma 5.8
         // screen: plasmoid.screen
         activity: appletAbilities.myView.isReady ? appletAbilities.myView.lastUsedActivity : activityInfo.currentActivity
-
         filterByVirtualDesktop: root.showOnlyCurrentDesktop
         filterByScreen: root.showOnlyCurrentScreen
         filterByActivity: root.showOnlyCurrentActivity
-
         launchInPlace: true
         separateLaunchers: true
         groupInline: false
-
         groupMode: groupTasksByDefault ? TaskManager.TasksModel.GroupApplications : TaskManager.TasksModel.GroupDisabled
         sortMode: TaskManager.TasksModel.SortManual
-
-        property bool anyTaskDemandsAttentionInValidTime: false
-
         onActivityChanged: {
             ActivitiesTools.currentActivity = String(activity);
         }
-
         onGroupingAppIdBlacklistChanged: {
             plasmoid.configuration.groupingAppIdBlacklist = groupingAppIdBlacklist;
         }
-
         onGroupingLauncherUrlBlacklistChanged: {
             plasmoid.configuration.groupingLauncherUrlBlacklist = groupingLauncherUrlBlacklist;
         }
-
         onAnyTaskDemandsAttentionChanged: {
             anyTaskDemandsAttentionInValidTime = anyTaskDemandsAttention;
-
-            if (anyTaskDemandsAttention){
+            if (anyTaskDemandsAttention)
                 attentionTimer.start();
-            } else {
+            else
                 attentionTimer.stop();
-            }
         }
-
         Component.onCompleted: {
-            ActivitiesTools.launchersOnActivities = root.launchersOnActivities
+            ActivitiesTools.launchersOnActivities = root.launchersOnActivities;
             ActivitiesTools.currentActivity = String(activityInfo.currentActivity);
             ActivitiesTools.plasmoid = plasmoid;
-
             //var loadedLaunchers = ActivitiesTools.restoreLaunchers();
             ActivitiesTools.importLaunchersToNewArchitecture();
-
             appletAbilities.launchers.importLauncherListInModel();
-
             groupingAppIdBlacklist = plasmoid.configuration.groupingAppIdBlacklist;
             groupingLauncherUrlBlacklist = plasmoid.configuration.groupingLauncherUrlBlacklist;
-
             ///Plasma 5.9 enforce grouping at all cases
             groupingWindowTasksThreshold = -1;
         }
@@ -560,19 +833,22 @@ PlasmoidItem {
     PlasmaCore.Dialog {
         //ghost group Dialog to not crash TaskManagerBackend
         id: groupDialogGhost
-        visible: false
 
+        visible: false
         type: PlasmaCore.Dialog.PopupMenu
         flags: Qt.WindowStaysOnTopHint
         hideOnWindowDeactivate: true
         location: root.location
     }
 
-
     // Minimal backend stub for Plasma 6: we no longer depend on
     // org.kde.plasma.private.taskmanager, but still expose the
     // properties the rest of this file and ContextMenu.qml expect.
     QtObject {
+        // no-op in Plasma 6 stub
+        // no-op in Plasma 6 stub
+        // no-op in Plasma 6 stub
+
         id: backend
 
         // basic references
@@ -580,7 +856,6 @@ PlasmoidItem {
         property bool highlightWindows: root.highlightWindows
         property var groupDialog: groupDialogGhost
         property var toolTipItem: toolTipDelegate
-
         // whether the window/present-windows effect is available
         // (used in TaskMouseArea; we default to false for Plasma 6 stub)
         property bool windowViewAvailable: false
@@ -589,6 +864,53 @@ PlasmoidItem {
 
         function addLauncher(url) {
             tasksModel.requestAddLauncher(url);
+        }
+
+        function isApplication(urlOrItem) {
+            if (!urlOrItem)
+                return false;
+
+            var u = urlOrItem;
+            if (u.launcherUrl !== undefined) {
+                u = u.launcherUrl;
+            }
+            else if (u.url !== undefined) {
+                u = u.url;
+            }
+            var s = u.toString ? u.toString() : String(u);
+            if( typeof s !== "string") {
+                console.log("URL is not a string:", s);
+                return false;
+            }
+            if (s.startsWith("applications:") 
+            || s.startsWith("preferred:") 
+            || s.startsWith("file://") 
+            || s.startsWith("trash:") 
+            || s.startsWith("settings:") 
+            || s.startsWith("systemsettings:") 
+            || s.startsWith("kcm:") 
+            || s.startsWith("plasma:") 
+            || s.startsWith("icon:") 
+            || s.startsWith("help:") 
+            || s.startsWith("man:") 
+            || s.startsWith("info:") 
+            || s.startsWith("gwenview:") 
+            || s.startsWith("dolphin:") 
+            || s.startsWith("konqueror:") 
+            || s.startsWith("kfind:") 
+            || s.startsWith("kate:") 
+            || s.startsWith("okular:") 
+            || s.startsWith("partitionmanager:") 
+            || s.startsWith("kwalletd:") 
+            || s.startsWith("launcher:") 
+            || s.startsWith("system:") 
+            || s.startsWith("firewall:") 
+            || s.startsWith("network:") 
+            || s.startsWith("bluetooth:")) {
+                return true;
+            }
+            return false;
+
         }
 
         // ContextMenu expects these helpers to exist; provide
@@ -606,16 +928,14 @@ PlasmoidItem {
         }
 
         function setActionGroup(action) {
-            // no-op in Plasma 6 stub
         }
 
         function ungrabMouse(item) {
-            // no-op in Plasma 6 stub
         }
 
         function cancelHighlightWindows() {
-            // no-op in Plasma 6 stub
         }
+
     }
 
     Item {
@@ -623,7 +943,7 @@ PlasmoidItem {
 
         Drag.dragType: Drag.Automatic
         Drag.supportedActions: Qt.CopyAction | Qt.MoveAction | Qt.LinkAction
-        Drag.onDragFinished: root.dragSource = null;
+        Drag.onDragFinished: root.dragSource = null
     }
 
     TaskManager.VirtualDesktopInfo {
@@ -634,12 +954,12 @@ PlasmoidItem {
         id: activityInfo
 
         property string previousActivity: ""
+
         onCurrentActivityChanged: {
             root.inActivityChange = true;
             activityChangeDelayer.start();
         }
-
-        Component.onCompleted: previousActivity = currentActivity;
+        Component.onCompleted: previousActivity = currentActivity
     }
 
     // Plasma 6: PlasmaCore.DataSource is no longer available as a creatable type.
@@ -651,7 +971,8 @@ PlasmoidItem {
         // Matches the original interface shape but does not talk to the
         // mpris2 engine. This disables media controls but keeps the
         // plasmoid loadable.
-        property var data: ({})
+        property var data: ({
+        })
         property var sources: []
         property var connectedSources: sources
 
@@ -663,18 +984,35 @@ PlasmoidItem {
             return null;
         }
 
-        function goPrevious(source) {}
-        function goNext(source) {}
-        function play(source) {}
-        function pause(source) {}
-        function playPause(source) {}
-        function stop(source) {}
-        function raise(source) {}
-        function quit(source) {}
+        function goPrevious(source) {
+        }
+
+        function goNext(source) {
+        }
+
+        function play(source) {
+        }
+
+        function pause(source) {
+        }
+
+        function playPause(source) {
+        }
+
+        function stop(source) {
+        }
+
+        function raise(source) {
+        }
+
+        function quit(source) {
+        }
+
     }
 
     Loader {
         id: pulseAudio
+
         source: "PulseAudio.qml"
         active: root.showAudioBadge
     }
@@ -685,56 +1023,47 @@ PlasmoidItem {
 
     AppletAbilities {
         id: _appletAbilities
+
         bridge: latteBridge
         layout: icList.contentItem
         tasksModel: tasksModel
-
         animations.local.speedFactor.current: plasmoid.configuration.durationTime
-        animations.local.requirements.zoomFactor: hasHighThicknessAnimation && LatteCore.WindowSystem.compositingActive ? 1.65 : 1.0
-
-        indexer.updateIsBlocked: root.inDraggingPhase || root.inActivityChange || tasksExtendedManager.launchersInPausedStateCount>0
-
+        animations.local.requirements.zoomFactor: hasHighThicknessAnimation && LatteCore.WindowSystem.compositingActive ? 1.65 : 1
+        indexer.updateIsBlocked: root.inDraggingPhase || root.inActivityChange || tasksExtendedManager.launchersInPausedStateCount > 0
         indicators.local.isEnabled: !plasmoid.configuration.isInLatteDock
-
         launchers.group: plasmoid.configuration.launchersGroup
         launchers.isStealingDroppedLaunchers: plasmoid.configuration.isPreferredForDroppedLaunchers
         launchers.syncer.isBlocked: inDraggingPhase
-
         metrics.local.iconSize: inPlasmaDesktop ? maxIconSizeInPlasma : (inPlasmaPanel ? Math.max(16, panelThickness - metrics.margin.tailThickness - metrics.margin.headThickness) : maxIconSizeInPlasma)
         metrics.local.backgroundThickness: metrics.totals.thickness
         metrics.local.margin.length: 0.1 * metrics.iconSize
         metrics.local.margin.tailThickness: inPlasmaDesktop ? 0.16 * metrics.iconSize : Math.max(2, (panelThickness - maxIconSizeInPlasma) / 2)
         metrics.local.margin.headThickness: metrics.local.margin.tailThickness
         metrics.local.padding.length: 0.04 * metrics.iconSize
-
         myView.local.isHidingBlocked: root.contextMenu || root.windowPreviewIsShown
         myView.local.itemShadow.isEnabled: plasmoid.configuration.showShadows
-        myView.local.itemShadow.size: Math.ceil(0.12*appletAbilities.metrics.iconSize)
-
-        parabolic.local.isEnabled: (!root.inPlasma || root.inPlasmaDesktop) && parabolic.local.factor.zoom > 1.0
-        parabolic.local.factor.zoom: parabolic.isEnabled ? ( 1 + (plasmoid.configuration.zoomLevel / 20) ) : 1.0
-        parabolic.local.factor.maxZoom: parabolic.isEnabled ? Math.max(parabolic.local.factor.zoom, 1.6) : 1.0
+        myView.local.itemShadow.size: Math.ceil(0.12 * appletAbilities.metrics.iconSize)
+        parabolic.local.isEnabled: (!root.inPlasma || root.inPlasmaDesktop) && parabolic.local.factor.zoom > 1
+        parabolic.local.factor.zoom: parabolic.isEnabled ? (1 + (plasmoid.configuration.zoomLevel / 20)) : 1
+        parabolic.local.factor.maxZoom: parabolic.isEnabled ? Math.max(parabolic.local.factor.zoom, 1.6) : 1
         parabolic.local.restoreZoomIsBlocked: root.contextMenu || windowsPreviewDlg.containsMouse
-
         shortcuts.isStealingGlobalPositionShortcuts: plasmoid.configuration.isPreferredForPositionShortcuts
-
         requires.activeIndicatorEnabled: false
         requires.lengthMarginsEnabled: false
         requires.latteSideColoringEnabled: false
         requires.screenEdgeMarginSupported: true
-
         thinTooltip.local.showIsBlocked: root.contextMenu || root.windowPreviewIsShown
     }
 
-    Timer{
+    Timer {
         id: attentionTimer
-        interval:8500
+
+        interval: 8500
         onTriggered: {
             tasksModel.anyTaskDemandsAttentionInValidTime = false;
-
-            if (appletAbilities.debug.timersEnabled) {
+            if (appletAbilities.debug.timersEnabled)
                 console.log("plasmoid timer: attentionTimer called...");
-            }
+
         }
     }
 
@@ -744,201 +1073,179 @@ PlasmoidItem {
     //dragging
     Timer {
         id: restoreDraggingPhaseTimer
+
         interval: 150
-        onTriggered: inDraggingPhase = false;
+        onTriggered: inDraggingPhase = false
     }
 
     ///Red Liner!!! show the upper needed limit for animations
-    Rectangle{
+    Rectangle {
+        property int neededSpace: appletAbilities.parabolic.factor.zoom * appletAbilities.metrics.totals.length
+
         anchors.horizontalCenter: !root.vertical ? parent.horizontalCenter : undefined
         anchors.verticalCenter: root.vertical ? parent.verticalCenter : undefined
-
         width: root.vertical ? 1 : 2 * appletAbilities.metrics.iconSize
         height: root.vertical ? 2 * appletAbilities.metrics.iconSize : 1
         color: "red"
         x: (root.location === PlasmaCore.Types.LeftEdge) ? neededSpace : parent.width - neededSpace
         y: (root.location === PlasmaCore.Types.TopEdge) ? neededSpace : parent.height - neededSpace
-
         visible: plasmoid.configuration.zoomHelper
-
-        property int neededSpace: appletAbilities.parabolic.factor.zoom*appletAbilities.metrics.totals.length
     }
 
-    Item{
-        id:barLine
-        anchors.bottom: (root.location === PlasmaCore.Types.BottomEdge) ? parent.bottom : undefined
-        anchors.top: (root.location === PlasmaCore.Types.TopEdge) ? parent.top : undefined
-        anchors.left: (root.location === PlasmaCore.Types.LeftEdge) ? parent.left : undefined
-        anchors.right: (root.location === PlasmaCore.Types.RightEdge) ? parent.right : undefined
-
-        anchors.horizontalCenter: !root.vertical ? parent.horizontalCenter : undefined
-        anchors.verticalCenter: root.vertical ? parent.verticalCenter : undefined
-
-        width: ( icList.orientation === Qt.Horizontal ) ? icList.width + spacing : smallSize
-        height: ( icList.orientation === Qt.Vertical ) ? icList.height + spacing : smallSize
-
-        property int spacing: latteBridge ? 0 : appletAbilities.metrics.iconSize / 2
-        property int smallSize: Math.max(0.10 * appletAbilities.metrics.iconSize, 16)
-
-        Behavior on opacity{
-            NumberAnimation { duration: appletAbilities.animations.speedFactor.current * appletAbilities.animations.duration.large }
-        }
-
-        /// plasmoid's default panel
-        BorderImage{
-            anchors.fill:parent
-            source: "../images/panel-west.png"
-            border { left:8; right:8; top:8; bottom:8 }
-
-            opacity: (plasmoid.configuration.showBarLine && !plasmoid.configuration.useThemePanel && inPlasma) ? 1 : 0
-
-            visible: (opacity == 0) ? false : true
-
-            horizontalTileMode: BorderImage.Stretch
-            verticalTileMode: BorderImage.Stretch
-
-            Behavior on opacity{
-                NumberAnimation { duration: appletAbilities.animations.speedFactor.current * appletAbilities.animations.duration.large }
-            }
-        }
-
-
-        /// item which is used as anchors for the plasma's theme
-        Item{
-            id:belower
-
-            width: (root.location === PlasmaCore.Types.LeftEdge) ? shadowsSvgItem.margins.left : shadowsSvgItem.margins.right
-            height: (root.location === PlasmaCore.Types.BottomEdge)? shadowsSvgItem.margins.bottom : shadowsSvgItem.margins.top
-
-            anchors.top: (root.location === PlasmaCore.Types.BottomEdge) ? parent.bottom : undefined
-            anchors.bottom: (root.location === PlasmaCore.Types.TopEdge) ? parent.top : undefined
-            anchors.right: (root.location === PlasmaCore.Types.LeftEdge) ? parent.left : undefined
-            anchors.left: (root.location === PlasmaCore.Types.RightEdge) ? parent.right : undefined
-        }
-
-
-        /// the current theme's panel
-        KSvg.FrameSvgItem{
-            id: shadowsSvgItem
-
-            anchors.bottom: (root.location === PlasmaCore.Types.BottomEdge) ? belower.bottom : undefined
-            anchors.top: (root.location === PlasmaCore.Types.TopEdge) ? belower.top : undefined
-            anchors.left: (root.location === PlasmaCore.Types.LeftEdge) ? belower.left : undefined
-            anchors.right: (root.location === PlasmaCore.Types.RightEdge) ? belower.right : undefined
-
-            anchors.horizontalCenter: !root.vertical ? parent.horizontalCenter : undefined
-            anchors.verticalCenter: root.vertical ? parent.verticalCenter : undefined
-
-            width: root.vertical ? panelSize + margins.left + margins.right: parent.width
-            height: root.vertical ? parent.height : panelSize + margins.top + margins.bottom
-
-            imagePath: "translucent/widgets/panel-background"
-            prefix:"shadow"
-
-            opacity: (plasmoid.configuration.showBarLine && plasmoid.configuration.useThemePanel && inPlasma) ? 1 : 0
-            visible: (opacity == 0) ? false : true
-
-            property int panelSize: ((root.location === PlasmaCore.Types.BottomEdge) ||
-                                     (root.location === PlasmaCore.Types.TopEdge)) ?
-                                        plasmoid.configuration.panelSize + belower.height:
-                                        plasmoid.configuration.panelSize + belower.width
-
-            Behavior on opacity{
-                NumberAnimation { duration: appletAbilities.animations.speedFactor.current * appletAbilities.animations.duration.large }
-            }
-
-
-            KSvg.FrameSvgItem{
-                anchors.margins: belower.width-1
-                anchors.fill:parent
-                imagePath: plasmoid.configuration.transparentPanel ? "translucent/widgets/panel-background" :
-                                                                     "widgets/panel-background"
-            }
-        }
-
-
-        TasksLayout.MouseHandler {
-            id: mouseHandler
-            anchors.bottom: (root.location === PlasmaCore.Types.BottomEdge) ? scrollableList.bottom : undefined
-            anchors.top: (root.location === PlasmaCore.Types.TopEdge) ? scrollableList.top : undefined
-            anchors.left: (root.location === PlasmaCore.Types.LeftEdge) ? scrollableList.left : undefined
-            anchors.right: (root.location === PlasmaCore.Types.RightEdge) ? scrollableList.right : undefined
-
-            anchors.horizontalCenter: !root.vertical ? scrollableList.horizontalCenter : undefined
-            anchors.verticalCenter: root.vertical ? scrollableList.verticalCenter : undefined
-
-            width: root.vertical ? maxThickness : icList.width
-            height: root.vertical ? icList.height : maxThickness
-
-            target: icList
-
-            property int maxThickness: ((appletAbilities.parabolic.isEnabled && appletAbilities.parabolic.isHovered)
-                                        || (appletAbilities.parabolic.isEnabled && windowPreviewIsShown)
-                                        || appletAbilities.animations.hasThicknessAnimation) ?
-                                           appletAbilities.metrics.mask.thickness.maxZoomedForItems : // dont clip bouncing tasks when zoom=1
-                                           appletAbilities.metrics.mask.thickness.normalForItems
-
-            function onlyLaunchersInDroppedList(list){
-                return list.every(function (item) {
-                    return backend.isApplication(item)
-                });
-            }
-
-            onUrlsDropped: {
-                //! inform synced docks for new dropped launchers
-                if (onlyLaunchersInDroppedList(urls)) {
-                    appletAbilities.launchers.addDroppedLaunchers(urls);
-                    return;
-                }
-
-                //! if the list does not contain only launchers then just open the corresponding
-                //! urls with the relevant app
-
-                if (!hoveredItem) {
-                    return;
-                }
-
-                // DeclarativeMimeData urls is a QJsonArray but requestOpenUrls expects a proper QList<QUrl>.
-                var urlsList = backend.jsonArrayToUrlList(urls);
-
-                // Otherwise we'll just start a new instance of the application with the URLs as argument,
-                // as you probably don't expect some of your files to open in the app and others to spawn launchers.
-                tasksModel.requestOpenUrls(hoveredItem.modelIndex(), urlsList);
-            }
-        }
-
+    Item {
         /* Rectangle {
             anchors.fill: scrollableList
             color: "transparent"
             border.width: 1
             border.color: "blue"
         } */
+        // ScrollEdgeShadows
+
+        id: barLine
+
+        property int spacing: latteBridge ? 0 : appletAbilities.metrics.iconSize / 2
+        property int smallSize: Math.max(0.1 * appletAbilities.metrics.iconSize, 16)
+
+        anchors.bottom: (root.location === PlasmaCore.Types.BottomEdge) ? parent.bottom : undefined
+        anchors.top: (root.location === PlasmaCore.Types.TopEdge) ? parent.top : undefined
+        anchors.left: (root.location === PlasmaCore.Types.LeftEdge) ? parent.left : undefined
+        anchors.right: (root.location === PlasmaCore.Types.RightEdge) ? parent.right : undefined
+        anchors.horizontalCenter: !root.vertical ? parent.horizontalCenter : undefined
+        anchors.verticalCenter: root.vertical ? parent.verticalCenter : undefined
+        width: (icList.orientation === Qt.Horizontal) ? icList.width + spacing : smallSize
+        height: (icList.orientation === Qt.Vertical) ? icList.height + spacing : smallSize
+
+        /// plasmoid's default panel
+        BorderImage {
+            anchors.fill: parent
+            source: "../images/panel-west.png"
+            opacity: (plasmoid.configuration.showBarLine && !plasmoid.configuration.useThemePanel && inPlasma) ? 1 : 0
+            visible: (opacity == 0) ? false : true
+            horizontalTileMode: BorderImage.Stretch
+            verticalTileMode: BorderImage.Stretch
+
+            border {
+                left: 8
+                right: 8
+                top: 8
+                bottom: 8
+            }
+
+            Behavior on opacity {
+                NumberAnimation {
+                    duration: appletAbilities.animations.speedFactor.current * appletAbilities.animations.duration.large
+                }
+
+            }
+
+        }
+
+        /// item which is used as anchors for the plasma's theme
+        Item {
+            id: belower
+
+            width: (root.location === PlasmaCore.Types.LeftEdge) ? shadowsSvgItem.margins.left : shadowsSvgItem.margins.right
+            height: (root.location === PlasmaCore.Types.BottomEdge) ? shadowsSvgItem.margins.bottom : shadowsSvgItem.margins.top
+            anchors.top: (root.location === PlasmaCore.Types.BottomEdge) ? parent.bottom : undefined
+            anchors.bottom: (root.location === PlasmaCore.Types.TopEdge) ? parent.top : undefined
+            anchors.right: (root.location === PlasmaCore.Types.LeftEdge) ? parent.left : undefined
+            anchors.left: (root.location === PlasmaCore.Types.RightEdge) ? parent.right : undefined
+        }
+
+        /// the current theme's panel
+        KSvg.FrameSvgItem {
+            id: shadowsSvgItem
+
+            property int panelSize: ((root.location === PlasmaCore.Types.BottomEdge) || (root.location === PlasmaCore.Types.TopEdge)) ? plasmoid.configuration.panelSize + belower.height : plasmoid.configuration.panelSize + belower.width
+
+            anchors.bottom: (root.location === PlasmaCore.Types.BottomEdge) ? belower.bottom : undefined
+            anchors.top: (root.location === PlasmaCore.Types.TopEdge) ? belower.top : undefined
+            anchors.left: (root.location === PlasmaCore.Types.LeftEdge) ? belower.left : undefined
+            anchors.right: (root.location === PlasmaCore.Types.RightEdge) ? belower.right : undefined
+            anchors.horizontalCenter: !root.vertical ? parent.horizontalCenter : undefined
+            anchors.verticalCenter: root.vertical ? parent.verticalCenter : undefined
+            width: root.vertical ? panelSize + margins.left + margins.right : parent.width
+            height: root.vertical ? parent.height : panelSize + margins.top + margins.bottom
+            imagePath: "translucent/widgets/panel-background"
+            prefix: "shadow"
+            opacity: (plasmoid.configuration.showBarLine && plasmoid.configuration.useThemePanel && inPlasma) ? 1 : 0
+            visible: (opacity == 0) ? false : true
+
+            KSvg.FrameSvgItem {
+                anchors.margins: belower.width - 1
+                anchors.fill: parent
+                imagePath: plasmoid.configuration.transparentPanel ? "translucent/widgets/panel-background" : "widgets/panel-background"
+            }
+
+            Behavior on opacity {
+                NumberAnimation {
+                    duration: appletAbilities.animations.speedFactor.current * appletAbilities.animations.duration.large
+                }
+
+            }
+
+        }
+
+        TasksLayout.MouseHandler {
+            // dont clip bouncing tasks when zoom=1
+
+            id: mouseHandler
+
+            property int maxThickness: ((appletAbilities.parabolic.isEnabled && appletAbilities.parabolic.isHovered) || (appletAbilities.parabolic.isEnabled && windowPreviewIsShown) || appletAbilities.animations.hasThicknessAnimation) ? appletAbilities.metrics.mask.thickness.maxZoomedForItems : appletAbilities.metrics.mask.thickness.normalForItems
+
+            function onlyLaunchersInDroppedList(list) {
+                return list.every(function(item) {
+                    return backend.isApplication(item);
+                });
+            }
+
+            anchors.bottom: (root.location === PlasmaCore.Types.BottomEdge) ? scrollableList.bottom : undefined
+            anchors.top: (root.location === PlasmaCore.Types.TopEdge) ? scrollableList.top : undefined
+            anchors.left: (root.location === PlasmaCore.Types.LeftEdge) ? scrollableList.left : undefined
+            anchors.right: (root.location === PlasmaCore.Types.RightEdge) ? scrollableList.right : undefined
+            anchors.horizontalCenter: !root.vertical ? scrollableList.horizontalCenter : undefined
+            anchors.verticalCenter: root.vertical ? scrollableList.verticalCenter : undefined
+            width: root.vertical ? maxThickness : icList.width
+            height: root.vertical ? icList.height : maxThickness
+            target: icList
+            onUrlsDropped: function(urls) {
+                //! if the list does not contain only launchers then just open the corresponding
+                //! urls with the relevant app
+
+                //! inform synced docks for new dropped launchers
+                if (onlyLaunchersInDroppedList(urls)) {
+                    appletAbilities.launchers.addDroppedLaunchers(urls);
+                    return ;
+                }
+                if (!hoveredItem)
+                    return ;
+
+                // DeclarativeMimeData urls is a QJsonArray but requestOpenUrls expects a proper QList<QUrl>.
+                var urlsList = backend.jsonArrayToUrlList(urls);
+                // Otherwise we'll just start a new instance of the application with the URLs as argument,
+                // as you probably don't expect some of your files to open in the app and others to spawn launchers.
+                tasksModel.requestOpenUrls(hoveredItem.modelIndex(), urlsList);
+            }
+        }
 
         TasksLayout.ScrollableList {
+            //onCurrentPosChanged: console.log("CP :: "+ currentPos + " icW:"+icList.width + " rw: "+root.width + " w:" +width);
+
             id: scrollableList
+
             width: !root.vertical ? length : thickness
             height: root.vertical ? length : thickness
             contentWidth: icList.width
             contentHeight: icList.height
-
-            //onCurrentPosChanged: console.log("CP :: "+ currentPos + " icW:"+icList.width + " rw: "+root.width + " w:" +width);
-
             layer.enabled: contentsExceed && root.scrollingEnabled
-            layer.effect: OpacityMask {
-                maskSource: TasksLayout.ScrollOpacityMask{
-                    width: scrollableList.width
-                    height: scrollableList.height
-                }
-            }
 
             Binding {
                 target: scrollableList
                 property: "thickness"
                 when: !appletAbilities.myView.inRelocationHiding
                 value: {
-                    if (appletAbilities.myView.isReady) {
+                    if (appletAbilities.myView.isReady)
                         return appletAbilities.animations.hasThicknessAnimation ? appletAbilities.metrics.mask.thickness.zoomed : appletAbilities.metrics.mask.thickness.normal;
-                    }
 
                     return appletAbilities.metrics.totals.thickness * appletAbilities.parabolic.factor.zoom;
                 }
@@ -955,478 +1262,300 @@ PlasmoidItem {
                 id: listViewBase
 
                 ListView {
-                    id:icList
-                    model: tasksModel
-                    delegate: Task.TaskItem{
-                        abilities: appletAbilities
-                    }
-
-                    property int currentSpot : -1000
-                    property int previousCount : 0
-
-                    property int tasksCount: tasksModel.count
-
                     //the duration of this animation should be as small as possible
                     //it fixes a small issue with the dragging an item to change it's
                     //position, if the duration is too big there is a point in the
                     //list that an item is going back and forth too fast
-
-                    //more of a trouble
-                    moveDisplaced: Transition {
-                        NumberAnimation { properties: "x,y"; duration: appletAbilities.animations.speedFactor.current * appletAbilities.animations.duration.large; easing.type: Easing.Linear }
-                    }
-
                     ///this transition can not be used with dragging !!!! I breaks
                     ///the lists indexes !!!!!
                     ///move: Transition {
                     ///    NumberAnimation { properties: "x,y"; duration: 400; easing.type: Easing.Linear }
                     ///}
 
-                    function childAtPos(x, y){
+                    id: icList
+
+                    property int currentSpot: -1000
+                    property int previousCount: 0
+                    property int tasksCount: tasksModel.count
+
+                    function childAtPos(x, y) {
                         var tasks = icList.contentItem.children;
-
-                        for(var i=0; i<tasks.length; ++i){
+                        for (var i = 0; i < tasks.length; ++i) {
                             var task = tasks[i];
-
-                            var choords = mapFromItem(task,0, 0);
-
-                            if( (task.objectName==="TaskItem") && (x>=choords.x) && (x<=choords.x+task.width)
-                                    && (y>=choords.y) && (y<=choords.y+task.height)){
+                            var choords = mapFromItem(task, 0, 0);
+                            if ((task.objectName === "TaskItem") && (x >= choords.x) && (x <= choords.x + task.width) && (y >= choords.y) && (y <= choords.y + task.height))
                                 return task;
-                            }
-                        }
 
+                        }
                         return null;
                     }
 
                     function childAtIndex(position) {
                         var tasks = icList.contentItem.children;
-
                         if (position < 0)
-                            return;
+                            return ;
 
-                        for(var i=0; i<tasks.length; ++i){
+                        for (var i = 0; i < tasks.length; ++i) {
                             var task = tasks[i];
-
-                            if (task.lastValidIndex === position
-                                    || (task.lastValidIndex === -1 && task.itemIndex === position )) {
+                            if (task.lastValidIndex === position || (task.lastValidIndex === -1 && task.itemIndex === position))
                                 return task;
-                            }
-                        }
 
+                        }
                         return undefined;
                     }
+
+                    model: tasksModel
+
+                    delegate: Task.TaskItem {
+                        abilities: appletAbilities
+                    }
+
+                    //more of a trouble
+                    moveDisplaced: Transition {
+                        NumberAnimation {
+                            properties: "x,y"
+                            duration: appletAbilities.animations.speedFactor.current * appletAbilities.animations.duration.large
+                            easing.type: Easing.Linear
+                        }
+
+                    }
+
                 }
-            } // ScrollPositioner
-        } // ScrollableList
+                // ScrollPositioner
+
+            }
+            // ScrollableList
+
+            layer.effect: OpacityMask {
+
+                maskSource: TasksLayout.ScrollOpacityMask {
+                    width: scrollableList.width
+                    height: scrollableList.height
+                }
+
+            }
+
+        }
 
         TasksLayout.ScrollEdgeShadows {
             id: scrollShadows
+
             width: !root.vertical ? scrollableList.width : thickness
             height: !root.vertical ? thickness : scrollableList.height
             visible: scrollableList.contentsExceed
-
             flickable: scrollableList
-        } // ScrollEdgeShadows
+        }
 
         LatteComponents.AddingArea {
             id: newDroppedLauncherVisual
+
             width: root.vertical ? appletAbilities.metrics.totals.thickness : scrollableList.length
             height: root.vertical ? scrollableList.length : appletAbilities.metrics.totals.thickness
-
             visible: backgroundOpacity > 0
-            radius: appletAbilities.metrics.iconSize/10
+            radius: appletAbilities.metrics.iconSize / 10
             backgroundOpacity: mouseHandler.isDroppingOnlyLaunchers || appletAbilities.launchers.isShowingAddLaunchersMessage ? 0.75 : 0
             duration: appletAbilities.animations.speedFactor.current
             iconSize: appletAbilities.metrics.iconSize
             z: 99
-
             title: i18n("Tasks Area")
-
             states: [
                 ///Bottom Edge
                 State {
                     name: "left"
-                    when: root.location===PlasmaCore.Types.LeftEdge
+                    when: root.location === PlasmaCore.Types.LeftEdge
 
                     AnchorChanges {
                         target: newDroppedLauncherVisual
-                        anchors{ top:undefined; bottom:undefined; left:scrollableList.left; right:undefined;
-                            horizontalCenter:undefined; verticalCenter:scrollableList.verticalCenter}
+
+                        anchors {
+                            top: undefined
+                            bottom: undefined
+                            left: scrollableList.left
+                            right: undefined
+                            horizontalCenter: undefined
+                            verticalCenter: scrollableList.verticalCenter
+                        }
+
                     }
 
                     PropertyChanges {
                         target: newDroppedLauncherVisual
-                        anchors{ topMargin:0; bottomMargin:0; leftMargin: appletAbilities.metrics.margin.screenEdge; rightMargin:0;}
+
+                        anchors {
+                            topMargin: 0
+                            bottomMargin: 0
+                            leftMargin: appletAbilities.metrics.margin.screenEdge
+                            rightMargin: 0
+                        }
+
                     }
+
                 },
                 State {
                     name: "right"
-                    when: root.location===PlasmaCore.Types.RightEdge
+                    when: root.location === PlasmaCore.Types.RightEdge
 
                     AnchorChanges {
                         target: newDroppedLauncherVisual
-                        anchors{ top:undefined; bottom:undefined; left:undefined; right:scrollableList.right;
-                            horizontalCenter:undefined; verticalCenter:scrollableList.verticalCenter}
+
+                        anchors {
+                            top: undefined
+                            bottom: undefined
+                            left: undefined
+                            right: scrollableList.right
+                            horizontalCenter: undefined
+                            verticalCenter: scrollableList.verticalCenter
+                        }
+
                     }
 
                     PropertyChanges {
                         target: newDroppedLauncherVisual
-                        anchors{ topMargin:0; bottomMargin:0; leftMargin:0; rightMargin: appletAbilities.metrics.margin.screenEdge;}
+
+                        anchors {
+                            topMargin: 0
+                            bottomMargin: 0
+                            leftMargin: 0
+                            rightMargin: appletAbilities.metrics.margin.screenEdge
+                        }
+
                     }
+
                 },
                 State {
                     name: "top"
-                    when: root.location===PlasmaCore.Types.TopEdge
+                    when: root.location === PlasmaCore.Types.TopEdge
 
                     AnchorChanges {
                         target: newDroppedLauncherVisual
-                        anchors{ top:scrollableList.top; bottom:undefined; left:undefined; right:undefined;
-                            horizontalCenter:scrollableList.horizontalCenter; verticalCenter:undefined}
+
+                        anchors {
+                            top: scrollableList.top
+                            bottom: undefined
+                            left: undefined
+                            right: undefined
+                            horizontalCenter: scrollableList.horizontalCenter
+                            verticalCenter: undefined
+                        }
+
                     }
 
                     PropertyChanges {
                         target: newDroppedLauncherVisual
-                        anchors{ topMargin: appletAbilities.metrics.margin.screenEdge; bottomMargin:0; leftMargin:0; rightMargin:0;}
+
+                        anchors {
+                            topMargin: appletAbilities.metrics.margin.screenEdge
+                            bottomMargin: 0
+                            leftMargin: 0
+                            rightMargin: 0
+                        }
+
                     }
+
                 },
                 State {
                     name: "bottom"
-                    when: root.location!==PlasmaCore.Types.TopEdge
-                          && root.location !== PlasmaCore.Types.LeftEdge
-                          && root.location !== PlasmaCore.Types.RightEdge
+                    when: root.location !== PlasmaCore.Types.TopEdge && root.location !== PlasmaCore.Types.LeftEdge && root.location !== PlasmaCore.Types.RightEdge
 
                     AnchorChanges {
                         target: newDroppedLauncherVisual
-                        anchors{ top:undefined; bottom:scrollableList.bottom; left:undefined; right:undefined;
-                            horizontalCenter:scrollableList.horizontalCenter; verticalCenter:undefined}
+
+                        anchors {
+                            top: undefined
+                            bottom: scrollableList.bottom
+                            left: undefined
+                            right: undefined
+                            horizontalCenter: scrollableList.horizontalCenter
+                            verticalCenter: undefined
+                        }
+
                     }
 
                     PropertyChanges {
                         target: newDroppedLauncherVisual
-                        anchors{ topMargin:0; bottomMargin: appletAbilities.metrics.margin.screenEdge; leftMargin:0; rightMargin:0;}
+
+                        anchors {
+                            topMargin: 0
+                            bottomMargin: appletAbilities.metrics.margin.screenEdge
+                            leftMargin: 0
+                            rightMargin: 0
+                        }
+
                     }
+
                 }
             ]
         }
-    }
 
-    //// helpers
+        Behavior on opacity {
+            NumberAnimation {
+                duration: appletAbilities.animations.speedFactor.current * appletAbilities.animations.duration.large
+            }
+
+        }
+
+    }
 
     Timer {
         id: iconGeometryTimer
+
         // INVESTIGATE: such big interval but unfortunately it does not work otherwise
         interval: 500
         repeat: false
-
         onTriggered: {
             root.publishTasksGeometries();
-
-            if (appletAbilities.debug.timersEnabled) {
+            if (appletAbilities.debug.timersEnabled)
                 console.log("plasmoid timer: iconGeometryTimer called...");
-            }
+
         }
     }
-
 
     ///REMOVE
     ////Activities List
     ////it can be used to cleanup the launchers from garbage-deleted activities....
-    Item{
-        id: activityModelInstance
-        property int count: activityModelRepeater.count
-
-        Repeater {
-            id:activityModelRepeater
-            model: Activities.ActivityModel {
-                id: activityModel
-                //  shownStates: "Running"
-            }
-            delegate: Item {
-                visible: false
-                property string activityId: model.id
-                property string activityName: model.name
-            }
-        }
-
-        function activities(){
-            var activitiesResult = [];
-
-            for(var i=0; i<activityModelInstance.count; ++i){
-                console.log(children[i].activityId);
-                activitiesResult.push(children[i].activityId);
-            }
-
-            return activitiesResult;
-        }
-
-        ///REMOVE
-        onCountChanged: {
-            /*  if(activityInfo.currentActivity != "00000000-0000-0000-0000-000000000000"){
+    Item {
+        /*  if(activityInfo.currentActivity != "00000000-0000-0000-0000-000000000000"){
                 console.log("----------- Latte Plasmoid Signal: Activities number was changed ---------");
                 var allActivities = activities();
                 ActivitiesTools.cleanupRecords(allActivities);
                 console.log("----------- Latte Plasmoid Signal End ---------");
             }*/
-        }
-    }
 
-    /////////
+        id: activityModelInstance
 
-    //// functions
-    function activateTaskAtIndex(index) {
-        // This is called with Meta+number shortcuts by plasmashell when Tasks are in a plasma panel.
-        appletAbilities.shortcuts.sglActivateEntryAtIndex(index);
-    }
+        property int count: activityModelRepeater.count
 
-    function newInstanceForTaskAtIndex(index) {
-        // This is called with Meta+Alt+number shortcuts by plasmashell when Tasks are in a plasma panel.
-        appletAbilities.shortcuts.sglNewInstanceForEntryAtIndex(index);
-    }
-
-    function getBadger(identifier) {
-        var ident1 = identifier;
-        var n = ident1.lastIndexOf('/');
-
-        var result = n>=0 ? ident1.substring(n + 1) : identifier;
-
-        for(var i=0; i<badgers.length; ++i) {
-            if (result.indexOf(badgers[i].id) >= 0) {
-                return badgers[i];
+        function activities() {
+            var activitiesResult = [];
+            for (var i = 0; i < activityModelInstance.count; ++i) {
+                console.log(children[i].activityId);
+                activitiesResult.push(children[i].activityId);
             }
-        }
-    }
-
-    function updateBadge(identifier, value) {
-        var tasks = icList.contentItem.children;
-        var identifierF = identifier.concat(".desktop");
-
-        for(var i=0; i<tasks.length; ++i){
-            var task = tasks[i];
-
-            if (task && task.launcherUrl && task.launcherUrl.indexOf(identifierF) >= 0) {
-                task.badgeIndicator = value === "" ? 0 : Number(value);
-                var badge = getBadger(identifierF);
-                if (badge) {
-                    badge.value = value;
-                } else {
-                    badgers.push({id: identifierF, value: value});
-                }
-            }
-        }
-    }
-
-    function getLauncherList() {
-        return plasmoid.configuration.launchers59;
-    }
-
-    function previewContainsMouse() {
-        return windowsPreviewDlg.containsMouse;
-    }
-
-    function containsMouse(){
-        //console.log("s1...");
-        if (disableRestoreZoom && (root.contextMenu || windowsPreviewDlg.visible)) {
-            return;
-        } else {
-            disableRestoreZoom = false;
+            return activitiesResult;
         }
 
-        //if (previewContainsMouse())
-        //  windowsPreviewDlg.hide(4);
-
-        if (previewContainsMouse())
-            return true;
-
-        //console.log("s3...");
-        var tasks = icList.contentItem.children;
-
-        for(var i=0; i<tasks.length; ++i){
-            var task = tasks[i];
-
-            if(task && task.containsMouse){
-                // console.log("Checking "+i+" - "+task.index+" - "+task.containsMouse);
-                return true;
-            }
+        ///REMOVE
+        onCountChanged: {
         }
 
-        return false;
-    }
+        Repeater {
+            //  shownStates: "Running"
 
-    ///REMOVE
-    /*function createContextMenu(task) {
-        var menu = root.contextMenuComponent.createObject(task);
-        menu.visualParent = task;
-        menu.mpris2Source = mpris2Source;
-        menu.activitiesCount = activityModelInstance.count;
-        return menu;
-    }*/
+            id: activityModelRepeater
 
-    function createContextMenu(rootTask, modelIndex, args) {
-        var initialArgs = args || {}
-        initialArgs.visualParent = rootTask;
-        initialArgs.modelIndex = modelIndex;
-        initialArgs.mpris2Source = mpris2Source;
-        initialArgs.backend = backend;
+            model: Activities.ActivityModel {
+                id: activityModel
+            }
 
-        // Plasma 6: protect against using the component before it is ready.
-        // If the component is still loading or in error, just skip creating
-        // the menu instead of spamming 'QQmlComponent: Component is not ready'.
-        if (!root.contextMenuComponent) {
-            root.contextMenuComponent = Qt.createComponent("ContextMenu.qml");
+            delegate: Item {
+                property string activityId: model.id
+                property string activityName: model.name
+
+                visible: false
+            }
+
         }
 
-        if (root.contextMenuComponent.status !== Component.Ready) {
-            console.log("LATTE DEBUG: ContextMenu.qml not ready, status=", root.contextMenuComponent.status,
-                        "error=", root.contextMenuComponent.errorString());
-            return null;
-        }
-
-        root.contextMenu = root.contextMenuComponent.createObject(rootTask, initialArgs);
-
-        return root.contextMenu;
     }
-
- Component.onCompleted:  {
-    if (backend && backend.activateWindowView) {
-        root.activateWindowView.connect(backend.activateWindowView);
-    }
-
-    if (backend && backend.windowsHovered) {
-        root.windowsHovered.connect(backend.windowsHovered);
-    }
-
-    updateListViewParent();
-}
-
-Component.onDestruction: {
-    if (backend && backend.activateWindowView) {
-        root.activateWindowView.disconnect(backend.activateWindowView);
-    }
-
-    if (backend && backend.windowsHovered) {
-        root.windowsHovered.disconnect(backend.windowsHovered);
-    }
-}
-
-    //BEGIN states
-    // Alignments
-    // 0-Center, 1-Left, 2-Right, 3-Top, 4-Bottom
-    states: [
-        ///Bottom Edge
-        State {
-            name: "bottomCenter"
-            when: (root.location===PlasmaCore.Types.BottomEdge && root.alignment===LatteCore.Types.Center)
-
-            AnchorChanges {
-                target: barLine
-                anchors{ top:undefined; bottom:parent.bottom; left:undefined; right:undefined; horizontalCenter:parent.horizontalCenter; verticalCenter:undefined}
-            }
-        },
-        State {
-            name: "bottomLeft"
-            when: (root.location===PlasmaCore.Types.BottomEdge && root.alignment===LatteCore.Types.Left)
-
-            AnchorChanges {
-                target: barLine
-                anchors{ top:undefined; bottom:parent.bottom; left:parent.left; right:undefined; horizontalCenter:undefined; verticalCenter:undefined}
-            }
-        },
-        State {
-            name: "bottomRight"
-            when: (root.location===PlasmaCore.Types.BottomEdge && root.alignment===LatteCore.Types.Right)
-
-            AnchorChanges {
-                target: barLine
-                anchors{ top:undefined; bottom:parent.bottom; left:undefined; right:parent.right; horizontalCenter:undefined; verticalCenter:undefined}
-            }
-        },
-        ///Top Edge
-        State {
-            name: "topCenter"
-            when: (root.location===PlasmaCore.Types.TopEdge && root.alignment===LatteCore.Types.Center)
-
-            AnchorChanges {
-                target: barLine
-                anchors{ top:parent.top; bottom:undefined; left:undefined; right:undefined; horizontalCenter:parent.horizontalCenter; verticalCenter:undefined}
-            }
-        },
-        State {
-            name: "topLeft"
-            when: (root.location===PlasmaCore.Types.TopEdge && root.alignment===LatteCore.Types.Left)
-
-            AnchorChanges {
-                target: barLine
-                anchors{ top:parent.top; bottom:undefined; left:parent.left; right:undefined; horizontalCenter:undefined; verticalCenter:undefined}
-            }
-        },
-        State {
-            name: "topRight"
-            when: (root.location===PlasmaCore.Types.TopEdge && root.alignment===LatteCore.Types.Right)
-
-            AnchorChanges {
-                target: barLine
-                anchors{ top:parent.top; bottom:undefined; left:undefined; right:parent.right; horizontalCenter:undefined; verticalCenter:undefined}
-            }
-        },
-        ////Left Edge
-        State {
-            name: "leftCenter"
-            when: (root.location===PlasmaCore.Types.LeftEdge && root.alignment===LatteCore.Types.Center)
-
-            AnchorChanges {
-                target: barLine
-                anchors{ top:undefined; bottom:undefined; left:parent.left; right:undefined; horizontalCenter:undefined; verticalCenter:parent.verticalCenter}
-            }
-        },
-        State {
-            name: "leftTop"
-            when: (root.location===PlasmaCore.Types.LeftEdge && root.alignment===LatteCore.Types.Top)
-
-            AnchorChanges {
-                target: barLine
-                anchors{ top:parent.top; bottom:undefined; left:parent.left; right:undefined; horizontalCenter:undefined; verticalCenter:undefined}
-            }
-        },
-        State {
-            name: "leftBottom"
-            when: (root.location===PlasmaCore.Types.LeftEdge && root.alignment===LatteCore.Types.Bottom)
-
-            AnchorChanges {
-                target: barLine
-                anchors{ top:undefined; bottom:parent.bottom; left:parent.left; right:undefined; horizontalCenter:undefined; verticalCenter:undefined}
-            }
-        },
-        ///Right Edge
-        State {
-            name: "rightCenter"
-            when: (root.location===PlasmaCore.Types.RightEdge && root.alignment===LatteCore.Types.Center)
-
-            AnchorChanges {
-                target: barLine
-                anchors{ top:undefined; bottom:undefined; left:undefined; right:parent.right; horizontalCenter:undefined; verticalCenter:parent.verticalCenter}
-            }
-        },
-        State {
-            name: "rightTop"
-            when: (root.location===PlasmaCore.Types.RightEdge && root.alignment===LatteCore.Types.Top)
-
-            AnchorChanges {
-                target: barLine
-                anchors{ top:parent.top; bottom:undefined; left:undefined; right:parent.right; horizontalCenter:undefined; verticalCenter:undefined}
-            }
-        },
-        State {
-            name: "rightBottom"
-            when: (root.location===PlasmaCore.Types.RightEdge && root.alignment===LatteCore.Types.Bottom)
-
-            AnchorChanges {
-                target: barLine
-                anchors{ top:undefined; bottom:parent.bottom; left:undefined; right:parent.right; horizontalCenter:undefined; verticalCenter:undefined}
-            }
-        }
-
-    ]
-    //END states
 
 }

@@ -37,10 +37,9 @@ Grid {
     property int beginIndex: 0
     property int offset: 0
 
-    // Plasma 6: make sure the container itself has size, otherwise children
-    // with valid width/height remain invisible because the Grid has w/h = 0.
-    // This stretches the container to the parent size (which may left-align
-    // the contents) but keeps tasks visible so we can debug layout.
+    // Plasma 6 fallback: keep the container stretched to the parent size to
+    // guarantee that applets and tasks remain visible, even if alignment is
+    // not yet perfect.
     width: parent ? parent.width : width
     height: parent ? parent.height : height
 

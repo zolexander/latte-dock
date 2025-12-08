@@ -40,7 +40,7 @@ DragDrop.DropArea {
         target: latteView
 
         onContainsDragChanged: {
-            if(!latteView.containsDrag) {
+            if (latteView && !latteView.containsDrag) {
                 dragArea.clearInfo();
             }
         }
@@ -52,10 +52,10 @@ DragDrop.DropArea {
 
     function isDroppingOnlyLaunchers(event) {
         if (!latteView) {
-            return
+            return false;
         }
 
-        if (event.mimeData.hasUrls || (event.mimeData.formats.indexOf("text/x-plasmoidservicename") !== 0)) {
+        if (event.mimeData && (event.mimeData.hasUrls || (event.mimeData.formats.indexOf("text/x-plasmoidservicename") !== 0))) {
             var onlyLaunchers = event.mimeData.urls.every(function (item) {
                 return latteView.extendedInterface.isApplication(item);
             });
@@ -71,7 +71,7 @@ DragDrop.DropArea {
         id: clearInfoTimer
         interval: 100
 
-        onTriggered: {
+        onTriggered: function() {
             dragArea.dragInfo.computationsAreValid = false;
 
             dragArea.dragInfo.isTask = false;
@@ -85,7 +85,7 @@ DragDrop.DropArea {
         }
     }
 
-    onDragEnter: {
+    onDragEnter: function(event) {
         containsDrag = true;
         clearInfoTimer.stop();
         var isTask = event !== undefined
@@ -95,11 +95,14 @@ DragDrop.DropArea {
 
         var isSeparator = event !== undefined
                 && event.mimeData !== undefined
-                && ( latteView.mimeContainsPlasmoid(event.mimeData, "audoban.applet.separator")
-                    || latteView.mimeContainsPlasmoid(event.mimeData, "org.kde.latte.separator") );
+                && latteView !== null
+                && (latteView.mimeContainsPlasmoid(event.mimeData, "audoban.applet.separator")
+                    || latteView.mimeContainsPlasmoid(event.mimeData, "org.kde.latte.separator"));
 
         var isLatteTasks = event !== undefined
                 && event.mimeData !== undefined
+                && event.mimeData.formats !== undefined
+                && latteView !== null
                 && latteView.mimeContainsPlasmoid(event.mimeData, "org.kde.latte.plasmoid");
 
         var isPlasmoid = event !== undefined
@@ -136,7 +139,7 @@ DragDrop.DropArea {
         dndSpacer.opacity = 1;
     }
 
-    onDragMove: {
+    onDragMove: function(event) {
         containsDrag = true;
         clearInfoTimer.stop();
         if (dragInfo.isTask) {
@@ -154,7 +157,7 @@ DragDrop.DropArea {
         dndSpacer.opacity = 1;
     }
 
-    onDragLeave: {
+    onDragLeave: function(event) {
         containsDrag = false;
         animations.needLength.removeEvent(dragArea);
 
@@ -166,7 +169,7 @@ DragDrop.DropArea {
         dndSpacer.parent = root;
     }
 
-    onDrop: {
+    onDrop: function(event) {
         containsDrag = false;
         animations.needLength.removeEvent(dragArea);
 
