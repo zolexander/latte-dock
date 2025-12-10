@@ -13,10 +13,11 @@ Grid {
     id: appletsContainer
 
     columns: root.isVertical ? 1 : 0
-    columnSpacing: 0
     flow: isHorizontal ? Grid.LeftToRight : Grid.TopToBottom
     rows: root.isHorizontal ? 1 : 0
     rowSpacing: 0
+    columnSpacing: 0
+
 
     opacity: {
         if (root.inConfigureAppletsMode && root.myView.alignment===LatteCore.Types.Justify && layoutsContainer.mainLayout.isCoveredFromSideLayouts){
@@ -30,18 +31,23 @@ Grid {
         return 1;
     }
 
-    readonly property real length : root.isHorizontal ? width - ignoredLength : height - ignoredLength
+    // Logical occupied length of the applets (excluding ignored spacers).
+    // Use childrenRect here so that LayoutsContainer.contentsWidth sees the
+    // real icon extent even if this Grid is stretched to the full panel size.
+    readonly property real length : root.isHorizontal ? childrenRect.width - ignoredLength
+                                                      : childrenRect.height - ignoredLength
     property real ignoredLength: 0
 
     property int alignment: LatteCore.Types.BottomEdgeCenterAlign
     property int beginIndex: 0
     property int offset: 0
 
-    // Plasma 6 fallback: keep the container stretched to the parent size to
-    // guarantee that applets and tasks remain visible, even if alignment is
-    // not yet perfect.
-    width: parent ? parent.width : width
-    height: parent ? parent.height : height
+    // Physical size follows the parent (dock/background), while the logical
+    // "length" above uses childrenRect to report the real occupied area.
+    // This keeps the click area stable but makes centering/layout logic
+    // work off the actual applet extent.
+    width: parent ? parent.width : childrenRect.width
+    height: parent ? parent.height : childrenRect.height
 
     //! Debug: log children and their geometry to understand layouting
     Component.onCompleted: {
