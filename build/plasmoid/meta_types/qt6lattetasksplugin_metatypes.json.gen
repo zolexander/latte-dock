@@ -1,0 +1,97 @@
+[
+    {
+        "classes": [
+            {
+                "className": "LatteTasksPlugin",
+                "lineNumber": 15,
+                "object": true,
+                "qualifiedClassName": "LatteTasksPlugin",
+                "superClasses": [
+                    {
+                        "access": "public",
+                        "name": "QQmlExtensionPlugin"
+                    }
+                ]
+            }
+        ],
+        "inputFile": "lattetasksplugin.h",
+        "outputRevision": 69
+    },
+    {
+        "classes": [
+            {
+                "className": "Types",
+                "enums": [
+                    {
+                        "isClass": false,
+                        "isFlag": false,
+                        "lineNumber": 25,
+                        "name": "Modifier",
+                        "values": [
+                            "Shift",
+                            "Ctrl",
+                            "Alt",
+                            "Meta"
+                        ]
+                    },
+                    {
+                        "isClass": false,
+                        "isFlag": false,
+                        "lineNumber": 34,
+                        "name": "ClickAction",
+                        "values": [
+                            "LeftClick",
+                            "MiddleClick",
+                            "RightClick"
+                        ]
+                    },
+                    {
+                        "isClass": false,
+                        "isFlag": false,
+                        "lineNumber": 42,
+                        "name": "TaskAction",
+                        "values": [
+                            "NoneAction",
+                            "Close",
+                            "NewInstance",
+                            "ToggleMinimized",
+                            "CycleThroughTasks",
+                            "ToggleGrouping",
+                            "PresentWindows",
+                            "PreviewWindows",
+                            "HighlightWindows",
+                            "PreviewAndHighlightWindows"
+                        ]
+                    },
+                    {
+                        "isClass": false,
+                        "isFlag": false,
+                        "lineNumber": 57,
+                        "name": "TaskScrollAction",
+                        "values": [
+                            "ScrollNone",
+                            "ScrollTasks",
+                            "ScrollToggleMinimized"
+                        ]
+                    },
+                    {
+                        "isClass": false,
+                        "isFlag": false,
+                        "lineNumber": 65,
+                        "name": "ManualScrollType",
+                        "values": [
+                            "ManualScrollDisabled",
+                            "ManualScrollOnlyParallel",
+                            "ManualScrollVerticalHorizontal"
+                        ]
+                    }
+                ],
+                "gadget": true,
+                "lineNumber": 17,
+                "qualifiedClassName": "Latte::Tasks::Types"
+            }
+        ],
+        "inputFile": "types.h",
+        "outputRevision": 69
+    }
+]

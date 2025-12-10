@@ -1,0 +1,2 @@
+/home/zolexander/latte-dock/build/plasmoid/lattetasksplugin_autogen/include/../7RBZBFH7CH/moc_lattetasksplugin.cpp.json
+/home/zolexander/latte-dock/build/plasmoid/lattetasksplugin_autogen/include/../7RBZBFH7CH/moc_types.cpp.json
